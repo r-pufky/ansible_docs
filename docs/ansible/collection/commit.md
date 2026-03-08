@@ -29,9 +29,19 @@ Add files that should not be included in the built collection such as tests.
 
 galaxy.yml
 ``` yaml
+# Do not include: testing, environments, caches, IDE settings, or staging
+# messages in release tarball.
 build_ignore:
-  - .gitignore
-  - changelogs/.plugin-cache.yaml
+  - '*.ansible'
+  - '*.gitignore'
+  - '*.gitmodules'
+  - '*.git'
+  - '*molecule'
+  - '.envrc'
+  - '.vscode'
+  - 'ansible.env'
+  - 'TODO.md'
+  - 'COMMIT.md'
 ```
 Reference:
 

@@ -9,11 +9,24 @@
 
 ## Install
 
+=== "Arch"
+
+    ``` bash
+    pacman -Syu crun  # OCI implementation (faster, less memory than runc).
+    pacman -Syu podman  # Service tests (non kernel, sysctl, networking, etc).
+    ```
+
+=== "Debian"
+
+    ``` bash
+    apt install crun  # OCI implementation (faster, less memory than runc).
+    apt install podman  # Service tests (non kernel, sysctl, networking, etc).
+    ```
+
 ``` bash
-source ansible.env  # source {VENV}/bin/activate
+# source ansible.env if not using direnv.
+source /var/venv/ansible/bin/activate
 pip install molecule-plugins[Podman]
-pacman -Syu crun  # OCI implementation (faster, less memory than runc).
-pacman -Syu podman  # Service testing (non kernel, sysctl, networking, etc).
 ```
 
 Verify Rootless Support. (1)
@@ -48,11 +61,11 @@ Create Subordinate UID/GID Mappings. (1)
 
 ``` bash
 # Add user
-cat /etc/subuid | grep -ri {USER}
+cat /etc/subuid | grep {USER}
 > {USER}:100000:65536
 
 # Add group
-cat /etc/subgid | grep -ri {GROUP}
+cat /etc/subgid | grep {GROUP}
 > {GROUP}:100000:65536
 
 # Modern linux distros may use this

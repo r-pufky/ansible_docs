@@ -30,9 +30,14 @@ Reference:
 
 ### .gitignore
 ``` yaml
+# Ansible
+r_pufky-*.tar.gz
 .ansible/
 .ansible
+.vscode/
 molecule/cache
+COMMIT.md
+TODO.md
 ```
 Reference:
 

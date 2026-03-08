@@ -6,22 +6,35 @@
 
 ## Create Environment and Install Packages
 
-Create python virtual environment, install Ansible and Molecule
+=== "Arch"
+
+    ``` bash
+    pacman -S python-pip
+    pacman -S direnv
+    ```
+
+=== "Debian"
+
+    ``` bash
+    apt install python3-pip python3-venv
+    apt install direnv
+    ```
+
 ``` bash
-python3 -m venv /var/venv/{REPO}  # Bare name (ansible_collection_srv).
-source /var/venv/{REPO}/bin/activate
+# Create python virtual environment.
+python3 -m venv /var/venv/ansible  # tip: a220 for ansible-core 2.20
+source /var/venv/ansible/bin/activate  # activate.fish
+
+# Install and lock to specific version.
+python -m ensurepip --upgrade
 pip install --upgrade pip
 pip install --upgrade setuptools
-# Lock to specific version. See reference.
-pip install ansible  # ansible==11.0  # ansible-core 2.18
+pip install ansible  # ansible==11.0  # ansible-core 2.20
 pip install argcomplete
-# Install older ansible-compat layer until issue is resolved.
-# Reference:
-# * https://github.com/ansible/ansible-lint/issues/4533
-# pip install ansible-lint
-# pip install molecule
-pip uninstall -y ansible-compat ansible-lint molecule
-pip install "ansible-compat==24.10.0" ansible-lint molecule
+pip install ansible-lint
+pip install molecule
+
+direnv allow  # source ansible.env if not using direnv.
 ```
 Reference:
 

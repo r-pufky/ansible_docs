@@ -76,6 +76,7 @@ nav:
           - 'ansible/role/README.md'
           - 'ansible/role/best_practices.md'
           - 'ansible/role/style_guide.md'
+          - 'ansible/role/troubleshooting.md'
       - 'ansible/troubleshooting.md'
   - 'Test Environments':
       - 'Molecule':
@@ -180,6 +181,13 @@ markdown_extensions:
   - pymdownx.emoji:
       emoji_index: !!python/name:material.extensions.emoji.twemoji
       emoji_generator: !!python/name:material.extensions.emoji.to_svg
+
+  # Linkable tabbed blocks.
+  - pymdownx.tabbed:
+      alternate_style: true
+      slugify: !!python/object/apply:pymdownx.slugs.slugify
+        kwds:
+          case: 'lower'
 
   # Github flavored checklists.
   - pymdownx.tasklist:
