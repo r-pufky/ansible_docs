@@ -7,12 +7,32 @@
 # material-specific options are removed.
 #
 # Development:
-#   python3 -m venv /var/venv/docs
-#   source /var/venv/docs/bin/activate
-#   pip install --upgrade pip
-#   pip install mkdocs mkdocs-material mkdocs-glightbox
-#   pip install mkdocs-git-revision-date-localized-plugin
-#   mkdocs serve --livereload
+#   venv:
+#     python3 -m venv /var/venv/docs
+#     source /var/venv/docs/bin/activate
+#     pip install --upgrade pip
+#     pip install mkdocs mkdocs-material mkdocs-glightbox
+#     pip install mkdocs-git-revision-date-localized-plugin
+#     pip install click==8.2.1  # (until 4014 is resolved).
+#     mkdocs serve --livereload
+#
+#   uv:
+#     uv init
+#     uv add mkdocs mkdocs-material mkdocs-glightbox
+#     uv add mkdocs-git-revision-date-localized-plugin
+#     uv pip install click==8.2.1  # (until 4014 is resolved).
+#     uv run mkdocs serve --livereload
+#
+#
+# TODO: mkdocs is deprecated and moving to 2.0 with breaking changes. Consider
+#     replacing with zeniscal:
+#
+#     https://squidfunk.github.io/mkdocs-material/blog/2026/02/18/mkdocs-2.0/
+#
+#     Zensical:
+#       uv init
+#       uv add zensical
+#       uv run zensical serve
 #
 # All warnings and errors must be resolved before committing.
 #
@@ -26,13 +46,14 @@
 #
 # Reference:
 # * https://www.mkdocs.org/
+# * https://github.com/mkdocs/mkdocs/issues/4014
 
 ###############################################################################
 # Page Configuration
 ###############################################################################
 site_name: 'Ansible Development'
-repo_url: 'https://github.com/r-pufky/ansible_collection_docs'
-site_url: 'https://github.com/r-pufky/ansible_collection_docs'
+repo_url: 'https://github.com/r-pufky/ansible_docs'
+site_url: 'https://github.com/r-pufky/ansible_docs'
 edit_uri: 'edit/main/docs'
 site_author: 'r-pufky'
 copyright: '©2025'
