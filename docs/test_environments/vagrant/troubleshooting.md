@@ -1,7 +1,7 @@
 # Troubleshooting
 
 !!! info ""
-    See [molecule](../molecule/testing.md) for specific molecule
+    See [molecule](../molecule/troubleshooting.md) for specific molecule
     troubleshooting.
 
 

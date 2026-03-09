@@ -25,8 +25,6 @@ nav:
   - 'Testing':
       - 'Molecule':
           - 'test_environments/molecule/README.md'
-          - 'test_environments/molecule/best_practices.md'
-          - 'test_environments/molecule/testing.md'
           - 'test_environments/molecule/troubleshooting.md'
       - 'Podman':
           - 'test_environments/podman/README.md'
@@ -42,6 +40,7 @@ nav:
       - 'best_practice/README.md'
       - 'best_practice/patterns.md'
       - 'best_practice/style_guide.md'
+      - 'best_practice/testing.md'
   - 'troubleshooting.md'
 
 extra:
