@@ -1,9 +1,10 @@
 # Troubleshooting
 
+
 ## vboxdrv kernel module is not loaded
 Kernel modules are not loaded.
 
-??? danger "Error"
+!!! danger ""
     ``` log
     WARNING: The vboxdrv kernel module is not loaded. Either there is no module
              available for the current kernel (4.4.0-22-generic) or it failed to
@@ -14,15 +15,13 @@ Kernel modules are not loaded.
              You will not be able to start VMs until this problem is fixed.
     ```
 
-Install kernel modules.
 ``` bash
-mhwd-kernel -l
-pamac install linux{KERNEL}-virtualbox-host-modules
+# Install kernel modules.
+pacman -Q | grep linux
+pacman -S linux-{KERNEL}-virtualbox-host-modules
 systemctl reboot
-```
 
-Confirm installed.
-``` bash
+# Confirm installed.
 vboxmanage --version  # Executable with modules loaded.
 > 7.1.4r165100  # Installed version.
 ```
