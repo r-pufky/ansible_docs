@@ -6,7 +6,7 @@
 grep -ri todo
 ```
 
-## Ensure linting follows [guidelines](../role/style_guide.md)
+## Ensure linting follows [guidelines](../best_practice/style_guide.md)
 ``` bash
 grep -ri yamllint  # yamllint
 grep -ri noqa  # ansible-lint

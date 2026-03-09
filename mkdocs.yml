@@ -26,8 +26,6 @@ nav:
       - 'collection/troubleshooting.md'
   - 'Roles':
       - 'role/README.md'
-      - 'role/best_practices.md'
-      - 'role/style_guide.md'
       - 'role/troubleshooting.md'
   - 'Testing':
       - 'Molecule':
@@ -47,11 +45,9 @@ nav:
       - 'VirtualBox':
           - 'test_environments/virtualbox/README.md'
           - 'test_environments/virtualbox/troubleshooting.md'
-  - 'Docstrings':
-      - 'docstring/README.md'
-      - 'docstring/unicode.md'
-      - 'docstring/task.md'
-      - 'docstring/variable.md'
+  - 'Best Practices':
+      - 'best_practice/README.md'
+      - 'best_practice/style_guide.md'
   - 'troubleshooting.md'
 
 extra:

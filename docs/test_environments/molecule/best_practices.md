@@ -7,8 +7,8 @@ Each pattern requires a separate molecule test setup.
   many options if they can be individually explicitly verified.
 
     !!! warning "Use Decisions"
-        Create [decisions](../../docstring/variable.md) when explicitly
-        **NOT** testing a task.
+        Create [decisions](../../best_practice/style_guide.md#file-documentation)
+        when explicitly **NOT** testing a task.
 
 * Use least privilege. Comments are required when using these features in
   Molecule.

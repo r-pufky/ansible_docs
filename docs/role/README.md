@@ -1,7 +1,4 @@
-# Role Developemnt
-
-!!! info "Prerequisites"
-    * [Collection Created](../collection/README.md).
+# Role Development
 
 ## Create New Role
 
