@@ -13,7 +13,8 @@ isolated minimal environment to minimize hidden dependencies. Environments are
 configured at the collection level and used within the role submodules.
 
 ### Local Packages
-Local package must be installed to activate environment.
+Local package must be installed to activate environment. Standard Ansible
+testing infrastructure: molecule, podman, vagrant, uv, direnv.
 
 === "Arch"
 
@@ -30,6 +31,60 @@ Local package must be installed to activate environment.
     apt install direnv podman crun vagrant
     direnv allow
     ```
+
+#### Package Configuration
+
+=== "[Rootless Podman][d]"
+    An entry must exist for each user that wants to use rootless podman. Modern
+    linux distros create users having these entries by default. Create
+    [Subordinate UID/GID Mappings if needed.][e]
+
+    ``` bash
+    # Confirm rootless support (graphdrivername=overlay and diff=true).
+    podman info | grep -i overlay
+
+    > 107:  graphDriverName: overlay
+    > 114:    Native Overlay Diff: "true"
+
+    # Verify unprivileged user namespace (1=enabled).
+    sysctl kernel.unprivileged_userns_clone
+
+    > kernel.unprivileged_userns_clone = 1
+
+    # Check user/group is correctly mapped.
+    cat /etc/subuid | grep {USER}
+
+    > {USER}:100000:65536
+
+    cat /etc/subgid | grep {GROUP}
+
+    > {GROUP}:100000:65536
+
+    # Modern linux distros may use this (or manually add lines above to files).
+    usermod --add-subuids 100000-165535 --add-subgids 100000-165535 {USER}
+    ```
+
+    Set [Default Container Registry][f]
+    !!! abstract "/etc/containers/registries.conf"
+        0644 root:root
+
+        ``` ini
+        [registries.search]
+        registries = ['ghcr.io']
+        unqualified-search-registries=['ghcr.io']
+        ```
+
+    ``` bash
+    # GHCR.IO requires a github login to download images.
+    podman login ghcr.io  # github account.
+    ```
+
+    Apply configuration changes and [migrate existing containers][g]
+    ``` bash
+    podman system reset
+    podman system migrate
+    ```
+
 
 ### Environment Setup
 A minimal (clean) environment enforces only settings which make testing easier
@@ -142,12 +197,13 @@ direnv allow
     export ANSIBLE_SYSTEM_TMPDIRS='/tmp'  # Use RAMFS tmp, not disk (/var/tmp).
     ```
 
+###
 
 ## Redirect ansible caches
 High IOPs cause premature SSD wear and cause false **yamllint**,
 **ansible-lint** errors from [imported collections and roles][b]. Redirection
 allows no changes for production environments while minimizing development
-wear.
+wear. Consider moving and linking entire .cache directories.
 
 !!! abstract "/etc/fstab"
     0644 root:root
@@ -161,11 +217,10 @@ wear.
 # Mount directory.
 mount -o remount -a
 
-# Redirect all per-directory caches.
+# Redirect all per-directory ansible caches.
 find . -type d -name '.ansible' -exec rm -rf "{}" \; -exec ln -s /tmp/ansible-cache "{}" \;
 
 # Redirect static ansible caches. Delete or move existing cache data.
-# Consider moving and linking entire .cache directory.
 ln -s /mnt/cache/.ansible_async ${HOME}/.ansible_async
 ln -s /mnt/cache/.ansible ${HOME}/.ansible
 ln -s /mnt/cache/cache/ansible-compat ${HOME}/.cache/ansible-compat
@@ -174,6 +229,10 @@ ln -s /mnt/cache/cache/molecule ${HOME}/.cache/molecule
 ln -s "/mnt/cache/config/Code - OSS" "${HOME}/.config/Code - OSS"
 ln -s /mnt/cache/config/VSCodium ${HOME}/.config/VSCodium
 ln -s /mnt/cache/config/VSCode ${HOME}/.config/VSCode
+# Redirect Podman.
+ls -s /mnt/cache/local/share/containers ${HOME}/.local/share/containers  # graph.
+ln -s /mnt/cache/cache/containers ${HOME}/.cache/containers  # config.
+ln -s /mnt/cache/storage /var/lib/containers/storage  # graph.
 ```
 
 
@@ -219,3 +278,7 @@ Install [Ansible extension][c].
 [a]: https://galaxy.ansible.com/ui/namespaces/r_pufky
 [b]: https://github.com/ansible/ansible-lint/issues/4533
 [c]: https://marketplace.visualstudio.com/items?itemName=redhat.ansible
+[d]: https://github.com/ansible-community/molecule-podman
+[e]: https://github.com/systemd/systemd/issues/21952
+[f]: https://halukkarakaya.medium.com/how-to-configure-default-search-registries-in-podman-ea930289692
+[g]: https://github.com/containers/podman/issues/12715

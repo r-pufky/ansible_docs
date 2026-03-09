@@ -30,7 +30,6 @@ nav:
           - 'test_environments/molecule/troubleshooting.md'
       - 'Podman':
           - 'test_environments/podman/README.md'
-          - 'test_environments/podman/testing.md'
           - 'test_environments/podman/troubleshooting.md'
       - 'Vagrant':
           - 'test_environments/vagrant/README.md'

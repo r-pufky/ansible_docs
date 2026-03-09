@@ -1,147 +1,99 @@
-# Podman Setup
+# Podman
 
 !!! success "Default Testing Platform"
-    Rootless podman environment is used to test **all** cases unless there are
-    required bare-metal cases (See [Vagrant](../vagrant/README.md)).
+    Podman is a full systemd container and does not have many of the issues
+    (including network issues) that docker does.
 
-## Install
+    Used to test **all** cases unless there are required bare-metal cases (see
+    [vagrant](../vagrant/README.md)).
 
-=== "Arch"
 
-    ``` bash
-    pacman -Syu crun  # OCI implementation (faster, less memory than runc).
-    pacman -Syu podman  # Service tests (non kernel, sysctl, networking, etc).
+## Molecule Setup
+Standard molecule setup for rootless podman debian container.
+
+!!! abstract "molecule.yml"
+    0644 {USER}:{USER}
+
+    ``` yaml
+    ---
+    dependency:
+      name: 'galaxy'
+    driver:
+      name: 'podman'
+    provisioner:
+      name: 'ansible'
+      config_options:
+        defaults:
+          interpreter_python: 'auto_silent'  # Suppress warnings.
+          callback_whitelist: 'profile_tasks, timer, yaml'  # Display profiling.
+          # To cache facts between molecule steps:
+          #   fact_caching: 'jsonfile'
+          #   fact_caching_connection: '/tmp/facts_cache'
+          #   fact_caching_timeout: 7200
+          #
+          # cache a fact between steps:
+          #   ansible.builtin.set_fact:
+          #     cacheable: yes
+          #     my_fact: "howdy, world"
+          #
+          # always assert cache is not expired before using and document with args:
+          #   - name: 'assert fact_caching not expired'
+          #     ansible.builtin.assert:
+          #       that:
+          #         - '_test_cached_fact is defined'
+          #       fail_msg: 'fact_caching has expired; re-run prepare.'
+        ssh_connection:
+          pipelining: false  # Does not work with podman.
+      # inventory:  # Set all base testing configuration here.
+      #   group_vars:
+      #     all:
+      #       setup_variables: true
+      #   host_vars:
+      #     {IMAGE}-{TEST}:
+      #       setup_variables: true
+    platforms:
+      - name: '{ROLE}_{TEST}'  # debian_default.
+        image: 'ghcr.io/hifis-net/debian-systemd:13'
+        systemd: 'always'
+        volumes:
+          - '/sys/fs/cgroup:/sys/fs/cgroup:ro'
+        # capabilities:  # Always comment explicit need (file, command, etc).
+        #   - 'SYS_ADMIN'  # Required for systemd systems.
+        #   - 'NET_ADMIN'  # Required for network-based testing.
+        command: '/lib/systemd/systemd'
+        pre_build_image: true
+        # privileged: true  # For some operations like sysctl, ulimit.
+        published_ports:
+          - '3000:3000/tcp'  # Exposes port to host. Not needed for testing.
+    verifier:
+      name: 'ansible'
+    lint: |
+      set -e
+      yamllint .
+      ansible-lint .
+    # Disable steps as needed with explicit reasons to minimize warnings.
+    scenario:
+      test_sequence:
+        - 'dependency'
+        - 'cleanup'
+        - 'destroy'
+        - 'syntax'
+        - 'create'
+        - 'prepare'
+        - 'converge'
+        - 'idempotence'
+        - 'side_effect'
+        - 'verify'
+        - 'cleanup'
+        - 'destroy'
     ```
 
-=== "Debian"
 
-    ``` bash
-    apt install crun  # OCI implementation (faster, less memory than runc).
-    apt install podman  # Service tests (non kernel, sysctl, networking, etc).
-    ```
+## Reference[^1][^2][^3][^4][^5][^6]
 
-``` bash
-# source ansible.env if not using direnv.
-source /var/venv/ansible/bin/activate
-pip install molecule-plugins[Podman]
-```
-
-Verify Rootless Support. (1)
-{ .annotate }
-
-1. **overlay** and **Diff: "true"** mean supported.
-
-``` bash
-podman info | grep -i overlay
-
-> 107:  graphDriverName: overlay
-> 114:    Native Overlay Diff: "true"
-```
-
-Verify Unprivileged User Namespace Enabled. (1)
-{ .annotate }
-
-1. **1** means enabled.
-
-``` bash
-sysctl kernel.unprivileged_userns_clone
-
-> kernel.unprivileged_userns_clone = 1
-```
-
-Create Subordinate UID/GID Mappings. (1)
-{ .annotate }
-
-1. Configuration entry must exist for each user that wants to use it. New users
-   created using useradd have these entries by default. If not add user
-   defaults.
-
-``` bash
-# Add user
-cat /etc/subuid | grep {USER}
-> {USER}:100000:65536
-
-# Add group
-cat /etc/subgid | grep {GROUP}
-> {GROUP}:100000:65536
-
-# Modern linux distros may use this
-usermod --add-subuids 100000-165535 --add-subgids 100000-165535 {USER}
-```
-Reference:
-
-* https://github.com/ansible-community/molecule-podman
-* https://github.com/systemd/systemd/issues/21952
-
-## Set Default Container Registry
-
-/etc/containers/registries.conf (1)
-{ .annotate }
-
-1. 0644 root:root
-
-``` ini
-[registries.search]
-registries = ['ghcr.io']
-unqualified-search-registries=['ghcr.io']
-```
-
-``` bash
-podman login ghcr.io  # github account.
-```
-!!! warning "Required"
-    GHCR.IO requires a github login to download images.
-
-Reference:
-
-* https://halukkarakaya.medium.com/how-to-configure-default-search-registries-in-podman-ea930289692
-
-## Migrate Podman Installation
-Applies configuration changes to Podman. Critical for unprivileged podman to
-execute properly.
-
-Run as the **current** user.
-``` bash
-podman system reset
-podman system migrate
-```
-Reference:
-
-* https://github.com/containers/podman/issues/12715
-
-
-## Set alternative container storage location (optional)
-Developing on containers will thrash disk especially when running molecule.
-Relocate high-use directories to a disk that can handle high wear. Prefer to
-config change as this enables quick use without configuration changes.
-
-!!! warning "graphroot and runroot are ignored in rootless containers"
-    `graphroot` and `runroot` are **ignored** in rootless containers and use
-    following defaults if not defined:
-    ``` bash
-    XDG_CONFIG_HOME=${HOME}/.config
-    XDG_DATA_DIR=${HOME}/.local/share
-    XDG_RUNTIME_DIR=/run/user/${UID}
-    ```
-
-Move and link user directories to an alternative location. (1)
-{ .annotate }
-
-1. Consider moving and linking entire **.cache** directory.
-
-``` bash
-# delete or move existing cache data.
-# rootless relocation
-ls -s /mnt/cache/local/share/containers ${HOME}/.local/share/containers  # graph.
-ln -s /mnt/cache/cache/containers ${HOME}/.cache/containers  # config.
-# podman relocation
-ln -s /hdd/cache/storage /var/lib/containers/storage  # graph.
-```
-Reference:
-
-* https://github.com/containers/podman/blob/main/docs/tutorials/rootless_tutorial.md#user-configuration-files
-
-## References
-
-* https://www.ansible.com/blog/developing-and-testing-ansible-roles-with-molecule-and-podman-part-1/
-* https://wiki.archlinux.org/title/Podman
+[^1]: https://ansible.readthedocs.io/projects/molecule/guides/systemd-container/
+[^2]: https://ansible.readthedocs.io/projects/molecule/examples/podman/
+[^3]: https://ansible.readthedocs.io/projects/molecule/configuration/?h=test_sequence#scenario
+[^4]: https://stackoverflow.com/questions/65350229/how-do-i-share-variables-facts-between-molecule-playbooks
+[^5]: https://www.ansible.com/blog/developing-and-testing-ansible-roles-with-molecule-and-podman-part-1/
+[^6]: https://wiki.archlinux.org/title/Podman
