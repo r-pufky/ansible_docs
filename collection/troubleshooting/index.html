@@ -7,31 +7,31 @@
         <meta name="author" content="r-pufky">
       
       
-        <link rel="canonical" href="https://github.com/r-pufky/ansible_docs/ansible/environment/vscodium/">
+        <link rel="canonical" href="https://github.com/r-pufky/ansible_docs/collection/troubleshooting/">
       
       
         <link rel="prev" href="../">
       
       
-        <link rel="next" href="../../collection/">
+        <link rel="next" href="../../role/">
       
       
         
       
       
-      <link rel="icon" href="../../../assets/images/favicon.png">
+      <link rel="icon" href="../../assets/images/favicon.png">
       <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.4">
     
     
       
-        <title>VSCodium (VScode) - Ansible Development</title>
+        <title>Troubleshooting - Ansible Development</title>
       
     
     
-      <link rel="stylesheet" href="../../../assets/stylesheets/main.484c7ddc.min.css">
+      <link rel="stylesheet" href="../../assets/stylesheets/main.484c7ddc.min.css">
       
         
-        <link rel="stylesheet" href="../../../assets/stylesheets/palette.ab4e12ef.min.css">
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
       
       
 
@@ -58,13 +58,13 @@
     
       <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/styles/vs2015.min.css">
     
-    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
       
 
     
     
-  <link href="../../../assets/stylesheets/glightbox.min.css" rel="stylesheet"><script src="../../../assets/javascripts/glightbox.min.js"></script><style id="glightbox-style">
+  <link href="../../assets/stylesheets/glightbox.min.css" rel="stylesheet"><script src="../../assets/javascripts/glightbox.min.js"></script><style id="glightbox-style">
             html.glightbox-open { overflow: initial; height: 100%; }
             .gslide-title { margin-top: 0px; user-select: text; }
             .gslide-desc { color: #666; user-select: text; }
@@ -93,7 +93,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#vscodium-vscode" class="md-skip">
+        <a href="#troubleshooting" class="md-skip">
           Skip to content
         </a>
       
@@ -109,7 +109,7 @@
 
 <header class="md-header md-header--shadow" data-md-component="header">
   <nav class="md-header__inner md-grid" aria-label="Header">
-    <a href="../../.." title="Ansible Development" class="md-header__button md-logo" aria-label="Ansible Development" data-md-component="logo">
+    <a href="../.." title="Ansible Development" class="md-header__button md-logo" aria-label="Ansible Development" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"></path></svg>
@@ -129,7 +129,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              VSCodium (VScode)
+              Troubleshooting
             
           </span>
         </div>
@@ -257,7 +257,7 @@
 
 <nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
-    <a href="../../.." title="Ansible Development" class="md-nav__button md-logo" aria-label="Ansible Development" data-md-component="logo">
+    <a href="../.." title="Ansible Development" class="md-nav__button md-logo" aria-label="Ansible Development" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"></path></svg>
@@ -287,14 +287,14 @@
   
   
     <li class="md-nav__item">
-      <a href="../../.." class="md-nav__link">
+      <a href="../.." class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    Purpose
+    Ansible
   
 
     
@@ -319,9 +319,7 @@
     
       
         
-      
-        
-      
+          
         
       
         
@@ -337,63 +335,6 @@
         <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked="">
         
           
-          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
-            
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Ansible
-  
-
-    
-  </span>
-  
-  
-
-            <span class="md-nav__icon md-icon"></span>
-          </label>
-        
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
-          <label class="md-nav__title" for="__nav_2">
-            <span class="md-nav__icon md-icon"></span>
-            
-  
-    Ansible
-  
-
-          </label>
-          <ul class="md-nav__list" data-md-scrollfix="">
-            
-              
-                
-  
-  
-    
-  
-  
-  
-    
-    
-      
-        
-          
-        
-      
-        
-      
-    
-    
-    
-    
-    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
-      
-        
-        
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_1" checked="">
-        
-          
           <div class="md-nav__link md-nav__container">
             <a href="../" class="md-nav__link ">
               
@@ -402,7 +343,7 @@
   <span class="md-ellipsis">
     
   
-    Environment
+    Collections
   
 
     
@@ -413,18 +354,18 @@
             </a>
             
               
-              <label class="md-nav__link " for="__nav_2_1" id="__nav_2_1_label" tabindex="0">
+              <label class="md-nav__link " for="__nav_2" id="__nav_2_label" tabindex="0">
                 <span class="md-nav__icon md-icon"></span>
               </label>
             
           </div>
         
-        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_1_label" aria-expanded="true">
-          <label class="md-nav__title" for="__nav_2_1">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2">
             <span class="md-nav__icon md-icon"></span>
             
   
-    Environment
+    Collections
   
 
           </label>
@@ -455,7 +396,7 @@
   <span class="md-ellipsis">
     
   
-    VSCodium (VScode)
+    Troubleshooting
   
 
     
@@ -473,7 +414,7 @@
   <span class="md-ellipsis">
     
   
-    VSCodium (VScode)
+    Troubleshooting
   
 
     
@@ -499,10 +440,10 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
       
         <li class="md-nav__item">
-  <a href="#configure-workspace" class="md-nav__link">
+  <a href="#testing-in-roles-uses-old-files" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Configure Workspace
+        Testing in roles uses old files
       
     </span>
   </a>
@@ -510,10 +451,43 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#set-alternative-container-storage-location-optional" class="md-nav__link">
+  <a href="#unable-to-determine-context-for-the-following-test-targets" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Set alternative container storage location (optional)
+        Unable to determine context for the following test targets
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#only-localhost-is-available" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Only Localhost is Available
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#fixing-gplv3-license-missing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Fixing GPLv3 License Missing
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#reference" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Reference
       
     </span>
   </a>
@@ -535,20 +509,42 @@
     </li>
   
 
-              
-            
-              
-                
-  
-  
-  
-  
-    
     
       
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../role/" class="md-nav__link">
         
-          
-        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Roles
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
       
         
       
@@ -566,56 +562,11 @@
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_2">
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4">
         
           
-          <div class="md-nav__link md-nav__container">
-            <a href="../../collection/" class="md-nav__link ">
-              
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Collection Development
-  
-
-    
-  </span>
-  
-  
-
-            </a>
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
             
-              
-              <label class="md-nav__link " for="__nav_2_2" id="__nav_2_2_label" tabindex="0">
-                <span class="md-nav__icon md-icon"></span>
-              </label>
-            
-          </div>
-        
-        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_2_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_2_2">
-            <span class="md-nav__icon md-icon"></span>
-            
-  
-    Collection Development
-  
-
-          </label>
-          <ul class="md-nav__list" data-md-scrollfix="">
-            
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../collection/testing/" class="md-nav__link">
-        
   
   
   <span class="md-ellipsis">
@@ -629,351 +580,15 @@
   
   
 
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../collection/commit/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Commit Checks
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../collection/release/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Major Release Guide
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../collection/troubleshooting/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Troubleshooting
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-          </ul>
-        </nav>
-      
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    
-    
-      
-        
-          
-        
-      
-        
-      
-        
-      
-        
-      
-    
-    
-    
-    
-    <li class="md-nav__item md-nav__item--nested">
-      
-        
-        
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_3">
-        
-          
-          <div class="md-nav__link md-nav__container">
-            <a href="../../role/" class="md-nav__link ">
-              
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Role Development
-  
-
-    
-  </span>
-  
-  
-
-            </a>
-            
-              
-              <label class="md-nav__link " for="__nav_2_3" id="__nav_2_3_label" tabindex="0">
-                <span class="md-nav__icon md-icon"></span>
-              </label>
-            
-          </div>
-        
-        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_3_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_2_3">
-            <span class="md-nav__icon md-icon"></span>
-            
-  
-    Role Development
-  
-
-          </label>
-          <ul class="md-nav__list" data-md-scrollfix="">
-            
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../role/best_practices/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Best Practices
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../role/style_guide/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Style Guide
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../role/troubleshooting/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Troubleshooting
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-          </ul>
-        </nav>
-      
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../troubleshooting/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Troubleshooting
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-          </ul>
-        </nav>
-      
-    </li>
-  
-
-    
-      
-      
-  
-  
-  
-  
-    
-    
-      
-        
-      
-        
-      
-        
-      
-        
-      
-    
-    
-    
-    
-    <li class="md-nav__item md-nav__item--nested">
-      
-        
-        
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3">
-        
-          
-          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
-            
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Test Environments
-  
-
-    
-  </span>
-  
-  
-
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_3">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
             <span class="md-nav__icon md-icon"></span>
             
   
-    Test Environments
+    Testing
   
 
           </label>
@@ -994,10 +609,6 @@
       
         
       
-        
-      
-        
-      
     
     
     
@@ -1006,11 +617,11 @@
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_1">
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_1">
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="../../../test_environments/molecule/" class="md-nav__link ">
+            <a href="../../test_environments/molecule/" class="md-nav__link ">
               
   
   
@@ -1028,14 +639,14 @@
             </a>
             
               
-              <label class="md-nav__link " for="__nav_3_1" id="__nav_3_1_label" tabindex="0">
+              <label class="md-nav__link " for="__nav_4_1" id="__nav_4_1_label" tabindex="0">
                 <span class="md-nav__icon md-icon"></span>
               </label>
             
           </div>
         
-        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_1_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_3_1">
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_1">
             <span class="md-nav__icon md-icon"></span>
             
   
@@ -1054,14 +665,14 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../test_environments/molecule/best_practices/" class="md-nav__link">
+      <a href="../../test_environments/molecule/troubleshooting/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    Best Practices
+    Troubleshooting
   
 
     
@@ -1075,29 +686,9 @@
 
               
             
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../../test_environments/molecule/testing/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Testing
-  
-
-    
-  </span>
-  
-  
-
-      </a>
+          </ul>
+        </nav>
+      
     </li>
   
 
@@ -1109,8 +700,72 @@
   
   
   
+    
+    
+      
+        
+          
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_2">
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../test_environments/podman/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Podman
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_4_2" id="__nav_4_2_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Podman
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix="">
+            
+              
+            
+              
+                
+  
+  
+  
+  
     <li class="md-nav__item">
-      <a href="../../../test_environments/molecule/troubleshooting/" class="md-nav__link">
+      <a href="../../test_environments/podman/troubleshooting/" class="md-nav__link">
         
   
   
@@ -1164,143 +819,11 @@
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_2">
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_3">
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="../../../test_environments/podman/" class="md-nav__link ">
-              
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Podman
-  
-
-    
-  </span>
-  
-  
-
-            </a>
-            
-              
-              <label class="md-nav__link " for="__nav_3_2" id="__nav_3_2_label" tabindex="0">
-                <span class="md-nav__icon md-icon"></span>
-              </label>
-            
-          </div>
-        
-        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_2_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_3_2">
-            <span class="md-nav__icon md-icon"></span>
-            
-  
-    Podman
-  
-
-          </label>
-          <ul class="md-nav__list" data-md-scrollfix="">
-            
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../../test_environments/podman/testing/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Testing
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../../test_environments/podman/troubleshooting/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Troubleshooting
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-          </ul>
-        </nav>
-      
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    
-    
-      
-        
-          
-        
-      
-        
-      
-        
-      
-        
-      
-    
-    
-    
-    
-    <li class="md-nav__item md-nav__item--nested">
-      
-        
-        
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_3">
-        
-          
-          <div class="md-nav__link md-nav__container">
-            <a href="../../../test_environments/vagrant/" class="md-nav__link ">
+            <a href="../../test_environments/vagrant/" class="md-nav__link ">
               
   
   
@@ -1318,14 +841,14 @@
             </a>
             
               
-              <label class="md-nav__link " for="__nav_3_3" id="__nav_3_3_label" tabindex="0">
+              <label class="md-nav__link " for="__nav_4_3" id="__nav_4_3_label" tabindex="0">
                 <span class="md-nav__icon md-icon"></span>
               </label>
             
           </div>
         
-        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_3_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_3_3">
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_3">
             <span class="md-nav__icon md-icon"></span>
             
   
@@ -1344,35 +867,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../test_environments/vagrant/testing/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Testing
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../../test_environments/vagrant/manual_vm/" class="md-nav__link">
+      <a href="../../test_environments/vagrant/manual_vm/" class="md-nav__link">
         
   
   
@@ -1400,7 +895,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../test_environments/vagrant/troubleshooting/" class="md-nav__link">
+      <a href="../../test_environments/vagrant/troubleshooting/" class="md-nav__link">
         
   
   
@@ -1452,11 +947,11 @@
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_4">
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_4">
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="../../../test_environments/virtualbox/" class="md-nav__link ">
+            <a href="../../test_environments/virtualbox/" class="md-nav__link ">
               
   
   
@@ -1474,14 +969,14 @@
             </a>
             
               
-              <label class="md-nav__link " for="__nav_3_4" id="__nav_3_4_label" tabindex="0">
+              <label class="md-nav__link " for="__nav_4_4" id="__nav_4_4_label" tabindex="0">
                 <span class="md-nav__icon md-icon"></span>
               </label>
             
           </div>
         
-        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_4_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_3_4">
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_4">
             <span class="md-nav__icon md-icon"></span>
             
   
@@ -1500,7 +995,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../test_environments/virtualbox/troubleshooting/" class="md-nav__link">
+      <a href="../../test_environments/virtualbox/troubleshooting/" class="md-nav__link">
         
   
   
@@ -1563,18 +1058,18 @@
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4">
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5">
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="../../../docstring/" class="md-nav__link ">
+            <a href="../../best_practice/" class="md-nav__link ">
               
   
   
   <span class="md-ellipsis">
     
   
-    Docstring
+    Best Practices
   
 
     
@@ -1585,18 +1080,18 @@
             </a>
             
               
-              <label class="md-nav__link " for="__nav_4" id="__nav_4_label" tabindex="0">
+              <label class="md-nav__link " for="__nav_5" id="__nav_5_label" tabindex="0">
                 <span class="md-nav__icon md-icon"></span>
               </label>
             
           </div>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_4">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
             <span class="md-nav__icon md-icon"></span>
             
   
-    Docstring
+    Best Practices
   
 
           </label>
@@ -1611,14 +1106,14 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../docstring/unicode/" class="md-nav__link">
+      <a href="../../best_practice/patterns/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    Unicode Glyphs
+    Patterns
   
 
     
@@ -1639,14 +1134,14 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../docstring/task/" class="md-nav__link">
+      <a href="../../best_practice/style_guide/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    Tasks
+    Style Guide
   
 
     
@@ -1667,14 +1162,14 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../docstring/variable/" class="md-nav__link">
+      <a href="../../best_practice/testing/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    Variables
+    Testing
   
 
     
@@ -1691,6 +1186,33 @@
           </ul>
         </nav>
       
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../troubleshooting/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    General Troubleshooting
+  
+
+    
+  </span>
+  
+  
+
+      </a>
     </li>
   
 
@@ -1722,10 +1244,10 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
       
         <li class="md-nav__item">
-  <a href="#configure-workspace" class="md-nav__link">
+  <a href="#testing-in-roles-uses-old-files" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Configure Workspace
+        Testing in roles uses old files
       
     </span>
   </a>
@@ -1733,10 +1255,43 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#set-alternative-container-storage-location-optional" class="md-nav__link">
+  <a href="#unable-to-determine-context-for-the-following-test-targets" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Set alternative container storage location (optional)
+        Unable to determine context for the following test targets
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#only-localhost-is-available" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Only Localhost is Available
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#fixing-gplv3-license-missing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Fixing GPLv3 License Missing
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#reference" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Reference
       
     </span>
   </a>
@@ -1768,10 +1323,10 @@
   
   
     <li class="md-path__item">
-      <a href="../../.." class="md-path__link">
+      <a href="../.." class="md-path__link">
         
   <span class="md-ellipsis">
-    Purpose
+    Ansible
   </span>
 
       </a>
@@ -1785,37 +1340,11 @@
   
     
     
-      
-  
-  
-    
-    
       <li class="md-path__item">
         <a href="../" class="md-path__link">
           
   <span class="md-ellipsis">
-    Ansible
-  </span>
-
-        </a>
-      </li>
-    
-  
-
-    
-  
-
-      
-        
-  
-  
-    
-    
-      <li class="md-path__item">
-        <a href="../" class="md-path__link">
-          
-  <span class="md-ellipsis">
-    Environment
+    Collections
   </span>
 
         </a>
@@ -1834,7 +1363,7 @@
 
 
   
-    <a href="https://github.com/r-pufky/ansible_docs/edit/main/docs/ansible/environment/vscodium.md" title="Edit this page" class="md-content__button md-icon" rel="edit">
+    <a href="https://github.com/r-pufky/ansible_docs/edit/main/docs/collection/troubleshooting.md" title="Edit this page" class="md-content__button md-icon" rel="edit">
       
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20H6V4h7v5h5v3.1l2-2V8l-6-6H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h4zm10.2-7c.1 0 .3.1.4.2l1.3 1.3c.2.2.2.6 0 .8l-1 1-2.1-2.1 1-1c.1-.1.2-.2.4-.2m0 3.9L14.1 23H12v-2.1l6.1-6.1z"></path></svg>
     </a>
@@ -1842,95 +1371,89 @@
   
 
 
-<h1 id="vscodium-vscode">VSCodium (VScode)</h1>
-<p>Install <a href="https://marketplace.visualstudio.com/items?itemName=redhat.ansible">Ansible extension</a></p>
-<h2 id="configure-workspace">Configure Workspace</h2>
-<p>ansible ➔ settings ➔ user ➔ workspace</p>
-<table>
-<thead>
-<tr>
-<th>Option</th>
-<th>Setting</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Ansible: Path</td>
-<td>/var/venv/{REPO}/bin/ansible</td>
-</tr>
-<tr>
-<td>Ansible: Use Fully Qualified Collection Names</td>
-<td>✔</td>
-</tr>
-<tr>
-<td>Ansible: Reuse Terminal</td>
-<td>✔</td>
-</tr>
-<tr>
-<td>Python: Interpreter Path</td>
-<td>/var/venv/{REPO}/bin/python</td>
-</tr>
-<tr>
-<td>Python: Activation Script</td>
-<td>/var/git/{REPO}/ansible.env</td>
-</tr>
-<tr>
-<td>Ansible: Navigator Path</td>
-<td>ansible-navigator</td>
-</tr>
-<tr>
-<td>Completion: Provide Redirect Modules</td>
-<td>✔</td>
-</tr>
-<tr>
-<td>Completion: Provide Module Option Aliases</td>
-<td>✔</td>
-</tr>
-<tr>
-<td>Validation: Enabled</td>
-<td>✔</td>
-</tr>
-<tr>
-<td>Lint: Enabled</td>
-<td>✔</td>
-</tr>
-<tr>
-<td>Lint: Path</td>
-<td>ansible-lint</td>
-</tr>
-<tr>
-<td>Execution Environment: Container Engine</td>
-<td>auto</td>
-</tr>
-<tr>
-<td>Execution Environment: Image</td>
-<td>ghcr.io/ansible/community-ansible-dev-tools:latest</td>
-</tr>
-<tr>
-<td>Pull: Policy</td>
-<td>missing</td>
-</tr>
-<tr>
-<td>Telemetry: Enabled</td>
-<td>✘</td>
-</tr>
-<tr>
-<td>Lightspeed: Enabled</td>
-<td>✘</td>
-</tr>
-</tbody>
-</table>
-<div class="admonition tip">
-<p>Disable <code>ansible-lint</code> for documentation to prevent incorrect YAML error reporting.</p>
-<p>Extensions ➔ Ansible ➔ Settings ➔ Folder
-</p><pre class="highlight"><code class="language-yaml">ansible.validation.lint.enabled: false</code></pre><p></p>
+<h1 id="troubleshooting">Troubleshooting</h1>
+<h2 id="testing-in-roles-uses-old-files">Testing in roles uses old files</h2>
+<p>Collection cache is outdated.</p>
+<p>Clear build cache.
+</p><pre class="highlight"><code class="language-bash">rm -rfv ~/.ansible/collections/ansible_collections/r_pufky/srv</code></pre><p></p>
+<h2 id="unable-to-determine-context-for-the-following-test-targets">Unable to determine context for the following test targets</h2>
+<p>A controller and a target were not specified when running the test.</p>
+<div class="admonition danger">
+<pre class="highlight"><code class="language-log">WARNING: Unable to determine context for the following test targets, they will
+be run on the target host: {MODULE}, {MODULE}, they will be run on the target
+host: {MODULE}, {MODULE}</code></pre>
 </div>
-<h2 id="set-alternative-container-storage-location-optional">Set alternative container storage location (optional)</h2>
-<p>Developing ansible will thrash disk especially running ansible-lint after every
-file save. Relocate high-use directories to a disk that can handle
-high wear. Prefer to config change as this enables vanilla use.</p>
-<pre class="highlight"><code class="language-bash"># delete or move existing cache data.
-ln -s /mnt/cache/config/VSCodium ${HOME}/.config/VSCodium</code></pre>
+<p>This is OK for tests that are run on localhost with NO impact on system (e.g.
+filters).</p>
+<h2 id="only-localhost-is-available">Only Localhost is Available</h2>
+<p>Host inventory not detected when running collection tests.</p>
+<div class="admonition danger">
+<pre class="highlight"><code class="language-bash">ansible-playbook roles/hello_motd/tests/playbook/test_hello_motd.yml
+...
+  [WARNING]: No inventory was parsed, only implicit localhost is available
+  [WARNING]: provided hosts list is empty, only localhost is available. Note
+  that the implicit localhost does not match 'all'</code></pre>
+</div>
+<p>Explicitly specify inventory to use.
+</p><pre class="highlight"><code class="language-bash">ansible-playbook -i tests/inventory tests/playbook/test_hello_motd.yml</code></pre><p></p>
+<div class="admonition tip">
+<p class="admonition-title"><strong>--ask-become-pass</strong> will be needed if sudo used or use GPG key injection.</p>
+</div>
+<h2 id="fixing-gplv3-license-missing">Fixing GPLv3 License Missing</h2>
+<p>Community distributions assumes GPLv3.</p>
+<p>Explicitly ignore if different license.
+</p><pre class="highlight"><code class="language-bash">mkdir -p tests/sanity
+touch tests/sanity/ignore-{ANSIBLE VERSION}.txt
+
+touch tests/sanity/ignore-2.16.txt</code></pre><p></p>
+<div class="admonition warning">
+<p class="admonition-title">An ignore file is required for each specific <strong>version</strong> of ansible.</p>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p><strong>Order Matters</strong>: if ignores are throwing warnings, check ordering and
+make sure they are ordered correctly. Proper ignores will <strong>not</strong> generate
+warnings.</p>
+</div>
+<div class="admonition info">
+<p class="admonition-title">Info</p>
+<p>Only certain ignores are explicitly allowed; others will always throw
+ansible-lint errors even if ignored.</p>
+</div>
+<p>tests/sanity/ignore-2.16.txt
+</p><pre class="highlight"><code>plugins/modules/demo_hello.py compile-2.7!skip
+plugins/modules/demo_hello.py import-2.7!skip
+plugins/modules/demo_hello.py compile-3.6!skip
+plugins/modules/demo_hello.py import-3.6!skip
+plugins/modules/demo_hello.py compile-3.7!skip
+plugins/modules/demo_hello.py import-3.7!skip
+plugins/modules/demo_hello.py compile-3.8!skip
+plugins/modules/demo_hello.py import-3.8!skip
+plugins/modules/demo_hello.py compile-3.9!skip
+plugins/modules/demo_hello.py import-3.9!skip
+plugins/modules/demo_hello.py compile-3.10!skip
+plugins/modules/demo_hello.py import-3.10!skip
+plugins/modules/demo_hello.py compile-3.12!skip
+plugins/modules/demo_hello.py import-3.12!skip
+plugins/modules/demo_hello.py validate-modules:missing-gplv3-license</code></pre><p></p>
+<h2 id="reference">Reference<sup id="fnref:1"><a class="footnote-ref" href="#fn:1">1</a></sup><sup id="fnref:2"><a class="footnote-ref" href="#fn:2">2</a></sup><sup id="fnref:3"><a class="footnote-ref" href="#fn:3">3</a></sup><sup id="fnref:4"><a class="footnote-ref" href="#fn:4">4</a></sup></h2>
+<div class="footnote">
+<hr>
+<ol>
+<li id="fn:1">
+<p><a href="https://github.com/ansible/ansible/issues/67032">https://github.com/ansible/ansible/issues/67032</a>&nbsp;<a class="footnote-backref" href="#fnref:1" title="Jump back to footnote 1 in the text">↩</a></p>
+</li>
+<li id="fn:2">
+<p><a href="https://docs.ansible.com/ansible/latest/dev_guide/testing/sanity/ignores.html">https://docs.ansible.com/ansible/latest/dev_guide/testing/sanity/ignores.html</a>&nbsp;<a class="footnote-backref" href="#fnref:2" title="Jump back to footnote 2 in the text">↩</a></p>
+</li>
+<li id="fn:3">
+<p><a href="https://docs.ansible.com/ansible/latest/dev_guide/testing/sanity/validate-modules.html">https://docs.ansible.com/ansible/latest/dev_guide/testing/sanity/validate-modules.html</a>&nbsp;<a class="footnote-backref" href="#fnref:3" title="Jump back to footnote 3 in the text">↩</a></p>
+</li>
+<li id="fn:4">
+<p><a href="https://ansible.readthedocs.io/projects/lint/rules/sanity/">https://ansible.readthedocs.io/projects/lint/rules/sanity/</a>&nbsp;<a class="footnote-backref" href="#fnref:4" title="Jump back to footnote 4 in the text">↩</a></p>
+</li>
+</ol>
+</div>
 
 
 
@@ -1953,7 +1476,7 @@ ln -s /mnt/cache/config/VSCodium ${HOME}/.config/VSCodium</code></pre>
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"></path></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="November 6, 2025 05:47:17 UTC">November 6, 2025</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="March 9, 2026 16:29:18 UTC">March 9, 2026</span>
   </span>
 
     
@@ -2062,16 +1585,16 @@ ln -s /mnt/cache/config/VSCodium ${HOME}/.config/VSCodium</code></pre>
     
       
       
-      <script id="__config" type="application/json">{"annotate": null, "base": "../../..", "features": ["navigation.instant", "navigation.instant.prefetch", "navigation.instant.progress", "navigation.tracking", "navigation.path", "navigation.indexes", "navigation.top", "search.suggest", "search.highlight", "toc.follow", "header.autohide", "content.action.edit", "content.footnote.tooltips"], "search": "../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.instant", "navigation.instant.prefetch", "navigation.instant.progress", "navigation.tracking", "navigation.path", "navigation.indexes", "navigation.top", "search.suggest", "search.highlight", "toc.follow", "header.autohide", "content.action.edit", "content.footnote.tooltips"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
     
     
-      <script src="../../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      <script src="../../assets/javascripts/bundle.79ae519e.min.js"></script>
       
         <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/highlight.min.js"></script>
       
         <script src="https://unpkg.com/tablesort@5.3.0/dist/tablesort.min.js"></script>
       
-        <script src="../../../_material/init.js"></script>
+        <script src="../../_material/init.js"></script>
       
     
   
