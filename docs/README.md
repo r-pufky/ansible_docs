@@ -233,6 +233,12 @@ ln -s /mnt/cache/config/VSCode ${HOME}/.config/VSCode
 ls -s /mnt/cache/local/share/containers ${HOME}/.local/share/containers  # graph.
 ln -s /mnt/cache/cache/containers ${HOME}/.cache/containers  # config.
 ln -s /mnt/cache/storage /var/lib/containers/storage  # graph.
+# Redirect Vagrant.
+ls -s /mnt/cache/local/share/containers ${HOME}/.local/share/containers
+```
+
+
+
 ```
 
 

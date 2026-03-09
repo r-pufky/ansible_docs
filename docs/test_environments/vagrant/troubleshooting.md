@@ -1,24 +1,23 @@
 # Troubleshooting
 
-## Driver vagrant does not provide a schema
+!!! info ""
+    See [molecule](../molecule/testing.md) for specific molecule
+    troubleshooting.
+
+
+## Driver vagrant does not [provide a schema][a]
 Vagrant driver does have a schema and will always generate a warning.
 
-??? danger "Error"
+!!! danger ""
     ``` log
     WARNING Driver vagrant does not provide a schema.
     ```
-Reference:
 
-* https://github.com/ansible/molecule/discussions/4108
-
-!!! info ""
-    Reference discussion lost in ansible consolidation to
-    https://forum.ansible.com.
 
 ## A Vagrant environment or target machine is required to run this command
 Virtualbox kernel modules are likely not loaded.
 
-??? danger "Error"
+!!! danger ""
     ``` log
     A Vagrant environment or target machine is required to run this
     command. Run 'vagrant init' to create a new Vagrant environment. Or,
@@ -28,14 +27,24 @@ Virtualbox kernel modules are likely not loaded.
     ```
 
 Install kernel modules.
-``` bash
-mhwd-kernel -l
-pamac install linux{KERNEL}-virtualbox-host-modules
-systemctl reboot
-```
+=== "Arch"
 
-Confirm each command works.
+    ``` bash
+    pacman -Q | grep linux
+    pacman -S linux-{KERNEL}-virtualbox-host-modules
+    systemctl reboot
+    ```
+
+=== "Debian"
+
+    ``` bash
+    dpkg -l | grep linux-image | grep ii
+    apt install linux-image-amd64 linux-headers-amd64
+    systemctl reboot
+    ```
+
 ``` bash
+# Confirm each command works.
 vboxmanage --version  # Executable with modules loaded.
 > 7.1.4r165100  # Installed version.
 vagrant global-status
@@ -46,7 +55,7 @@ vagrant up --provider virtualbox  # Provides details why it is not running.
 Molecule test fails during create due to vagrant path length limitation (see
 underlying virtualization manager).
 
-??? danger "Error"
+!!! danger ""
     ``` bash
     fatal: [localhost]: FAILED! => {
         "changed": false,
@@ -75,9 +84,17 @@ underlying virtualization manager).
     Failed to start the VM(s): See log file '.../vagrant.err'
     ```
 
+!!! info "Molecule creates a VM name using"
+    * Molecule test name: **my_test**
+    * Molecule image test name: **test-case-vm**
+    * Image box name: **inception-of-things-trixie**
+    * OS used: **debian**
+    * Network: **private_network**
+    * Random UUID hash: **36 characters**
+
 Use shorter component names:
 
-* VM instance name in `molecule.yml`.
+* VM instance name in **molecule.yml**.
 * Rename molecule test to shorter name.
 * Extreme cases may require cloning repo with a shorter root repository name.
 
@@ -90,16 +107,8 @@ platforms:
       - network_name: 'private_network'
 ```
 
-Molecule creates a VM name combining:
 
-* Molecule test name (`my_test`).
-* Molecule image test name (`test-case-vm`).
-* Image box name (`inception-of-things-trixie`).
-* OS used (`debian`).
-* Network (`private_network`).
-* Random UUID hash (36 characters).
-
-## Failed to lock apt for exclusive operation
+## Failed to [lock apt for exclusive operation][b]
 Debian VirtualBox VM uses root to configure and test the instance. All Molecule
 setup/teardown steps require root user.
 
@@ -111,14 +120,12 @@ setup/teardown steps require root user.
   # ansible user after VM turnup to apply ansible tasks.
   become: true
 ```
-Reference:
 
-* https://stackoverflow.com/questions/33563425/ansible-1-9-4-failed-to-lock-apt-for-exclusive-operation
 
 ## Failed to start the VM(s)
 Virtualbox may fail due to system constraints.
 
-??? danger "Error"
+!!! danger ""
     ``` bash
     PLAY [Create] ******************************************************************
     fatal: [localhost]: FAILED! => {
@@ -149,30 +156,29 @@ Virtualbox may fail due to system constraints.
     Failed to start the VM(s): See log file '.../vagrant.err'
     ```
 
-Re-run test.
 ``` bash
+# Re-run test.
 molecule test --scenario-name={TEST}
 ```
 
 ## Flaky VM
 A previous molecule test likely not cleaned up properly.
 
-Clean all VMs and re-run.
 ``` bash
+# Clean all VMs and re-run.
 vagrant global-status
 vagrant destroy {ID}
 vagrant box list
 vagrant box destroy {ID}
 ```
 
-!!! tip
-    Check GUI for additional VMs if needed.
+!!! tip "Check GUI for additional VMs if needed."
 
 
-## ERROR! couldn't resolve module/action 'vagrant'
-Molecule **25.2.0** is a bad release that broke vagrant modules.
+## ERROR! couldn't [resolve module/action 'vagrant'][c]
+Molecule **25.2.0+** is a bad release that broke vagrant modules.
 
-??? danger "Error"
+!!! danger ""
     ``` bash
     molecule create
     > WARNING  Driver vagrant does not provide a schema.
@@ -194,19 +200,35 @@ Molecule **25.2.0** is a bad release that broke vagrant modules.
     >       ^ here
     ```
 
-Install Molecule **25.1.0** as a temporary workaround.
-``` bash
-pip install --force-reinstall -v 'molecule==25.1.0'
-```
-Reference:
+!!! warning "Install Molecule **25.1.0** as a temporary workaround."
+    This is only a temporary solution until alternatives are found. Molecule
+    developers quite frankly shit out a half-form glob, tosseed it over the
+    fence, yelled fuck you, and walked away. Most consumers of Molecule have
+    locked to 25.1 as the workarounds are ineffective or created a [ton of
+    unnecessary churn][c].
 
-* https://github.com/ansible-community/molecule-plugins/issues/301
+    This is a serious breakage with an extreme lack of reponse from developers.
+
+    ``` bash
+    pip install --force-reinstall -v 'molecule==25.1.0'
+    ```
+
+!!! info "Potential Resolutions"
+    * [Main issue][c]
+    * [direnv workaround][d]
+    * [Developers abandoning Molecule updates][e]
+    * [Potential workaround][f]
+    * [Potential workaround][g]
+    * [Developer response][h]
+    * [Script to generate previous molecule environment][i]
+    * [opentofu stopped molecule updates][j]
+
 
 ## Permission denied (publickey,password)
 Verify permissions are correct and keys are loaded from the correct location.
 Applies to [Manual VM](manual_vm.md) only.
 
-??? danger "Error"
+!!! danger ""
     ``` bash
     TASK [Install packages] ********************************************************
     included: {ROLE} for 10.2.2.39
@@ -218,24 +240,37 @@ Applies to [Manual VM](manual_vm.md) only.
     root@10.2.2.39: Permission denied (publickey,password).
     ```
 
-Confirm keys are set correctly in VM
 ``` bash
+# Confirm keys are set correctly in VM.
 ls -l id.*
 > 0400 {USER}:{USER} id.*
 ```
 
-Add debug line in converge to confirm key is located correctly
-converge.yml
-``` yaml
-- ansible.builtin.debug:
-    msg: '{{ ansible_ssh_private_key_file }}'
-```
+!!! abstract "converge.yml"
+    0644 {USER}:{USER}
+
+    ``` yaml
+    # Add debug line in converge to confirm key is located correctly
+    - ansible.builtin.debug:
+        msg: '{{ ansible_ssh_private_key_file }}'
+    ```
 
 ## VM moved or not registered
-Register VM - VMs must be registered to start in VirtualBox. Applies to
+VMs must be registered to start in VirtualBox. Applies to
 [Manual VM](manual_vm.md) only.
 
 ``` bash
 vboxmanage registervm \
   /home/{USER}/VirtualBox\ VMs/debian-12-efi-template/debian-12-efi-template.vbox
 ```
+
+[a]: https://github.com/ansible/molecule/discussions/4108
+[b]: https://stackoverflow.com/questions/33563425/ansible-1-9-4-failed-to-lock-apt-for-exclusive-operation
+[c]: https://github.com/ansible-community/molecule-plugins/issues/301
+[d]: https://github.com/ansible-community/molecule-plugins/issues/301#issuecomment-3687957567
+[e]: https://github.com/dev-sec/ansible-collection-hardening/pull/849
+[f]: https://github.com/ansible/molecule/pull/4380
+[g]: https://github.com/cisagov/skeleton-ansible-role/pull/221/changes
+[h]: https://docs.ansible.com/projects/dev-tools/user-guide/test-isolation
+[i]: https://github.com/konstruktoid/ansible-role-hardening/blob/master/generate_molecule_env.sh
+[j]: https://github.com/diodonfrost/ansible-role-opentofu/commit/b06e2850c4dea0054570033d231bc35c28d7245b
