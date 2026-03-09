@@ -3,7 +3,7 @@
 
 ## New Collection
 
-!!! tip ""
+!!! tip
     Recommend copying an existing collection, updating, and removing unused
     options.
 
@@ -99,7 +99,7 @@ ansible-test {unit,integration,sanity}
 
     [yamllint][e] and [ansible-lint][f] documentation.
 
-2. Update [submodules](../role/README.md#update-and-commit).
+2. Update [submodules](../role.md#commits).
 3. Update [**galaxy.yml**][g].
 
     !!! abstract "galaxy.yml"

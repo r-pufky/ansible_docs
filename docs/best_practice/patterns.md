@@ -1,9 +1,10 @@
-# Troubleshooting
+# Patterns
 
-## Remote filesystem permission check causes stackdump
-Explicitly test remote file before applying file changes.
+## Test remote filesystem permissions
+Remote filesystem permission check causes stackdump for specific remote mounted
+filesystems. Explicitly test remote file before applying file changes.
 
-Settings permissions via octal (0755) vs symbolic (u=,g=,o=...) results in
+Settings permissions via octal **0755** vs symbolic **u=,g=,o=...** results in
 plowing file permissions without checking first.
 
 Remote filesystems typically do not have the same or allow the root user to
@@ -12,9 +13,8 @@ plow those file permissions (e.g. NFS squashed root or containers). Becoming
 locking the task out of modifying permissions even if NO change is required.
 
 This results in ansible stack dumps that are hard to debug due to multiple
-system layers on top of vague error messaging from ansible, when simply
-setting file permissions (especially when it is pre-existing with correct
-permissions).
+system layers on top of vague error messaging from ansible during simple file
+permission setting (especially when pre-existing with correct permissions).
 
 ``` yaml
 # Args:
@@ -63,8 +63,8 @@ are written to temp file with exclusive disabled, then moved into place,
 preventing infinite duplicate key growth in configs.
 
 This should only be used for INI files meeting this specific case; standard
-cases should ALWAYS use community.general.ini_file directly in configuration
-tasks.
+cases should ALWAYS use **community.general.ini_file** directly in
+configuration tasks.
 
 ``` yaml
 # Args:

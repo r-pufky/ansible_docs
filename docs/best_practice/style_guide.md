@@ -17,7 +17,7 @@ Continue long lines with breaks. Prefer human readability.
         forgejo_config_server_ssh_trusted_user_ca_keys_filename
       }}',
 
-# A vertical space with automatically disable jinja[spacing] test.
+# A vertical space will automatically disable jinja[spacing] test.
 - ansible.builtin.set_fact:
     data_annotation: "{{ {} | r_pufky.data.v3(
 
@@ -37,8 +37,7 @@ Continue long lines with breaks. Prefer human readability.
 
 
 ## Accepted Lint Disables
-Minimize disable impact preferring to keep to isolated space. Never use global
-lint disables for a project.
+Isolate disable impact. Never use global lint disables for a project.
 
 ``` yaml
 ---

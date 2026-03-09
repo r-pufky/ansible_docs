@@ -21,9 +21,7 @@ nav:
   - 'Collections':
       - 'collection/README.md'
       - 'collection/troubleshooting.md'
-  - 'Roles':
-      - 'role/README.md'
-      - 'role/troubleshooting.md'
+  - 'Roles': 'role.md'
   - 'Testing':
       - 'Molecule':
           - 'test_environments/molecule/README.md'
@@ -44,6 +42,7 @@ nav:
           - 'test_environments/virtualbox/troubleshooting.md'
   - 'Best Practices':
       - 'best_practice/README.md'
+      - 'best_practice/patterns.md'
       - 'best_practice/style_guide.md'
   - 'troubleshooting.md'
 
