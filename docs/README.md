@@ -5,8 +5,8 @@ follow these guidelines.
 
 
 ## Environment Configuration
-!!! tip "Decision: Use isolated minimal environments"
-    All collections and roles assume environment is created and active.
+!!! info "Decision: Use isolated minimal environments"
+    All collections and roles **assume** environment is created and active.
 
 Each collection is configured using **direnv** to automatically setup an
 isolated minimal environment to minimize hidden dependencies. Environments are

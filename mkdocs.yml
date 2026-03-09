@@ -20,9 +20,6 @@ nav:
   - 'README.md'
   - 'Collections':
       - 'collection/README.md'
-      - 'collection/testing.md'
-      - 'collection/commit.md'
-      - 'collection/release.md'
       - 'collection/troubleshooting.md'
   - 'Roles':
       - 'role/README.md'
