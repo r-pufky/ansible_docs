@@ -1,7 +1,6 @@
 # Manual VM Creation
 
 !!! info "Prerequisites"
-    * [Ansible Environment](../../ansible/environment/README.md).
     * [VirtualBox](../virtualbox/README.md).
     * [Vagrant](../vagrant/README.md).
 

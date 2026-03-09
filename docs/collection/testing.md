@@ -1,8 +1,4 @@
 # Testing
-
-!!! info "Prerequisites"
-    * [Ansible Environment](../environment/README.md).
-
 Use community references for examples on specific implementations:
 
 * [Filter Plugins](https://github.com/ansible-collections/community.general/blob/main/tests/unit/plugins/filter/test_json_patch.py)

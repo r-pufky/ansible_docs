@@ -1,7 +1,6 @@
 # Role Developemnt
 
 !!! info "Prerequisites"
-    * [Ansible Environment](../environment/README.md).
     * [Collection Created](../collection/README.md).
 
 ## Create New Role

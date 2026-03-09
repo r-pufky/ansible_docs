@@ -18,23 +18,18 @@ remote_name: 'origin'
 
 nav:
   - 'README.md'
-  - 'Ansible':
-      - 'Environment':
-          - 'ansible/environment/README.md'
-          - 'ansible/environment/vscodium.md'
-      - 'Collection Development':
-          - 'ansible/collection/README.md'
-          - 'ansible/collection/testing.md'
-          - 'ansible/collection/commit.md'
-          - 'ansible/collection/release.md'
-          - 'ansible/collection/troubleshooting.md'
-      - 'Role Development':
-          - 'ansible/role/README.md'
-          - 'ansible/role/best_practices.md'
-          - 'ansible/role/style_guide.md'
-          - 'ansible/role/troubleshooting.md'
-      - 'ansible/troubleshooting.md'
-  - 'Test Environments':
+  - 'Collections':
+      - 'collection/README.md'
+      - 'collection/testing.md'
+      - 'collection/commit.md'
+      - 'collection/release.md'
+      - 'collection/troubleshooting.md'
+  - 'Roles':
+      - 'role/README.md'
+      - 'role/best_practices.md'
+      - 'role/style_guide.md'
+      - 'role/troubleshooting.md'
+  - 'Testing':
       - 'Molecule':
           - 'test_environments/molecule/README.md'
           - 'test_environments/molecule/best_practices.md'
@@ -52,11 +47,12 @@ nav:
       - 'VirtualBox':
           - 'test_environments/virtualbox/README.md'
           - 'test_environments/virtualbox/troubleshooting.md'
-  - 'Docstring':
+  - 'Docstrings':
       - 'docstring/README.md'
       - 'docstring/unicode.md'
       - 'docstring/task.md'
       - 'docstring/variable.md'
+  - 'troubleshooting.md'
 
 extra:
   social:

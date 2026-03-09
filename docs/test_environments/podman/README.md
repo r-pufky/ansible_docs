@@ -1,8 +1,5 @@
 # Podman Setup
 
-!!! info "Prerequisites"
-    * [Ansible Environment](../../ansible/environment/README.md).
-
 !!! success "Default Testing Platform"
     Rootless podman environment is used to test **all** cases unless there are
     required bare-metal cases (See [Vagrant](../vagrant/README.md)).

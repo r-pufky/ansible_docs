@@ -3,7 +3,6 @@ Use podman as it is a full systemd container and does not have many of the
 issues (including network issues) that docker does.
 
 !!! info "Prerequisites"
-    * [Ansible Environment](../../ansible/environment/README.md).
     * [Podman](README.md) - Primary test framework.
 
 ## System Images Used

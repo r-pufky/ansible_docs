@@ -1,4 +1,4 @@
-# Troubleshooting
+# General Troubleshooting
 
 ## Remove Submodule
 Usually after a bad initial creation or weird sync state.

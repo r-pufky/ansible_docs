@@ -1,7 +1,6 @@
 # Testing
 
 !!! info "Prerequisites"
-    * [Ansible Environment](../../ansible/environment/README.md).
     * [Podman](../podman/README.md) - Primary test framework.
     * [Vagrant](../vagrant/README.md) - Secondary test framework.
     * [Molecule Setup](README.md).

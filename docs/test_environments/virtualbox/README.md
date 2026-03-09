@@ -1,8 +1,5 @@
 # VirtualBox Setup
 
-!!! info "Prerequisites"
-    * [Ansible Environment](../../ansible/environment/README.md).
-
 !!! warning "Explicit Need Only"
     VirtualBox VMs are **ONLY** used to test cases which cannot be tested
     in containers (kernel, firmware, proc, systemd, networking, etc) these

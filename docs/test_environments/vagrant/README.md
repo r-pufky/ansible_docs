@@ -1,7 +1,6 @@
 # Vagrant Setup
 
 !!! info "Prerequisites"
-    * [Ansible Environment](../../ansible/environment/README.md).
     * [VirtualBox](../virtualbox/README.md).
 
 !!! warning "Explicit Need Only"

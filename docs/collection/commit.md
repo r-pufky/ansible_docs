@@ -1,7 +1,5 @@
 # Commit Checks
 
-!!! info "Prerequisites"
-    * [Ansible Environment](../environment/README.md).
 
 ## Ensure all TODOs are valid
 ``` bash
