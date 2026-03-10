@@ -12,7 +12,7 @@ repo_url: 'https://github.com/r-pufky/ansible_docs'
 site_url: 'https://github.com/r-pufky/ansible_docs'
 edit_uri: 'edit/main/docs'
 site_author: 'r-pufky'
-copyright: '©2025'
+copyright: '©2026'
 remote_branch: 'gh-pages'
 remote_name: 'origin'
 
@@ -33,9 +33,9 @@ nav:
           - 'test_environments/vagrant/README.md'
           - 'test_environments/vagrant/manual_vm.md'
           - 'test_environments/vagrant/troubleshooting.md'
-      - 'VirtualBox':
-          - 'test_environments/virtualbox/README.md'
-          - 'test_environments/virtualbox/troubleshooting.md'
+      - 'libvirt':
+          - 'test_environments/libvirt/README.md'
+          - 'test_environments/libvirt/troubleshooting.md'
   - 'Best Practices':
       - 'best_practice/README.md'
       - 'best_practice/patterns.md'

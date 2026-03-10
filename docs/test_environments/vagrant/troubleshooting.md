@@ -217,11 +217,17 @@ Molecule **25.2.0+** is a bad release that broke vagrant modules.
     * [Main issue][c]
     * [direnv workaround][d]
     * [Developers abandoning Molecule updates][e]
-    * [Potential workaround][f]
+    * [Developer merged pull][f]
     * [Potential workaround][g]
     * [Developer response][h]
     * [Script to generate previous molecule environment][i]
     * [opentofu stopped molecule updates][j]
+
+
+# TODO - update with default user/pass, ssh user/pass, and links to public keys.
+
+
+debian package: root/vagrant.  SSH only with vagrant/vagrant user w/ public key.
 
 
 ## Permission denied (publickey,password)

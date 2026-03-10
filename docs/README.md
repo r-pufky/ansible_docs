@@ -13,26 +13,42 @@ isolated minimal environment to minimize hidden dependencies. Environments are
 configured at the collection level and used within the role submodules.
 
 ### Local Packages
-Local package must be installed to activate environment. Standard Ansible
-testing infrastructure: molecule, podman, vagrant, uv, direnv.
+Local package must be installed to activate environment. Standard testing
+infrastructure: ansible, molecule, podman, vagrant, libvirt, uv, direnv.
 
 === "Arch"
 
     ``` bash
-    # Auto configure virtual environments.
+    # Auto configure virtual environments, podman, vagrant.
     pacman -S direnv libuv podman crun vagrant
     direnv allow
+
+    # libvirt, KVM/QEMU Driver.
+    pacman -S libvirt virt-manager qemu-base
+
+    # VM support: NAT/DHCP, IPtables w/ NFtables bridge, netcat for SSH.
+    pacman -S dnsmasq iptables-nft openbsd-netcat
     ```
 
 === "Debian"
 
     ``` bash
+    # Auto configure virtual environments, podman, vagrant.
     curl -LsSf https://astral.sh/uv/install.sh | sh
     apt install direnv podman crun vagrant
     direnv allow
+
+    # libvirtd, virsh & UI Manager.
+    apt install libvirt virt-manager libvirt-daemon-system libvirt-clients
+
+    # KVM/QEMU Driver.
+    apt install qemu-kvm
+
+    # VM support: NAT/DHCP, IPtables w/ NFtables bridge, netcat for SSH.
+    apt install bridge-utils dnsmasq-base iptables-nft
     ```
 
-#### Package Configuration
+### Package Configuration
 
 === "[Rootless Podman][d]"
     An entry must exist for each user that wants to use rootless podman. Modern
@@ -83,6 +99,115 @@ testing infrastructure: molecule, podman, vagrant, uv, direnv.
     ``` bash
     podman system reset
     podman system migrate
+    ```
+
+=== "[Vagrant][h]"
+
+    ``` bash
+    # Enable libvirt plugins.
+    vagrant plugin install vagrant-libvirt
+    ```
+
+=== "[libvirt][i]"
+    Enable [default use of libvirtd (system)][n] for users in libvirt group
+    without password. Use [PolicyKit][j] for group based access to run VMs.
+    Alternatively [use unix sockets][k].
+
+    !!! abstract "/etc/libvirt/libvirtd.conf"
+        0644 root:root
+
+        ``` bash
+        auth_unix_ro = "polkit"
+        auth_unix_rw = "polkit"
+        ```
+
+    !!! abstract "/etc/polkit-1/rules.d/50-libvirt.rules"
+        0644 root:root
+
+        ``` js
+        // Allow users in libvirt group to manage the libvirt system daemon without authentication.
+        polkit.addRule(function(action, subject) {
+            if (action.id == "org.libvirt.unix.manage" &&
+                subject.isInGroup("libvirt")) {
+                    return polkit.Result.YES;
+            }
+        });
+        ```
+    ``` bash
+    # Add user to VM access groups.
+    sudo usermod -aG libvirt,libvirt-qemu,kvm $(whoami)
+
+    # Enable libvirtd. PolicyKit changes require reboot.
+    systemctl enable --now libvirtd
+    reboot
+    ```
+
+    Use [qemu:///system][l] as default hypervisor driver.
+
+    !!! abstract "~/.config/libvirt/libvirt.conf"
+        0644 root:root
+
+        ``` ini
+        # Users will use qemu:///session which runs libvirtd with current user
+        # permissions resulting in obtuse networking VM limitations.
+        #
+        # /etc/libvirt/libvirt.conf is only read in root user context.
+        #
+        # ansible.env: export LIBVIRT_DEFAULT_URI=qemu:///system
+        uri_default = "qemu:///system"
+        ```
+
+    ``` bash
+    # Confirm system, session, and defaults work.
+    virsh -c qemu:///system
+    virsh -c qemu:///session
+    virsh
+
+    > Welcome to virsh, the virtualization interactive terminal.
+    >
+    > Type:  'help' for help with commands
+    >        'quit' to qui
+    >
+    > virsh #
+    ```
+
+    Use iptables and enable default network.
+
+    !!! info "[libvirtd requires iptables with UFW][m]"
+        libvirt switched to using nftables userspace directly. Immediate
+        workaround is to set libvirt back to iptables backend.
+
+        UFW uses legacy iptables userspace tools and these create shared
+        nftables top level tables. All different applications which use
+        iptables userspace end up in same nftables table.
+
+    !!! abstract "/etc/libvirt/network.conf"
+        0644 root:root
+
+        ``` ini
+        firewall_backend = "iptables"
+        ```
+
+    ``` bash
+    # Confirm both sudo and non-sudo commands report default network.
+    # Both will show information when qemu:///system is loaded correctly with
+    # group membership and policy kit.
+    sudo virsh net-list --all
+    virsh net-list --all
+
+    >  Name      State      Autostart   Persistent
+    > ----------------------------------------------
+    >  default   inactive   no          yes
+
+    # Set autostart and start default network.
+    virsh net-start default
+    virsh net-autostart default
+
+    virsh net-list --all
+
+    >  Name      State    Autostart   Persistent
+    > --------------------------------------------
+    >  default   active   yes         yes
     ```
 
 
@@ -136,7 +261,7 @@ direnv allow
     ###############################################################################
     # Ansible Collection Test Environment Configuration
     ###############################################################################
-    # Create an ansible environment to use. use direnv to auto-load environment or
+    # Create an ansible environment to use. Use direnv to auto-load environment or
     # manually source; then activate venv.
     #
     # Manual:
@@ -195,15 +320,39 @@ direnv allow
     export ANSIBLE_PARAMIKO_RECORD_HOST_KEYS=0  # Ignore host keys.
     export ANSIBLE_REMOTE_TMP='/tmp'  # Use RAMFS tmp, not disk (~/.ansible/tmp).
     export ANSIBLE_SYSTEM_TMPDIRS='/tmp'  # Use RAMFS tmp, not disk (/var/tmp).
+
+    ###############################################################################
+    # Molecule 25.1.0+ Environment Fix
+    ###############################################################################
+    # 25.2.0 removed automatic path configuration for molecule tests. Manually set
+    # Molecule path resolution during environment setup.
+    #
+    # Reference:
+    # * https://github.com/ansible-community/molecule-plugins/issues/301
+    # * https://github.com/ansible/molecule/pull/4380
+    export PYTHON_LIB_PATH="$(python3 -c 'import sysconfig; print(sysconfig.get_paths()["purelib"])')"
+    export ANSIBLE_FILTER_PLUGINS="${PYTHON_LIB_PATH}/molecule/provisioner/ansible/plugins/filter:${HOME}/.ansible/plugins/filter:/usr/share/ansible/plugins/filter"
+    export ANSIBLE_LIBRARY="${PYTHON_LIB_PATH}/molecule/provisioner/ansible/plugins/modules:${PYTHON_LIB_PATH}/molecule_plugins/vagrant/modules:${HOME}/.ansible/plugins/modules:/usr/share/ansible/plugins/modules"
+    export ANSIBLE_ROLES_PATH="$(pwd)/roles:${HOME}/.ansible/roles:/usr/share/ansible/roles:/etc/ansible/roles"
+
+    ###############################################################################
+    # libvirt
+    ###############################################################################
+    # Always use system daemon for VM testing to prevent obtuse issues.
+    #
+    # Reference:
+    # * https://wiki.archlinux.org/title/Libvirt#Configuration
+    export LIBVIRT_DEFAULT_URI='qemu:///system'
     ```
 
-###
 
 ## Redirect ansible caches
 High IOPs cause premature SSD wear and cause false **yamllint**,
 **ansible-lint** errors from [imported collections and roles][b]. Redirection
 allows no changes for production environments while minimizing development
-wear. Consider moving and linking entire .cache directories.
+wear. This also applies to [libvirt][o] and [Podman][p].
+
+Consider moving and linking entire .cache directories.
 
 !!! abstract "/etc/fstab"
     0644 root:root
@@ -221,24 +370,22 @@ mount -o remount -a
 find . -type d -name '.ansible' -exec rm -rf "{}" \; -exec ln -s /tmp/ansible-cache "{}" \;
 
 # Redirect static ansible caches. Delete or move existing cache data.
-ln -s /mnt/cache/.ansible_async ${HOME}/.ansible_async
-ln -s /mnt/cache/.ansible ${HOME}/.ansible
-ln -s /mnt/cache/cache/ansible-compat ${HOME}/.cache/ansible-compat
-ln -s /mnt/cache/cache/molecule ${HOME}/.cache/molecule
-# Redirect VScode variant as needed.
-ln -s "/mnt/cache/config/Code - OSS" "${HOME}/.config/Code - OSS"
-ln -s /mnt/cache/config/VSCodium ${HOME}/.config/VSCodium
-ln -s /mnt/cache/config/VSCode ${HOME}/.config/VSCode
+ln -s /mnt/cache/home/${USER}/.ansible_async ${HOME}/.ansible_async
+ln -s /mnt/cache/home/${USER}/.ansible ${HOME}/.ansible
+ln -s /mnt/cache/home/${USER}/.cache/ansible-compat ${HOME}/.cache/ansible-compat
+ln -s /mnt/cache/home/${USER}/.cache/molecule ${HOME}/.cache/molecule
+# Redirect VScode variants as needed.
+ln -s "/mnt/cache/home/${USER}/.config/Code - OSS" "${HOME}/.config/Code - OSS"
+ln -s /mnt/cache/home/${USER}/.config/VSCodium ${HOME}/.config/VSCodium
+ln -s /mnt/cache/home/${USER}/.config/VSCode ${HOME}/.config/VSCode
 # Redirect Podman.
-ls -s /mnt/cache/local/share/containers ${HOME}/.local/share/containers  # graph.
-ln -s /mnt/cache/cache/containers ${HOME}/.cache/containers  # config.
-ln -s /mnt/cache/storage /var/lib/containers/storage  # graph.
+ls -s /mnt/cache/home/${USER}/.local/share/containers ${HOME}/.local/share/containers  # graph.
+ln -s /mnt/cache/home/${USER}/.cache/containers ${HOME}/.cache/containers  # config.
+ln -s /mnt/cache/var/lib/containers/storage /var/lib/containers/storage  # graph.
 # Redirect Vagrant.
 ls -s /mnt/cache/local/share/containers ${HOME}/.local/share/containers
-```
-
-
-
+# Redirect libvirt.
+ln -s /mnt/cache/var/lib/libvirt /var/lib/libvirt
 ```
 
 
@@ -281,6 +428,7 @@ Install [Ansible extension][c].
 [^1]: https://docs.ansible.com/ansible/latest/roadmap/ansible_roadmap_index.html
 [^2]: https://docs.ansible.com/ansible/2.9/installation_guide/intro_installation.html
 
+
 [a]: https://galaxy.ansible.com/ui/namespaces/r_pufky
 [b]: https://github.com/ansible/ansible-lint/issues/4533
 [c]: https://marketplace.visualstudio.com/items?itemName=redhat.ansible
@@ -288,3 +436,12 @@ Install [Ansible extension][c].
 [e]: https://github.com/systemd/systemd/issues/21952
 [f]: https://halukkarakaya.medium.com/how-to-configure-default-search-registries-in-podman-ea930289692
 [g]: https://github.com/containers/podman/issues/12715
+[h]: https://github.com/vagrant-libvirt/vagrant-libvirt
+[i]: https://libvirt.org
+[j]: https://wiki.archlinux.org/title/Polkit
+[k]: https://wiki.archlinux.org/title/Libvirt#Authenticate_with_file-based_permissions
+[l]: https://wiki.archlinux.org/title/Libvirt#Configuration
+[m]: https://gitlab.com/libvirt/libvirt/-/work_items/644
+[n]: https://wiki.archlinux.org/title/Libvirt#Installation
+[o]: https://old.reddit.com/r/linuxquestions/comments/tkgqdu/how_to_change_storage_path_for_libvirt
+[p]: https://docs.podman.io/en/latest
