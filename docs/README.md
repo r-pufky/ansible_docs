@@ -383,7 +383,7 @@ ls -s /mnt/cache/home/${USER}/.local/share/containers ${HOME}/.local/share/conta
 ln -s /mnt/cache/home/${USER}/.cache/containers ${HOME}/.cache/containers  # config.
 ln -s /mnt/cache/var/lib/containers/storage /var/lib/containers/storage  # graph.
 # Redirect Vagrant.
-ls -s /mnt/cache/local/share/containers ${HOME}/.local/share/containers
+ls -s /mnt/cache/home/${USER}/.vagrant.d ${HOME}/.vagrant.d
 # Redirect libvirt.
 ln -s /mnt/cache/var/lib/libvirt /var/lib/libvirt
 ```
