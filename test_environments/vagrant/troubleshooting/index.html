@@ -10,7 +10,7 @@
         <link rel="canonical" href="https://github.com/r-pufky/ansible_docs/test_environments/vagrant/troubleshooting/">
       
       
-        <link rel="prev" href="../manual_vm/">
+        <link rel="prev" href="../">
       
       
         <link rel="next" href="../../libvirt/">
@@ -709,8 +709,6 @@
       
         
       
-        
-      
     
     
     
@@ -758,34 +756,6 @@
           </label>
           <ul class="md-nav__list" data-md-scrollfix="">
             
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../manual_vm/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Manual VM Creation
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
               
             
               
@@ -866,17 +836,6 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#a-vagrant-environment-or-target-machine-is-required-to-run-this-command" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        A Vagrant environment or target machine is required to run this command
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
   <a href="#verr_cfgm_not_enough_space" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -899,10 +858,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#failed-to-start-the-vms" class="md-nav__link">
+  <a href="#flaky-vm" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Failed to start the VM(s)
+        Flaky VM
       
     </span>
   </a>
@@ -910,10 +869,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#flaky-vm" class="md-nav__link">
+  <a href="#permission-denied-publickeypassword" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Flaky VM
+        Permission denied (publickey,password)
       
     </span>
   </a>
@@ -1279,17 +1238,6 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#a-vagrant-environment-or-target-machine-is-required-to-run-this-command" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        A Vagrant environment or target machine is required to run this command
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
   <a href="#verr_cfgm_not_enough_space" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -1312,10 +1260,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#failed-to-start-the-vms" class="md-nav__link">
+  <a href="#flaky-vm" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Failed to start the VM(s)
+        Flaky VM
       
     </span>
   </a>
@@ -1323,10 +1271,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#flaky-vm" class="md-nav__link">
+  <a href="#permission-denied-publickeypassword" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Flaky VM
+        Permission denied (publickey,password)
       
     </span>
   </a>
@@ -1453,38 +1401,8 @@ troubleshooting.</p>
 <div class="admonition danger">
 <pre class="highlight"><code class="language-log">WARNING Driver vagrant does not provide a schema.</code></pre>
 </div>
-<h2 id="a-vagrant-environment-or-target-machine-is-required-to-run-this-command">A Vagrant environment or target machine is required to run this command</h2>
-<p>Virtualbox kernel modules are likely not loaded.</p>
-<div class="admonition danger">
-<pre class="highlight"><code class="language-log">A Vagrant environment or target machine is required to run this
-command. Run 'vagrant init' to create a new Vagrant environment. Or,
-get an ID of a target machine from 'vagrant global-status' to run
-this command on. A final option is to change to a directory with a
-Vagrantfile and to try again.</code></pre>
-</div>
-<p>Install kernel modules.</p>
-<div class="tabbed-set tabbed-alternate" data-tabs="1:2"><input checked="checked" id="arch" name="__tabbed_1" type="radio"><input id="debian" name="__tabbed_1" type="radio"><div class="tabbed-labels"><label for="arch">Arch</label><label for="debian">Debian</label></div>
-<div class="tabbed-content">
-<div class="tabbed-block">
-<pre class="highlight"><code class="language-bash">pacman -Q | grep linux
-pacman -S linux-{KERNEL}-virtualbox-host-modules
-systemctl reboot</code></pre>
-</div>
-<div class="tabbed-block">
-<pre class="highlight"><code class="language-bash">dpkg -l | grep linux-image | grep ii
-apt install linux-image-amd64 linux-headers-amd64
-systemctl reboot</code></pre>
-</div>
-</div>
-</div>
-<pre class="highlight"><code class="language-bash"># Confirm each command works.
-vboxmanage --version  # Executable with modules loaded.
-&gt; 7.1.4r165100  # Installed version.
-vagrant global-status
-vagrant up --provider virtualbox  # Provides details why it is not running.</code></pre>
 <h2 id="verr_cfgm_not_enough_space">VERR_CFGM_NOT_ENOUGH_SPACE</h2>
-<p>Molecule test fails during create due to vagrant path length limitation (see
-underlying virtualization manager).</p>
+<p>Vagrant path length exceeded for Molecule test (see virtualization manager).</p>
 <div class="admonition danger">
 <pre class="highlight"><code class="language-bash">fatal: [localhost]: FAILED! =&gt; {
     "changed": false,
@@ -1536,47 +1454,15 @@ Failed to start the VM(s): See log file '.../vagrant.err'</code></pre>
     interfaces:
       - network_name: 'private_network'</code></pre><p></p>
 <h2 id="failed-to-lock-apt-for-exclusive-operation">Failed to <a href="https://stackoverflow.com/questions/33563425/ansible-1-9-4-failed-to-lock-apt-for-exclusive-operation">lock apt for exclusive operation</a></h2>
-<p>Debian VirtualBox VM uses root to configure and test the instance. All Molecule
-setup/teardown steps require root user.</p>
+<p>Use root to configure and test VM instance. All Molecule setup/teardown steps
+require root user. Always use become when creating Molecule tests or setup an
+ansible user after VM turnup to apply ansible tasks.</p>
 <pre class="highlight"><code class="language-yaml">- name: 'Molecule testing step'
   hosts: 'all'
   gather_facts: false
   # Always **become** ssh.remote_user when creating Molecule tests or setup an
   # ansible user after VM turnup to apply ansible tasks.
   become: true</code></pre>
-<h2 id="failed-to-start-the-vms">Failed to start the VM(s)</h2>
-<p>Virtualbox may fail due to system constraints.</p>
-<div class="admonition danger">
-<pre class="highlight"><code class="language-bash">PLAY [Create] ******************************************************************
-fatal: [localhost]: FAILED! =&gt; {
-    "changed": false,
-    "cmd": [
-        "/usr/bin/vagrant",
-        "up",
-        "--no-provision"
-    ],
-    "rc": 1
-}
-
-STDERR:
-
-### YYYY-MM-DD 15:10:23 ###
-### YYYY-MM-DD 15:10:23 ###
-### YYYY-MM-DD 15:10:23 ###
-### YYYY-MM-DD 15:32:14 ###
-### YYYY-MM-DD 15:32:15 ###
-### YYYY-MM-DD 15:32:15 ###
-The SSH connection was unexpectedly closed by the remote end. This
-usually indicates that SSH within the guest machine was unable to
-properly start up. Please boot the VM in GUI mode to check whether
-it is booting properly.
-
-MSG:
-
-Failed to start the VM(s): See log file '.../vagrant.err'</code></pre>
-</div>
-<pre class="highlight"><code class="language-bash"># Re-run test.
-molecule test --scenario-name={TEST}</code></pre>
 <h2 id="flaky-vm">Flaky VM</h2>
 <p>A previous molecule test likely not cleaned up properly.</p>
 <pre class="highlight"><code class="language-bash"># Clean all VMs and re-run.
@@ -1587,8 +1473,62 @@ vagrant box destroy {ID}</code></pre>
 <div class="admonition tip">
 <p class="admonition-title">Check GUI for additional VMs if needed.</p>
 </div>
+<h2 id="permission-denied-publickeypassword">Permission denied (publickey,password)</h2>
+<p>Vagrant SSH keys should automatically be set in images. Manual images may have
+forgotten to install these keys.</p>
+<div class="admonition danger">
+<pre class="highlight"><code class="language-bash">TASK [Install packages] ********************************************************
+included: {ROLE} for 10.2.2.39
+fatal: [10.2.2.39]: UNREACHABLE! =&gt; {
+    "changed": false,
+    "unreachable": true
+}
+MSG:
+vagrant@10.2.2.39: Permission denied (publickey,password).</code></pre>
+</div>
+<p>For Debian Images</p>
+<table>
+<thead>
+<tr>
+<th>User</th>
+<th>password</th>
+<th><a href="https://github.com/hashicorp/vagrant/tree/main/keys">vagrant public key</a></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>root</td>
+<td>vagrant</td>
+<td>✘</td>
+</tr>
+<tr>
+<td>vagrant</td>
+<td>vagrant</td>
+<td>✔</td>
+</tr>
+</tbody>
+</table>
+<p>Be sure to <a href="#failed-to-lock-apt-for-exclusive-operation">become root after connecting to run tests</a>.</p>
+<p>Confirm keys are set correctly in VM.
+</p><pre class="highlight"><code class="language-bash">ls -l /home/vagrant/.ssh/id.*
+&gt; 0400 vagrant:vagrant id.*
+
+# Install VM keys and re-create base image if needed.
+wget https://raw.githubusercontent.com/hashicorp/vagrant/refs/heads/main/keys/vagrant.pub -O /home/vagrant/.ssh/authorized_keys</code></pre><p></p>
+<p>Enable debugging if issue continues.</p>
+<div class="admonition abstract">
+<p class="admonition-title">converge.yml</p>
+<p>0644 {USER}:{USER}</p>
+<pre class="highlight"><code class="language-yaml">- ansible.builtin.debug:
+    msg: '{{ ansible_ssh_private_key_file }}'</code></pre>
+</div>
 <h2 id="error-couldnt-resolve-moduleaction-vagrant">ERROR! couldn't <a href="https://github.com/ansible-community/molecule-plugins/issues/301">resolve module/action 'vagrant'</a></h2>
 <p>Molecule <strong>25.2.0+</strong> is a bad release that broke vagrant modules.</p>
+<div class="admonition success">
+<p class="admonition-title">Resolved via <a href="../../../">auto configured environments</a></p>
+<p>Update configured <a href="../../../">development environment</a>.</p>
+<p>Issue left for clarity.</p>
+</div>
 <div class="admonition danger">
 <pre class="highlight"><code class="language-bash">molecule create
 &gt; WARNING  Driver vagrant does not provide a schema.
@@ -1609,8 +1549,9 @@ vagrant box destroy {ID}</code></pre>
 &gt;     - name: Create molecule instance(s) # noqa fqcn[action]
 &gt;       ^ here</code></pre>
 </div>
-<div class="admonition warning">
+<div class="admonition failure">
 <p class="admonition-title">Install Molecule <strong>25.1.0</strong> as a temporary workaround.</p>
+<p>Use <a href="../../../">auto configured environments</a></p>
 <p>This is only a temporary solution until alternatives are found. Molecule
 developers quite frankly shit out a half-form glob, tosseed it over the
 fence, yelled fuck you, and walked away. Most consumers of Molecule have
@@ -1632,36 +1573,6 @@ unnecessary churn</a>.</p>
 <li><a href="https://github.com/diodonfrost/ansible-role-opentofu/commit/b06e2850c4dea0054570033d231bc35c28d7245b">opentofu stopped molecule updates</a></li>
 </ul>
 </div>
-<h1 id="todo-update-with-default-userpass-ssh-userpass-and-links-to-public-keys">TODO - update with default user/pass, ssh user/pass, and links to public keys.</h1>
-<p>debian package: root/vagrant.  SSH only with vagrant/vagrant user w/ public key.</p>
-<h2 id="permission-denied-publickeypassword">Permission denied (publickey,password)</h2>
-<p>Verify permissions are correct and keys are loaded from the correct location.
-Applies to <a href="../manual_vm/">Manual VM</a> only.</p>
-<div class="admonition danger">
-<pre class="highlight"><code class="language-bash">TASK [Install packages] ********************************************************
-included: {ROLE} for 10.2.2.39
-fatal: [10.2.2.39]: UNREACHABLE! =&gt; {
-    "changed": false,
-    "unreachable": true
-}
-MSG:
-root@10.2.2.39: Permission denied (publickey,password).</code></pre>
-</div>
-<pre class="highlight"><code class="language-bash"># Confirm keys are set correctly in VM.
-ls -l id.*
-&gt; 0400 {USER}:{USER} id.*</code></pre>
-<div class="admonition abstract">
-<p class="admonition-title">converge.yml</p>
-<p>0644 {USER}:{USER}</p>
-<pre class="highlight"><code class="language-yaml"># Add debug line in converge to confirm key is located correctly
-- ansible.builtin.debug:
-    msg: '{{ ansible_ssh_private_key_file }}'</code></pre>
-</div>
-<h2 id="vm-moved-or-not-registered">VM moved or not registered</h2>
-<p>VMs must be registered to start in VirtualBox. Applies to
-<a href="../manual_vm/">Manual VM</a> only.</p>
-<pre class="highlight"><code class="language-bash">vboxmanage registervm \
-  /home/{USER}/VirtualBox\ VMs/debian-12-efi-template/debian-12-efi-template.vbox</code></pre>
 
 
 
@@ -1684,7 +1595,7 @@ ls -l id.*
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"></path></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="March 10, 2026 21:07:41 UTC">March 10, 2026</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="March 10, 2026 22:07:22 UTC">March 10, 2026</span>
   </span>
 
     
