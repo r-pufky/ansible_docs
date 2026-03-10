@@ -365,8 +365,7 @@
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Local Packages">
-      <ul class="md-nav__list">
+</li>
         
           <li class="md-nav__item">
   <a href="#package-configuration" class="md-nav__link">
@@ -379,27 +378,11 @@
   
 </li>
         
-      </ul>
-    </nav>
-  
-</li>
-        
           <li class="md-nav__item">
   <a href="#environment-setup" class="md-nav__link">
     <span class="md-ellipsis">
       
         Environment Setup
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#_1" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        
       
     </span>
   </a>
@@ -992,14 +975,14 @@
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="test_environments/virtualbox/" class="md-nav__link ">
+            <a href="test_environments/libvirt/" class="md-nav__link ">
               
   
   
   <span class="md-ellipsis">
     
   
-    VirtualBox
+    libvirt
   
 
     
@@ -1021,7 +1004,7 @@
             <span class="md-nav__icon md-icon"></span>
             
   
-    VirtualBox
+    libvirt
   
 
           </label>
@@ -1036,7 +1019,7 @@
   
   
     <li class="md-nav__item">
-      <a href="test_environments/virtualbox/troubleshooting/" class="md-nav__link">
+      <a href="test_environments/libvirt/troubleshooting/" class="md-nav__link">
         
   
   
@@ -1305,8 +1288,7 @@
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Local Packages">
-      <ul class="md-nav__list">
+</li>
         
           <li class="md-nav__item">
   <a href="#package-configuration" class="md-nav__link">
@@ -1319,27 +1301,11 @@
   
 </li>
         
-      </ul>
-    </nav>
-  
-</li>
-        
           <li class="md-nav__item">
   <a href="#environment-setup" class="md-nav__link">
     <span class="md-ellipsis">
       
         Environment Setup
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#_1" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        
       
     </span>
   </a>
@@ -1430,24 +1396,40 @@ follow these guidelines.</p>
 isolated minimal environment to minimize hidden dependencies. Environments are
 configured at the collection level and used within the role submodules.</p>
 <h3 id="local-packages">Local Packages</h3>
-<p>Local package must be installed to activate environment. Standard Ansible
-testing infrastructure: molecule, podman, vagrant, uv, direnv.</p>
+<p>Local package must be installed to activate environment. Standard testing
+infrastructure: ansible, molecule, podman, vagrant, libvirt, uv, direnv.</p>
 <div class="tabbed-set tabbed-alternate" data-tabs="1:2"><input checked="checked" id="arch" name="__tabbed_1" type="radio"><input id="debian" name="__tabbed_1" type="radio"><div class="tabbed-labels"><label for="arch">Arch</label><label for="debian">Debian</label></div>
 <div class="tabbed-content">
 <div class="tabbed-block">
-<pre class="highlight"><code class="language-bash"># Auto configure virtual environments.
+<pre class="highlight"><code class="language-bash"># Auto configure virtual environments, podman, vagrant.
 pacman -S direnv libuv podman crun vagrant
-direnv allow</code></pre>
+direnv allow
+
+# libvirt, KVM/QEMU Driver.
+pacman -S libvirt virt-manager qemu-base
+
+# VM support: NAT/DHCP, IPtables w/ NFtables bridge, netcat for SSH.
+pacman -S dnsmasq iptables-nft openbsd-netcat</code></pre>
 </div>
 <div class="tabbed-block">
-<pre class="highlight"><code class="language-bash">curl -LsSf https://astral.sh/uv/install.sh | sh
+<pre class="highlight"><code class="language-bash"># Auto configure virtual environments, podman, vagrant.
+curl -LsSf https://astral.sh/uv/install.sh | sh
 apt install direnv podman crun vagrant
-direnv allow</code></pre>
+direnv allow
+
+# libvirtd, virsh &amp; UI Manager.
+apt install libvirt virt-manager libvirt-daemon-system libvirt-clients
+
+# KVM/QEMU Driver.
+apt install qemu-kvm
+
+# VM support: NAT/DHCP, IPtables w/ NFtables bridge, netcat for SSH.
+apt install bridge-utils dnsmasq-base iptables-nft</code></pre>
 </div>
 </div>
 </div>
-<h4 id="package-configuration">Package Configuration</h4>
-<div class="tabbed-set tabbed-alternate" data-tabs="2:1"><input checked="checked" id="rootless-podman" name="__tabbed_2" type="radio"><div class="tabbed-labels"><label for="rootless-podman"><a href="https://github.com/ansible-community/molecule-podman">Rootless Podman</a></label></div>
+<h3 id="package-configuration">Package Configuration</h3>
+<div class="tabbed-set tabbed-alternate" data-tabs="2:3"><input checked="checked" id="rootless-podman" name="__tabbed_2" type="radio"><input id="vagrant" name="__tabbed_2" type="radio"><input id="libvirt" name="__tabbed_2" type="radio"><div class="tabbed-labels"><label for="rootless-podman"><a href="https://github.com/ansible-community/molecule-podman">Rootless Podman</a></label><label for="vagrant"><a href="https://github.com/vagrant-libvirt/vagrant-libvirt">Vagrant</a></label><label for="libvirt"><a href="https://libvirt.org">libvirt</a></label></div>
 <div class="tabbed-content">
 <div class="tabbed-block">
 <p>An entry must exist for each user that wants to use rootless podman. Modern
@@ -1488,6 +1470,94 @@ podman login ghcr.io  # github account.</code></pre>
 <p>Apply configuration changes and <a href="https://github.com/containers/podman/issues/12715">migrate existing containers</a>
 </p><pre class="highlight"><code class="language-bash">podman system reset
 podman system migrate</code></pre><p></p>
+</div>
+<div class="tabbed-block">
+<pre class="highlight"><code class="language-bash"># Enable libvirt plugins.
+vagrant plugin install vagrant-libvirt</code></pre>
+</div>
+<div class="tabbed-block">
+<p>Enable <a href="https://wiki.archlinux.org/title/Libvirt#Installation">default use of libvirtd (system)</a> for users in libvirt group
+without password. Use <a href="https://wiki.archlinux.org/title/Polkit">PolicyKit</a> for group based access to run VMs.
+Alternatively <a href="https://wiki.archlinux.org/title/Libvirt#Authenticate_with_file-based_permissions">use unix sockets</a>.</p>
+<div class="admonition abstract">
+<p class="admonition-title">/etc/libvirt/libvirtd.conf</p>
+<p>0644 root:root</p>
+<pre class="highlight"><code class="language-bash">auth_unix_ro = "polkit"
+auth_unix_rw = "polkit"</code></pre>
+</div>
+<div class="admonition abstract">
+<p class="admonition-title">/etc/polkit-1/rules.d/50-libvirt.rules</p>
+<p>0644 root:root</p>
+<pre class="highlight"><code class="language-js">// Allow users in libvirt group to manage the libvirt system daemon without authentication.
+polkit.addRule(function(action, subject) {
+    if (action.id == "org.libvirt.unix.manage" &amp;&amp;
+        subject.isInGroup("libvirt")) {
+            return polkit.Result.YES;
+    }
+});</code></pre>
+</div>
+<pre class="highlight"><code class="language-bash"># Add user to VM access groups.
+sudo usermod -aG libvirt,libvirt-qemu,kvm $(whoami)
+
+# Enable libvirtd. PolicyKit changes require reboot.
+systemctl enable --now libvirtd
+reboot</code></pre>
+<p>Use <a href="https://wiki.archlinux.org/title/Libvirt#Configuration">qemu:///system</a> as default hypervisor driver.</p>
+<div class="admonition abstract">
+<p class="admonition-title">~/.config/libvirt/libvirt.conf</p>
+<p>0644 root:root</p>
+<pre class="highlight"><code class="language-ini"># Users will use qemu:///session which runs libvirtd with current user
+# permissions resulting in obtuse networking VM limitations.
+#
+# /etc/libvirt/libvirt.conf is only read in root user context.
+#
+# ansible.env: export LIBVIRT_DEFAULT_URI=qemu:///system
+uri_default = "qemu:///system"</code></pre>
+</div>
+<pre class="highlight"><code class="language-bash"># Confirm system, session, and defaults work.
+virsh -c qemu:///system
+virsh -c qemu:///session
+virsh
+
+&gt; Welcome to virsh, the virtualization interactive terminal.
+&gt;
+&gt; Type:  'help' for help with commands
+&gt;        'quit' to qui
+&gt;
+&gt; virsh #</code></pre>
+<p>Use iptables and enable default network.</p>
+<div class="admonition info">
+<p class="admonition-title"><a href="https://gitlab.com/libvirt/libvirt/-/work_items/644">libvirtd requires iptables with UFW</a></p>
+<p>libvirt switched to using nftables userspace directly. Immediate
+workaround is to set libvirt back to iptables backend.</p>
+<p>UFW uses legacy iptables userspace tools and these create shared
+nftables top level tables. All different applications which use
+iptables userspace end up in same nftables table.</p>
+</div>
+<div class="admonition abstract">
+<p class="admonition-title">/etc/libvirt/network.conf</p>
+<p>0644 root:root</p>
+<pre class="highlight"><code class="language-ini">firewall_backend = "iptables"</code></pre>
+</div>
+<pre class="highlight"><code class="language-bash"># Confirm both sudo and non-sudo commands report default network.
+# Both will show information when qemu:///system is loaded correctly with
+# group membership and policy kit.
+sudo virsh net-list --all
+virsh net-list --all
+
+&gt;  Name      State      Autostart   Persistent
+&gt; ----------------------------------------------
+&gt;  default   inactive   no          yes
+
+# Set autostart and start default network.
+virsh net-start default
+virsh net-autostart default
+
+virsh net-list --all
+
+&gt;  Name      State    Autostart   Persistent
+&gt; --------------------------------------------
+&gt;  default   active   yes         yes</code></pre>
 </div>
 </div>
 </div>
@@ -1533,7 +1603,7 @@ source ansible.env</code></pre>
 <pre class="highlight"><code class="language-bash">###############################################################################
 # Ansible Collection Test Environment Configuration
 ###############################################################################
-# Create an ansible environment to use. use direnv to auto-load environment or
+# Create an ansible environment to use. Use direnv to auto-load environment or
 # manually source; then activate venv.
 #
 # Manual:
@@ -1591,14 +1661,37 @@ export ANSIBLE_USE_PERSISTENT_CONNECTIONS=1  # Persist SSH connections.
 export ANSIBLE_ADMIN_USERS='root'  # Only enable root by default.
 export ANSIBLE_PARAMIKO_RECORD_HOST_KEYS=0  # Ignore host keys.
 export ANSIBLE_REMOTE_TMP='/tmp'  # Use RAMFS tmp, not disk (~/.ansible/tmp).
-export ANSIBLE_SYSTEM_TMPDIRS='/tmp'  # Use RAMFS tmp, not disk (/var/tmp).</code></pre>
+export ANSIBLE_SYSTEM_TMPDIRS='/tmp'  # Use RAMFS tmp, not disk (/var/tmp).
+
+###############################################################################
+# Molecule 25.1.0+ Environment Fix
+###############################################################################
+# 25.2.0 removed automatic path configuration for molecule tests. Manually set
+# Molecule path resolution during environment setup.
+#
+# Reference:
+# * https://github.com/ansible-community/molecule-plugins/issues/301
+# * https://github.com/ansible/molecule/pull/4380
+export PYTHON_LIB_PATH="$(python3 -c 'import sysconfig; print(sysconfig.get_paths()["purelib"])')"
+export ANSIBLE_FILTER_PLUGINS="${PYTHON_LIB_PATH}/molecule/provisioner/ansible/plugins/filter:${HOME}/.ansible/plugins/filter:/usr/share/ansible/plugins/filter"
+export ANSIBLE_LIBRARY="${PYTHON_LIB_PATH}/molecule/provisioner/ansible/plugins/modules:${PYTHON_LIB_PATH}/molecule_plugins/vagrant/modules:${HOME}/.ansible/plugins/modules:/usr/share/ansible/plugins/modules"
+export ANSIBLE_ROLES_PATH="$(pwd)/roles:${HOME}/.ansible/roles:/usr/share/ansible/roles:/etc/ansible/roles"
+
+###############################################################################
+# libvirt
+###############################################################################
+# Always use system daemon for VM testing to prevent obtuse issues.
+#
+# Reference:
+# * https://wiki.archlinux.org/title/Libvirt#Configuration
+export LIBVIRT_DEFAULT_URI='qemu:///system'</code></pre>
 </details>
-<h3 id="_1"></h3>
 <h2 id="redirect-ansible-caches">Redirect ansible caches</h2>
 <p>High IOPs cause premature SSD wear and cause false <strong>yamllint</strong>,
 <strong>ansible-lint</strong> errors from <a href="https://github.com/ansible/ansible-lint/issues/4533">imported collections and roles</a>. Redirection
 allows no changes for production environments while minimizing development
-wear. Consider moving and linking entire .cache directories.</p>
+wear. This also applies to <a href="https://old.reddit.com/r/linuxquestions/comments/tkgqdu/how_to_change_storage_path_for_libvirt">libvirt</a> and <a href="https://docs.podman.io/en/latest">Podman</a>.</p>
+<p>Consider moving and linking entire .cache directories.</p>
 <div class="admonition abstract">
 <p class="admonition-title">/etc/fstab</p>
 <p>0644 root:root</p>
@@ -1612,21 +1705,22 @@ mount -o remount -a
 find . -type d -name '.ansible' -exec rm -rf "{}" \; -exec ln -s /tmp/ansible-cache "{}" \;
 
 # Redirect static ansible caches. Delete or move existing cache data.
-ln -s /mnt/cache/.ansible_async ${HOME}/.ansible_async
-ln -s /mnt/cache/.ansible ${HOME}/.ansible
-ln -s /mnt/cache/cache/ansible-compat ${HOME}/.cache/ansible-compat
-ln -s /mnt/cache/cache/molecule ${HOME}/.cache/molecule
-# Redirect VScode variant as needed.
-ln -s "/mnt/cache/config/Code - OSS" "${HOME}/.config/Code - OSS"
-ln -s /mnt/cache/config/VSCodium ${HOME}/.config/VSCodium
-ln -s /mnt/cache/config/VSCode ${HOME}/.config/VSCode
+ln -s /mnt/cache/home/${USER}/.ansible_async ${HOME}/.ansible_async
+ln -s /mnt/cache/home/${USER}/.ansible ${HOME}/.ansible
+ln -s /mnt/cache/home/${USER}/.cache/ansible-compat ${HOME}/.cache/ansible-compat
+ln -s /mnt/cache/home/${USER}/.cache/molecule ${HOME}/.cache/molecule
+# Redirect VScode variants as needed.
+ln -s "/mnt/cache/home/${USER}/.config/Code - OSS" "${HOME}/.config/Code - OSS"
+ln -s /mnt/cache/home/${USER}/.config/VSCodium ${HOME}/.config/VSCodium
+ln -s /mnt/cache/home/${USER}/.config/VSCode ${HOME}/.config/VSCode
 # Redirect Podman.
-ls -s /mnt/cache/local/share/containers ${HOME}/.local/share/containers  # graph.
-ln -s /mnt/cache/cache/containers ${HOME}/.cache/containers  # config.
-ln -s /mnt/cache/storage /var/lib/containers/storage  # graph.
+ls -s /mnt/cache/home/${USER}/.local/share/containers ${HOME}/.local/share/containers  # graph.
+ln -s /mnt/cache/home/${USER}/.cache/containers ${HOME}/.cache/containers  # config.
+ln -s /mnt/cache/var/lib/containers/storage /var/lib/containers/storage  # graph.
 # Redirect Vagrant.
-ls -s /mnt/cache/local/share/containers ${HOME}/.local/share/containers</code></pre>
-<p>```</p>
+ls -s /mnt/cache/local/share/containers ${HOME}/.local/share/containers
+# Redirect libvirt.
+ln -s /mnt/cache/var/lib/libvirt /var/lib/libvirt</code></pre>
 <h2 id="vscode">VSCode</h2>
 <p>All VSCode variants are included.</p>
 <p>Install <a href="https://marketplace.visualstudio.com/items?itemName=redhat.ansible">Ansible extension</a>.</p>
@@ -1654,8 +1748,7 @@ ls -s /mnt/cache/local/share/containers ${HOME}/.local/share/containers</code></
 <div class="admonition tip">
 <p>Disable <code>ansible-lint</code> for documentation to prevent incorrect YAML error reporting.</p>
 <p>Extensions ➔ Ansible ➔ Settings ➔ Folder
-<code>yaml
-ansible.validation.lint.enabled: false</code></p>
+</p><pre class="highlight"><code class="language-yaml">ansible.validation.lint.enabled: false</code></pre><p></p>
 <p>Manually run on the command line.</p>
 </div>
 <h2 id="reference">Reference<sup id="fnref:1"><a class="footnote-ref" href="#fn:1">1</a></sup><sup id="fnref:2"><a class="footnote-ref" href="#fn:2">2</a></sup></h2>
@@ -1692,7 +1785,7 @@ ansible.validation.lint.enabled: false</code></p>
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"></path></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="March 9, 2026 18:25:15 UTC">March 9, 2026</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="March 10, 2026 21:07:41 UTC">March 10, 2026</span>
   </span>
 
     
@@ -1737,7 +1830,7 @@ ansible.validation.lint.enabled: false</code></p>
       <div class="md-copyright">
   
     <div class="md-copyright__highlight">
-      ©2025
+      ©2026
     </div>
   
   

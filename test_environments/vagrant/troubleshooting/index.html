@@ -13,7 +13,7 @@
         <link rel="prev" href="../manual_vm/">
       
       
-        <link rel="next" href="../../virtualbox/">
+        <link rel="next" href="../../libvirt/">
       
       
         
@@ -931,28 +931,6 @@
   
 </li>
       
-        <li class="md-nav__item">
-  <a href="#permission-denied-publickeypassword" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Permission denied (publickey,password)
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#vm-moved-or-not-registered" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        VM moved or not registered
-      
-    </span>
-  </a>
-  
-</li>
-      
     </ul>
   
 </nav>
@@ -997,14 +975,14 @@
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="../../virtualbox/" class="md-nav__link ">
+            <a href="../../libvirt/" class="md-nav__link ">
               
   
   
   <span class="md-ellipsis">
     
   
-    VirtualBox
+    libvirt
   
 
     
@@ -1026,7 +1004,7 @@
             <span class="md-nav__icon md-icon"></span>
             
   
-    VirtualBox
+    libvirt
   
 
           </label>
@@ -1041,7 +1019,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../virtualbox/troubleshooting/" class="md-nav__link">
+      <a href="../../libvirt/troubleshooting/" class="md-nav__link">
         
   
   
@@ -1366,28 +1344,6 @@
   
 </li>
       
-        <li class="md-nav__item">
-  <a href="#permission-denied-publickeypassword" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Permission denied (publickey,password)
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#vm-moved-or-not-registered" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        VM moved or not registered
-      
-    </span>
-  </a>
-  
-</li>
-      
     </ul>
   
 </nav>
@@ -1669,13 +1625,15 @@ unnecessary churn</a>.</p>
 <li><a href="https://github.com/ansible-community/molecule-plugins/issues/301">Main issue</a></li>
 <li><a href="https://github.com/ansible-community/molecule-plugins/issues/301#issuecomment-3687957567">direnv workaround</a></li>
 <li><a href="https://github.com/dev-sec/ansible-collection-hardening/pull/849">Developers abandoning Molecule updates</a></li>
-<li><a href="https://github.com/ansible/molecule/pull/4380">Potential workaround</a></li>
+<li><a href="https://github.com/ansible/molecule/pull/4380">Developer merged pull</a></li>
 <li><a href="https://github.com/cisagov/skeleton-ansible-role/pull/221/changes">Potential workaround</a></li>
 <li><a href="https://docs.ansible.com/projects/dev-tools/user-guide/test-isolation">Developer response</a></li>
 <li><a href="https://github.com/konstruktoid/ansible-role-hardening/blob/master/generate_molecule_env.sh">Script to generate previous molecule environment</a></li>
 <li><a href="https://github.com/diodonfrost/ansible-role-opentofu/commit/b06e2850c4dea0054570033d231bc35c28d7245b">opentofu stopped molecule updates</a></li>
 </ul>
 </div>
+<h1 id="todo-update-with-default-userpass-ssh-userpass-and-links-to-public-keys">TODO - update with default user/pass, ssh user/pass, and links to public keys.</h1>
+<p>debian package: root/vagrant.  SSH only with vagrant/vagrant user w/ public key.</p>
 <h2 id="permission-denied-publickeypassword">Permission denied (publickey,password)</h2>
 <p>Verify permissions are correct and keys are loaded from the correct location.
 Applies to <a href="../manual_vm/">Manual VM</a> only.</p>
@@ -1726,7 +1684,7 @@ ls -l id.*
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"></path></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="March 9, 2026 19:14:47 UTC">March 9, 2026</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="March 10, 2026 21:07:41 UTC">March 10, 2026</span>
   </span>
 
     
@@ -1771,7 +1729,7 @@ ls -l id.*
       <div class="md-copyright">
   
     <div class="md-copyright__highlight">
-      ©2025
+      ©2026
     </div>
   
   
