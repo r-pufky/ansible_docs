@@ -31,7 +31,6 @@ nav:
           - 'test_environments/podman/troubleshooting.md'
       - 'Vagrant':
           - 'test_environments/vagrant/README.md'
-          - 'test_environments/vagrant/manual_vm.md'
           - 'test_environments/vagrant/troubleshooting.md'
       - 'libvirt':
           - 'test_environments/libvirt/README.md'

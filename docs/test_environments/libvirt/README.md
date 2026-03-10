@@ -1,12 +1,12 @@
 # [libvirt][a]
 
 !!! warning "Explicit Need Only"
-    VirtualBox VMs are **ONLY** used to test specific cases which cannot be
-    tested in containers (kernel, firmware, proc, systemd, networking, etc.)
-    these should **never** be default test cases.
+    VMs are **ONLY** used to test specific cases which cannot be tested in
+    containers (kernel, firmware, proc, systemd, networking, etc.) these should
+    **never** be default test cases.
 
 
-# Molecule Setup
+## Molecule Setup
 Standard molecule setup for vagrant libvirt kvm/qemu debian VM.
 
 !!! abstract "molecule.yml"
@@ -35,17 +35,17 @@ Standard molecule setup for vagrant libvirt kvm/qemu debian VM.
         memory: 4096
         cpus: 2
         interfaces:
-          - network_name: 'private_network'  # network_name required.
+          - network_name: 'private_network'  # Required. Molecule network name.
             auto_config: true
             type: 'dhcp'
             # type: static
-            # ip: 192.168.56.10  # default is 192.168.56.0/21
+            # ip: 192.168.56.10  # Uses libvirt default virbr network space.
         instance_raw_config_args:
           - 'vm.network "forwarded_port", guest: 8443, host: 8443'
           - 'vm.network "forwarded_port", guest: 8080, host: 8080'
           - 'vm.network "forwarded_port", guest: 8880, host: 8880'
           - 'vm.network "forwarded_port", guest: 8443, host: 8843'
-        # Example provides GPU passthrough.
+        # Aditional options can be directly provided to libvirt.
         # provider_options:
         #   video_type: 'virtio'
         #   channel:

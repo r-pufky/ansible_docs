@@ -14,46 +14,8 @@ Vagrant driver does have a schema and will always generate a warning.
     ```
 
 
-## A Vagrant environment or target machine is required to run this command
-Virtualbox kernel modules are likely not loaded.
-
-!!! danger ""
-    ``` log
-    A Vagrant environment or target machine is required to run this
-    command. Run 'vagrant init' to create a new Vagrant environment. Or,
-    get an ID of a target machine from 'vagrant global-status' to run
-    this command on. A final option is to change to a directory with a
-    Vagrantfile and to try again.
-    ```
-
-Install kernel modules.
-=== "Arch"
-
-    ``` bash
-    pacman -Q | grep linux
-    pacman -S linux-{KERNEL}-virtualbox-host-modules
-    systemctl reboot
-    ```
-
-=== "Debian"
-
-    ``` bash
-    dpkg -l | grep linux-image | grep ii
-    apt install linux-image-amd64 linux-headers-amd64
-    systemctl reboot
-    ```
-
-``` bash
-# Confirm each command works.
-vboxmanage --version  # Executable with modules loaded.
-> 7.1.4r165100  # Installed version.
-vagrant global-status
-vagrant up --provider virtualbox  # Provides details why it is not running.
-```
-
 ## VERR_CFGM_NOT_ENOUGH_SPACE
-Molecule test fails during create due to vagrant path length limitation (see
-underlying virtualization manager).
+Vagrant path length exceeded for Molecule test (see virtualization manager).
 
 !!! danger ""
     ``` bash
@@ -109,8 +71,9 @@ platforms:
 
 
 ## Failed to [lock apt for exclusive operation][b]
-Debian VirtualBox VM uses root to configure and test the instance. All Molecule
-setup/teardown steps require root user.
+Use root to configure and test VM instance. All Molecule setup/teardown steps
+require root user. Always use become when creating Molecule tests or setup an
+ansible user after VM turnup to apply ansible tasks.
 
 ``` yaml
 - name: 'Molecule testing step'
@@ -121,45 +84,6 @@ setup/teardown steps require root user.
   become: true
 ```
 
-
-## Failed to start the VM(s)
-Virtualbox may fail due to system constraints.
-
-!!! danger ""
-    ``` bash
-    PLAY [Create] ******************************************************************
-    fatal: [localhost]: FAILED! => {
-        "changed": false,
-        "cmd": [
-            "/usr/bin/vagrant",
-            "up",
-            "--no-provision"
-        ],
-        "rc": 1
-    }
-
-    STDERR:
-
-    ### YYYY-MM-DD 15:10:23 ###
-    ### YYYY-MM-DD 15:10:23 ###
-    ### YYYY-MM-DD 15:10:23 ###
-    ### YYYY-MM-DD 15:32:14 ###
-    ### YYYY-MM-DD 15:32:15 ###
-    ### YYYY-MM-DD 15:32:15 ###
-    The SSH connection was unexpectedly closed by the remote end. This
-    usually indicates that SSH within the guest machine was unable to
-    properly start up. Please boot the VM in GUI mode to check whether
-    it is booting properly.
-
-    MSG:
-
-    Failed to start the VM(s): See log file '.../vagrant.err'
-    ```
-
-``` bash
-# Re-run test.
-molecule test --scenario-name={TEST}
-```
 
 ## Flaky VM
 A previous molecule test likely not cleaned up properly.
@@ -175,8 +99,57 @@ vagrant box destroy {ID}
 !!! tip "Check GUI for additional VMs if needed."
 
 
+## Permission denied (publickey,password)
+Vagrant SSH keys should automatically be set in images. Manual images may have
+forgotten to install these keys.
+
+!!! danger ""
+    ``` bash
+    TASK [Install packages] ********************************************************
+    included: {ROLE} for 10.2.2.39
+    fatal: [10.2.2.39]: UNREACHABLE! => {
+        "changed": false,
+        "unreachable": true
+    }
+    MSG:
+    vagrant@10.2.2.39: Permission denied (publickey,password).
+    ```
+
+For Debian Images
+
+ User    | password | [vagrant public key][k]
+---------|----------|-------------------------
+ root    | vagrant  | ✘
+ vagrant | vagrant  | ✔
+
+Be sure to [become root after connecting to run tests](#failed-to-lock-apt-for-exclusive-operation).
+
+Confirm keys are set correctly in VM.
+``` bash
+ls -l /home/vagrant/.ssh/id.*
+> 0400 vagrant:vagrant id.*
+
+# Install VM keys and re-create base image if needed.
+wget https://raw.githubusercontent.com/hashicorp/vagrant/refs/heads/main/keys/vagrant.pub -O /home/vagrant/.ssh/authorized_keys
+```
+
+Enable debugging if issue continues.
+!!! abstract "converge.yml"
+    0644 {USER}:{USER}
+
+    ``` yaml
+    - ansible.builtin.debug:
+        msg: '{{ ansible_ssh_private_key_file }}'
+    ```
+
+
 ## ERROR! couldn't [resolve module/action 'vagrant'][c]
 Molecule **25.2.0+** is a bad release that broke vagrant modules.
+
+!!! success "Resolved via [auto configured environments](../../README.md)"
+    Update configured [development environment](../../README.md).
+
+    Issue left for clarity.
 
 !!! danger ""
     ``` bash
@@ -200,7 +173,9 @@ Molecule **25.2.0+** is a bad release that broke vagrant modules.
     >       ^ here
     ```
 
-!!! warning "Install Molecule **25.1.0** as a temporary workaround."
+!!! failure "Install Molecule **25.1.0** as a temporary workaround."
+    Use [auto configured environments](../../README.md)
+
     This is only a temporary solution until alternatives are found. Molecule
     developers quite frankly shit out a half-form glob, tosseed it over the
     fence, yelled fuck you, and walked away. Most consumers of Molecule have
@@ -224,52 +199,6 @@ Molecule **25.2.0+** is a bad release that broke vagrant modules.
     * [opentofu stopped molecule updates][j]
 
 
-# TODO - update with default user/pass, ssh user/pass, and links to public keys.
-
-
-debian package: root/vagrant.  SSH only with vagrant/vagrant user w/ public key.
-
-
-## Permission denied (publickey,password)
-Verify permissions are correct and keys are loaded from the correct location.
-Applies to [Manual VM](manual_vm.md) only.
-
-!!! danger ""
-    ``` bash
-    TASK [Install packages] ********************************************************
-    included: {ROLE} for 10.2.2.39
-    fatal: [10.2.2.39]: UNREACHABLE! => {
-        "changed": false,
-        "unreachable": true
-    }
-    MSG:
-    root@10.2.2.39: Permission denied (publickey,password).
-    ```
-
-``` bash
-# Confirm keys are set correctly in VM.
-ls -l id.*
-> 0400 {USER}:{USER} id.*
-```
-
-!!! abstract "converge.yml"
-    0644 {USER}:{USER}
-
-    ``` yaml
-    # Add debug line in converge to confirm key is located correctly
-    - ansible.builtin.debug:
-        msg: '{{ ansible_ssh_private_key_file }}'
-    ```
-
-## VM moved or not registered
-VMs must be registered to start in VirtualBox. Applies to
-[Manual VM](manual_vm.md) only.
-
-``` bash
-vboxmanage registervm \
-  /home/{USER}/VirtualBox\ VMs/debian-12-efi-template/debian-12-efi-template.vbox
-```
-
 [a]: https://github.com/ansible/molecule/discussions/4108
 [b]: https://stackoverflow.com/questions/33563425/ansible-1-9-4-failed-to-lock-apt-for-exclusive-operation
 [c]: https://github.com/ansible-community/molecule-plugins/issues/301
@@ -280,3 +209,4 @@ vboxmanage registervm \
 [h]: https://docs.ansible.com/projects/dev-tools/user-guide/test-isolation
 [i]: https://github.com/konstruktoid/ansible-role-hardening/blob/master/generate_molecule_env.sh
 [j]: https://github.com/diodonfrost/ansible-role-opentofu/commit/b06e2850c4dea0054570033d231bc35c28d7245b
+[k]: https://github.com/hashicorp/vagrant/tree/main/keys
