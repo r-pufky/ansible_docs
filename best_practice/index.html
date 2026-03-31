@@ -1267,14 +1267,29 @@
 <p>Always resolve yamllint, and ansible-lint issues with <strong>no</strong> global
 exceptions (<a href="https://github.com/r-pufky/ansible_paperless_ngx">example</a>).</p>
 </div>
+<div class="admonition success">
+<p class="admonition-title">Use ansible sourced jinja2 templates for release cycles faster than Debian</p>
+<p>Many modern applications use rolling release or rapid release cycles in the
+span of months ➔ weeks ➔ days. Many of these updates have breaking config
+setting changes requiring complete re-evaluation of application under
+management when encapsulating configuration settings.</p>
+<p>This is untenable for maintaining large numbers of roles.</p>
+<p><strong>Any</strong> application where major releases (or breaking releases) occur
+<a href="https://www.debian.org/releases">faster than the Debian release cycle</a> <strong>must use</strong> ansible source
+jinja2 templates for configuration. This enables the role to focus on
+critical setup and the consumer to configure the application settings
+appropriately.</p>
+<p>See <a href="patterns/#templated-directories">Templated Directories</a>.</p>
+</div>
 <ul>
-<li>Use <a href="https://github.com/r-pufky/ansible_collection_data">Data annotations</a> for variables touched by consumer (<a href="https://github.com/r-pufky/ansible_paperless_ngx">example</a>).</li>
+<li>Use <a href="https://github.com/r-pufky/ansible_collection_data">Data annotations</a> for variables touched by consumer (<a href="https://github.com/r-pufky/ansible_paperless_ngx">example</a>)
+  that require data manipulation for role application.</li>
 <li>Always create roles explicitly designed for bare-metal installations.</li>
 <li>Use feature flags to stage role execution steps.</li>
 <li>Provide debug notification &amp; estimated wait time with <a href="#text-glyphs">glyphs</a>
   for long running tasks (<a href="https://github.com/r-pufky/ansible_paperless_ngx/blob/main/tasks/install.yml#L292">example</a>).</li>
 <li>Always include update date, version, and OS release in <strong>vars/main.yml</strong>:
-  <pre class="highlight"><code class="language-yaml">role___release: "{{ {} | r_pufky.data.v3(
+  <pre class="highlight"><code class="language-yaml">{ROLE}___release: "{{ {} | r_pufky.data.v3(
 
     _date='2024-06-14',
     _debian='bookworm',
@@ -1521,7 +1536,7 @@ option. This provides self-documenting expanded use features.</p>
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"></path></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="March 9, 2026 06:44:23 UTC">March 9, 2026</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="March 31, 2026 02:22:12 UTC">March 31, 2026</span>
   </span>
 
     
