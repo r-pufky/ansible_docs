@@ -4,6 +4,8 @@
     See [molecule](../molecule/troubleshooting.md) for specific molecule
     troubleshooting.
 
+See [dist-upgrade fails for grub-pc](../libvirt/troubleshooting.md#dist-upgrade-fails-for-grub-pc).
+
 
 ## Driver vagrant does not [provide a schema][a]
 Vagrant driver does have a schema and will always generate a warning.

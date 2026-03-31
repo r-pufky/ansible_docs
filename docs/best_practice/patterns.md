@@ -1,5 +1,87 @@
 # Patterns
 
+## Network Mounts
+For mounted data locations (NFS with squashed mounts, mapped container mounts,
+etc) the local root user will not have sufficient privileges to modify these
+files.
+
+Typically only the service user is mapped to the hosted UID/GID, and all other
+users including root are mapped to 165536+ to prevent access (appears as
+nobody/nogroup on opposing node).
+
+Always attempt to first execute user data changes with the most common case
+first and fallback to the service user if it fails.
+
+``` yaml
+- name: '{{ "Init DB | filesystem | set " ~ maria__init_db._data_d }}'
+  block:
+    - name: '{{ "Init DB | filesystem | set " ~ maria__init_db._data_d }}'
+      ansible.builtin.file:
+        path: '{{ maria__init_db._data_d }}'
+        owner: '{{ maria__cfg._uid }}'
+        group: '{{ maria__cfg._gid }}'
+        mode: '0755'
+        state: 'directory'
+  rescue:
+    - name: '{{ "Init DB | filesystem | set " ~ maria__init_db._data_d }}'
+      ansible.builtin.file:
+        path: '{{ maria__init_db._data_d }}'
+        owner: '{{ maria__cfg._uid }}'
+        group: '{{ maria__cfg._gid }}'
+        mode: '0755'
+        state: 'directory'
+      become: true
+      become_user: '{{ maria__srv._user }}'
+```
+
+## Templated Directories
+Recursively templating directories separates application config format changes.
+
+This enables the role to focus on critical setup and the consumer to configure
+the application settings appropriately.
+
+``` yaml
+- name: '{{ "Install | filesystem | deploy " ~ maria___app._conf_d }}'
+  ansible.builtin.template:
+    src: '{{ item.src }}'
+    dest: '{{ maria___app._conf_d }}'
+    owner: '{{ maria__srv._user }}'
+    group: '{{ maria__srv._group }}'
+    mode: '0644'
+  loop: '{{
+      query("community.general.filetree", "templates/default/mariadb.conf.d")
+    }}'
+  loop_control:
+    label: '{{ item.path }}'
+  when: item.state == 'file'
+  register: maria__local
+
+- name: 'Install | filesystem | query remote files'
+  ansible.builtin.find:
+    paths: '{{ maria___app._conf_d }}'
+    file_type: 'file'
+    recurse: true
+  register: maria__remote
+
+- name: 'Install | filesystem | remove unmanaged files'
+  ansible.builtin.file:
+    path: '{{ item.path }}'
+    state: 'absent'
+  loop: '{{ maria__remote.files }}'
+  loop_control:
+    label: '{{ item.path }}'
+  when: >
+    item.path not in maria__local.results | selectattr('dest', 'defined') |
+    map(attribute='dest') | list
+```
+
+!!! tip "Do not separate into another role"
+    **community.general.filetree** resolves paths based on the play it was
+    called from, not the path provided. This is different than standard ansible
+    **include_tasks** behavior.
+
+    This will break if this pattern is used outside of the play.
+
 ## Test remote filesystem permissions
 Remote filesystem permission check causes stackdump for specific remote mounted
 filesystems. Explicitly test remote file before applying file changes.

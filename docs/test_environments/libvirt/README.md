@@ -5,6 +5,15 @@
     containers (kernel, firmware, proc, systemd, networking, etc.) these should
     **never** be default test cases.
 
+!!! tip "Always use root"
+    Vagrant images require becoming **root** for executing tasks as the default
+    vagrant user is unprivileged.
+
+    ``` yaml
+    - name: 'Vagrant VMs require root.'
+      hosts: 'all'
+      become: true
+    ```
 
 ## Molecule Setup
 Standard molecule setup for vagrant libvirt kvm/qemu debian VM.

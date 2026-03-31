@@ -4,14 +4,31 @@
     Always resolve yamllint, and ansible-lint issues with **no** global
     exceptions ([example][a]).
 
-* Use [Data annotations][b] for variables touched by consumer ([example][a]).
+!!! success "Use ansible sourced jinja2 templates for release cycles faster than Debian"
+    Many modern applications use rolling release or rapid release cycles in the
+    span of months ➔ weeks ➔ days. Many of these updates have breaking config
+    setting changes requiring complete re-evaluation of application under
+    management when encapsulating configuration settings.
+
+    This is untenable for maintaining large numbers of roles.
+
+    **Any** application where major releases (or breaking releases) occur
+    [faster than the Debian release cycle][d] **must use** ansible source
+    jinja2 templates for configuration. This enables the role to focus on
+    critical setup and the consumer to configure the application settings
+    appropriately.
+
+    See [Templated Directories](patterns.md#templated-directories).
+
+* Use [Data annotations][b] for variables touched by consumer ([example][a])
+  that require data manipulation for role application.
 * Always create roles explicitly designed for bare-metal installations.
 * Use feature flags to stage role execution steps.
 * Provide debug notification & estimated wait time with [glyphs](#text-glyphs)
   for long running tasks ([example][c]).
 * Always include update date, version, and OS release in **vars/main.yml**:
   ``` yaml
-  role___release: "{{ {} | r_pufky.data.v3(
+  {ROLE}___release: "{{ {} | r_pufky.data.v3(
 
       _date='2024-06-14',
       _debian='bookworm',
@@ -112,3 +129,4 @@ option. This provides self-documenting expanded use features.
 [a]: https://github.com/r-pufky/ansible_paperless_ngx
 [b]: https://github.com/r-pufky/ansible_collection_data
 [c]: https://github.com/r-pufky/ansible_paperless_ngx/blob/main/tasks/install.yml#L292
+[d]: https://www.debian.org/releases

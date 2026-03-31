@@ -40,7 +40,7 @@ Standard molecule setup for rootless podman debian container.
           #   - name: 'assert fact_caching not expired'
           #     ansible.builtin.assert:
           #       that:
-          #         - '_test_cached_fact is defined'
+          #         - ansible_facts['my_fact'] is defined'
           #       fail_msg: 'fact_caching has expired; re-run prepare.'
         ssh_connection:
           pipelining: false  # Does not work with podman.

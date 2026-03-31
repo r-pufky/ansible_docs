@@ -108,6 +108,8 @@ infrastructure: ansible, molecule, podman, vagrant, libvirt, uv, direnv.
     vagrant plugin install vagrant-libvirt
     ```
 
+    See [fish shell completions for vagrant][q].
+
 === "[libvirt][i]"
     Enable [default use of libvirtd (system)][n] for users in libvirt group
     without password. Use [PolicyKit][j] for group based access to run VMs.
@@ -219,6 +221,130 @@ for the collection and roles.
     Commit environment setup after creation and use direnv to automatically
     setup virtual environment on entering directory.
 
+=== ".gitignore"
+
+    !!! abstract ".gitignore"
+        0644 {USER}:{USER}
+
+        ``` bash
+        # Ansible
+        r_pufky-*.tar.gz
+        .ansible/
+        .ansible
+        .vscode/
+        molecule/cache
+        COMMIT.md
+        TODO.md
+        # Auto venv
+        .venv/
+        ```
+
+=== ".envrc"
+
+    !!! abstract ".envrc"
+        0644 {USER}:{USER}
+
+        ``` bash
+        # direnv executes .envrc in bash and exports back to current shell.
+
+        # Create venv if needed and activate adding ansible testing environment.
+        uv sync --all-extras && source .venv/bin/activate
+        source ansible.env
+        ```
+
+=== "ansible.env"
+
+    !!! abstract "ansible.env"
+        0644 {USER}:{USER}
+
+        ``` bash
+        ###############################################################################
+        # Ansible Collection Test Environment Configuration
+        ###############################################################################
+        # Create an ansible environment to use. Use direnv to auto-load environment or
+        # manually source; then activate venv.
+        #
+        # Manual:
+        #   source ansible.env && source ./venv/bin/activate
+        #
+        # Direnv:
+        #   direnv allow  # only needed one-time.
+        #
+        # All configuration is done using environment variable per best practice. Check
+        # both core and community options when setting or changing values.
+        #
+        # Generated with:
+        #
+        #   ansible-config init -t all -f env > /tmp/ansible-env.cfg
+        #
+        # Environment options are:
+        # * Explicitly set.
+        # * Not internal-only settings.
+        # * Deprecated settings actively removed or noted with a TODO if in use.
+        # * Use sh interpretation (0: False, 1: True; etc).
+        #
+        # Settings can be validated with (errors will be listed):
+        #
+        #   ansible-config --help
+        #   ansible-config dump -t all --only-changed
+        #
+        # Reference:
+        # * https://r-pufky.github.io/ansible_docs/ansible/environment
+
+        ###############################################################################
+        # Ansible (Core) Common Options
+        ###############################################################################
+        # Environment variables for core ansible release.
+        #
+        # Do not use 'ansible' user (as containers do not have this setup); also do not
+        # use custom SSH options as these are not used for podman.
+        #
+        # Reference:
+        # * https://docs.ansible.com/ansible/latest/reference_appendices/config.html
+
+        export ANSIBLE_CONFIG=''  # Do not use config files.
+        export ANSIBLE_DISPLAY_SKIPPED_HOSTS=0  # Do not display skipped hosts.
+        export ANSIBLE_DUPLICATE_YAML_DICT_KEY='error'  # Explicit duplicate errors.
+        export ANSIBLE_STDOUT_CALLBACK='debug'  # ansible-doc -t callback -l.
+        export ANSIBLE_USE_PERSISTENT_CONNECTIONS=1  # Persist SSH connections.
+
+        ###############################################################################
+        # Ansible (Collection) Environment Options
+        ###############################################################################
+        # Environment variables for non-core ansible collections.
+        #
+        # Reference:
+        # * https://docs.ansible.com/ansible/latest/collections/environment_variables.html#list-of-collection-env-vars
+
+        export ANSIBLE_ADMIN_USERS='root'  # Only enable root by default.
+        export ANSIBLE_PARAMIKO_RECORD_HOST_KEYS=0  # Ignore host keys.
+        export ANSIBLE_REMOTE_TMP='/tmp'  # Use RAMFS tmp, not disk (~/.ansible/tmp).
+        export ANSIBLE_SYSTEM_TMPDIRS='/tmp'  # Use RAMFS tmp, not disk (/var/tmp).
+
+        ###############################################################################
+        # Molecule 25.1.0+ Environment Fix
+        ###############################################################################
+        # 25.2.0 removed automatic path configuration for molecule tests. Manually set
+        # Molecule path resolution during environment setup.
+        #
+        # Reference:
+        # * https://github.com/ansible-community/molecule-plugins/issues/301
+        # * https://github.com/ansible/molecule/pull/4380
+        export PYTHON_LIB_PATH="$(python3 -c 'import sysconfig; print(sysconfig.get_paths()["purelib"])')"
+        export ANSIBLE_FILTER_PLUGINS="${PYTHON_LIB_PATH}/molecule/provisioner/ansible/plugins/filter:${HOME}/.ansible/plugins/filter:/usr/share/ansible/plugins/filter"
+        export ANSIBLE_LIBRARY="${PYTHON_LIB_PATH}/molecule/provisioner/ansible/plugins/modules:${PYTHON_LIB_PATH}/molecule_plugins/vagrant/modules:${HOME}/.ansible/plugins/modules:/usr/share/ansible/plugins/modules"
+        export ANSIBLE_ROLES_PATH="$(pwd)/roles:${HOME}/.ansible/roles:/usr/share/ansible/roles:/etc/ansible/roles"
+
+        ###############################################################################
+        # libvirt
+        ###############################################################################
+        # Always use system daemon for VM testing to prevent obtuse issues.
+        #
+        # Reference:
+        # * https://wiki.archlinux.org/title/Libvirt#Configuration
+        export LIBVIRT_DEFAULT_URI='qemu:///system'
+        ```
+
 ``` bash
 uv init --bare
 uv add ansible ansible-lint argcomplete
@@ -226,125 +352,6 @@ uv add molecule molecule-plugins[podman] molecule-plugins[vagrant]
 
 direnv allow
 ```
-
-!!! abstract ".gitignore"
-    0644 {USER}:{USER}
-
-    ``` bash
-    # Ansible
-    r_pufky-*.tar.gz
-    .ansible/
-    .ansible
-    .vscode/
-    molecule/cache
-    COMMIT.md
-    TODO.md
-    # Auto venv
-    .venv/
-    ```
-
-!!! abstract ".envrc"
-    0644 {USER}:{USER}
-
-    ``` bash
-    # direnv executes .envrc in bash and exports back to current shell.
-
-    # Create venv if needed and activate adding ansible testing environment.
-    uv sync --all-extras && source .venv/bin/activate
-    source ansible.env
-    ```
-
-??? abstract "ansible.env"
-    0644 {USER}:{USER}
-
-    ``` bash
-    ###############################################################################
-    # Ansible Collection Test Environment Configuration
-    ###############################################################################
-    # Create an ansible environment to use. Use direnv to auto-load environment or
-    # manually source; then activate venv.
-    #
-    # Manual:
-    #   source ansible.env && source ./venv/bin/activate
-    #
-    # Direnv:
-    #   direnv allow  # only needed one-time.
-    #
-    # All configuration is done using environment variable per best practice. Check
-    # both core and community options when setting or changing values.
-    #
-    # Generated with:
-    #
-    #   ansible-config init -t all -f env > /tmp/ansible-env.cfg
-    #
-    # Environment options are:
-    # * Explicitly set.
-    # * Not internal-only settings.
-    # * Deprecated settings actively removed or noted with a TODO if in use.
-    # * Use sh interpretation (0: False, 1: True; etc).
-    #
-    # Settings can be validated with (errors will be listed):
-    #
-    #   ansible-config --help
-    #   ansible-config dump -t all --only-changed
-    #
-    # Reference:
-    # * https://r-pufky.github.io/ansible_docs/ansible/environment
-
-    ###############################################################################
-    # Ansible (Core) Common Options
-    ###############################################################################
-    # Environment variables for core ansible release.
-    #
-    # Do not use 'ansible' user (as containers do not have this setup); also do not
-    # use custom SSH options as these are not used for podman.
-    #
-    # Reference:
-    # * https://docs.ansible.com/ansible/latest/reference_appendices/config.html
-
-    export ANSIBLE_CONFIG=''  # Do not use config files.
-    export ANSIBLE_DISPLAY_SKIPPED_HOSTS=0  # Do not display skipped hosts.
-    export ANSIBLE_DUPLICATE_YAML_DICT_KEY='error'  # Explicit duplicate errors.
-    export ANSIBLE_STDOUT_CALLBACK='debug'  # ansible-doc -t callback -l.
-    export ANSIBLE_USE_PERSISTENT_CONNECTIONS=1  # Persist SSH connections.
-
-    ###############################################################################
-    # Ansible (Collection) Environment Options
-    ###############################################################################
-    # Environment variables for non-core ansible collections.
-    #
-    # Reference:
-    # * https://docs.ansible.com/ansible/latest/collections/environment_variables.html#list-of-collection-env-vars
-
-    export ANSIBLE_ADMIN_USERS='root'  # Only enable root by default.
-    export ANSIBLE_PARAMIKO_RECORD_HOST_KEYS=0  # Ignore host keys.
-    export ANSIBLE_REMOTE_TMP='/tmp'  # Use RAMFS tmp, not disk (~/.ansible/tmp).
-    export ANSIBLE_SYSTEM_TMPDIRS='/tmp'  # Use RAMFS tmp, not disk (/var/tmp).
-
-    ###############################################################################
-    # Molecule 25.1.0+ Environment Fix
-    ###############################################################################
-    # 25.2.0 removed automatic path configuration for molecule tests. Manually set
-    # Molecule path resolution during environment setup.
-    #
-    # Reference:
-    # * https://github.com/ansible-community/molecule-plugins/issues/301
-    # * https://github.com/ansible/molecule/pull/4380
-    export PYTHON_LIB_PATH="$(python3 -c 'import sysconfig; print(sysconfig.get_paths()["purelib"])')"
-    export ANSIBLE_FILTER_PLUGINS="${PYTHON_LIB_PATH}/molecule/provisioner/ansible/plugins/filter:${HOME}/.ansible/plugins/filter:/usr/share/ansible/plugins/filter"
-    export ANSIBLE_LIBRARY="${PYTHON_LIB_PATH}/molecule/provisioner/ansible/plugins/modules:${PYTHON_LIB_PATH}/molecule_plugins/vagrant/modules:${HOME}/.ansible/plugins/modules:/usr/share/ansible/plugins/modules"
-    export ANSIBLE_ROLES_PATH="$(pwd)/roles:${HOME}/.ansible/roles:/usr/share/ansible/roles:/etc/ansible/roles"
-
-    ###############################################################################
-    # libvirt
-    ###############################################################################
-    # Always use system daemon for VM testing to prevent obtuse issues.
-    #
-    # Reference:
-    # * https://wiki.archlinux.org/title/Libvirt#Configuration
-    export LIBVIRT_DEFAULT_URI='qemu:///system'
-    ```
-
 
 ## Redirect ansible caches
 High IOPs cause premature SSD wear and cause false **yamllint**,
@@ -392,14 +399,27 @@ ln -s /mnt/cache/var/lib/libvirt /var/lib/libvirt
 ## VSCode
 All VSCode variants are included.
 
-Install [Ansible extension][c].
+### Create VSCode specific Ansible Environment
+Ideally pin to the specific ansible release being used.
+
+``` bash
+# A separate environment specifically for VSCode is recommended. Any
+# pre-configured environment (e.g. collection) will work.
+mkdir -p /var/venv/vscode && cd !$
+uv init --bare
+uv add ansible ansible-lint argcomplete ansible-navigator
+uv add molecule molecule-plugins[podman] molecule-plugins[vagrant]
+```
+
+Install [Ansible extension][c]. There should be no errors when opening ansible
+files locally or remotely.
 
 !!! example "ansible ➔ settings ➔ user ➔ workspace"
-    * Ansible: Path ➔ /var/venv/{REPO}/bin/ansible
+    * Ansible: Path ➔ /var/venv/vscode/.venv/bin/ansible
     * Ansible: Use Fully Qualified Collection Names ➔ ✔
     * Ansible: Reuse Terminal ➔ ✔
-    * Python: Interpreter Path ➔ /var/venv/{REPO}/bin/python
-    * Python: Activation Script ➔ /var/git/{REPO}/ansible.env
+    * Python: Interpreter Path ➔ /var/venv/vscode/.venv/bin/python
+    * Python: Activation Script ➔ /var/git/vscode/.venv/ansible.env
     * Ansible: Navigator Path ➔ ansible-navigator
     * Completion: Provide Redirect Modules ➔ ✔
     * Completion: Provide Module Option Aliases ➔ ✔
@@ -411,6 +431,10 @@ Install [Ansible extension][c].
     * Pull: Policy ➔ missing
     * Telemetry: Enabled ➔ ✘
     * Lightspeed: Enabled ➔ ✘
+
+!!! example "ctrl + , Python: Venv Path ➔ /var/venv"
+
+!!! tip "Preferences ➔ Color Theme ➔ Dark Modern"
 
 !!! tip ""
     Disable `ansible-lint` for documentation to prevent incorrect YAML error reporting.
@@ -445,3 +469,4 @@ Install [Ansible extension][c].
 [n]: https://wiki.archlinux.org/title/Libvirt#Installation
 [o]: https://old.reddit.com/r/linuxquestions/comments/tkgqdu/how_to_change_storage_path_for_libvirt
 [p]: https://docs.podman.io/en/latest
+[q]: https://r-pufky.github.io/docs/app/fish/#vagrant-shell-completion

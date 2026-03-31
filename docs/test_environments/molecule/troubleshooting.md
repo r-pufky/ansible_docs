@@ -1,6 +1,17 @@
 # Troubleshooting
 !!! info "Molecule 25.2+ [introduced breaking changes](../vagrant/troubleshooting.md#error-couldnt-resolve-moduleaction-vagrant)."
 
+## Failed to set permissions ... when becoming an unprivileged user
+ACL management utilities are required for `become: user`. These may be left out
+for minimal install images.
+
+!!! danger ""
+    [ERROR]: Task failed: Failed to set permissions on the temporary files Ansible needs to create when becoming an unprivileged user (rc: 1, err: chmod: invalid mode: ‘A+user:{USER}:rx:allow’
+
+``` bash
+# Always install ACL packages as part of role dependencies.
+apt install acl
+```
 
 ## YAML files reverted on test execution
 File linking or caching issue with IDE or Molecule.
