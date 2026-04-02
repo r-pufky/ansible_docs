@@ -10,7 +10,7 @@ users including root are mapped to 165536+ to prevent access (appears as
 nobody/nogroup on opposing node).
 
 Always attempt to first execute user data changes with the most common case
-first and fallback to the service user if it fails.
+first and fallback to the alternative if it fails.
 
 ``` yaml
 - name: '{{ "Init DB | filesystem | set " ~ maria__init_db._data_d }}'
@@ -23,7 +23,7 @@ first and fallback to the service user if it fails.
         mode: '0755'
         state: 'directory'
   rescue:
-    - name: '{{ "Init DB | filesystem | set " ~ maria__init_db._data_d }}'
+    - name: '{{ "Init DB ⛑ | filesystem | set " ~ maria__init_db._data_d }}'
       ansible.builtin.file:
         path: '{{ maria__init_db._data_d }}'
         owner: '{{ maria__cfg._uid }}'
