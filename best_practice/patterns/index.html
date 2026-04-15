@@ -918,6 +918,8 @@
       
         
       
+        
+      
     
     
     
@@ -1142,6 +1144,34 @@
 
               
             
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../vault/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Vault
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
           </ul>
         </nav>
       
@@ -1328,7 +1358,7 @@ files.</p>
 users including root are mapped to 165536+ to prevent access (appears as
 nobody/nogroup on opposing node).</p>
 <p>Always attempt to first execute user data changes with the most common case
-first and fallback to the service user if it fails.</p>
+first and fallback to the alternative if it fails.</p>
 <pre class="highlight"><code class="language-yaml">- name: '{{ "Init DB | filesystem | set " ~ maria__init_db._data_d }}'
   block:
     - name: '{{ "Init DB | filesystem | set " ~ maria__init_db._data_d }}'
@@ -1339,7 +1369,7 @@ first and fallback to the service user if it fails.</p>
         mode: '0755'
         state: 'directory'
   rescue:
-    - name: '{{ "Init DB | filesystem | set " ~ maria__init_db._data_d }}'
+    - name: '{{ "Init DB ⛑ | filesystem | set " ~ maria__init_db._data_d }}'
       ansible.builtin.file:
         path: '{{ maria__init_db._data_d }}'
         owner: '{{ maria__cfg._uid }}'
@@ -1352,38 +1382,68 @@ first and fallback to the service user if it fails.</p>
 <p>Recursively templating directories separates application config format changes.</p>
 <p>This enables the role to focus on critical setup and the consumer to configure
 the application settings appropriately.</p>
-<pre class="highlight"><code class="language-yaml">- name: '{{ "Install | filesystem | deploy " ~ maria___app._conf_d }}'
+<pre class="highlight"><code class="language-yaml">- name: 'Config | filetree | set managed directories'
+  ansible.builtin.file:
+    path: '{{ target_directory ~ "/" ~ item.path }}'
+    owner: 'root'
+    group: 'root'
+    mode: '0755'
+    state: 'directory'
+  loop: '{{ query("community.general.filetree", source_directory) }}'
+  loop_control:
+    label: '{{ item.path }}'
+  when: item.state == 'directory'
+
+- name: 'Config | filetree | set managed files'
   ansible.builtin.template:
     src: '{{ item.src }}'
-    dest: '{{ maria___app._conf_d }}'
-    owner: '{{ maria__srv._user }}'
-    group: '{{ maria__srv._group }}'
+    dest: '{{ target_directory ~ "/" ~ item.path }}'
+    owner: 'root'
+    group: 'root'
     mode: '0644'
-  loop: '{{
-      query("community.general.filetree", "templates/default/mariadb.conf.d")
-    }}'
+  loop: '{{ query("community.general.filetree", source_directory) }}'
   loop_control:
     label: '{{ item.path }}'
   when: item.state == 'file'
-  register: maria__local
 
-- name: 'Install | filesystem | query remote files'
+- name: 'Config | filesystem | query remote files'
   ansible.builtin.find:
-    paths: '{{ maria___app._conf_d }}'
-    file_type: 'file'
+    paths: '{{ target_directory }}'
+    file_type: 'any'
+    hidden: true
     recurse: true
-  register: maria__remote
+  register: remote__list
 
-- name: 'Install | filesystem | remove unmanaged files'
+- name: 'Config | filetree | remove unmanaged files and directories'
   ansible.builtin.file:
     path: '{{ item.path }}'
     state: 'absent'
-  loop: '{{ maria__remote.files }}'
+  loop: '{{ remote__list.files | sort(attribute="path", reverse=true) }}'
   loop_control:
     label: '{{ item.path }}'
   when: &gt;
-    item.path not in maria__local.results | selectattr('dest', 'defined') |
-    map(attribute='dest') | list</code></pre>
+    item.path not in
+    (
+      query("community.general.filetree", source_directory) |
+      map(attribute='path') |
+      map('regex_replace', '^', target_directory ~ "/") | list
+    )
+
+# If source_directory can be left as empty string, clear target_directory.
+- name: '{{ "Config | filesystem | query " ~ target_directory }}'
+  when: source_directory | length == 0
+  ansible.builtin.find:
+    paths: "{{ target_directory }}"
+    recurse: false  # Don't need to enumerate sub-directories to remove.
+    hidden: true
+  register: remote__cmd
+
+- name: '{{ "Config | filesystem | clear " ~ target_directory }}'
+  when: source_directory | length == 0
+  ansible.builtin.file:
+    path: "{{ item.path }}"
+    state: absent
+  loop: "{{ remote__cmd.files }}"</code></pre>
 <div class="admonition tip">
 <p class="admonition-title">Do not separate into another role</p>
 <p><strong>community.general.filetree</strong> resolves paths based on the play it was
@@ -1589,7 +1649,7 @@ configuration tasks.</p>
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"></path></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="March 31, 2026 02:22:12 UTC">March 31, 2026</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="April 15, 2026 05:03:20 UTC">April 15, 2026</span>
   </span>
 
     

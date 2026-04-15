@@ -7,13 +7,13 @@
         <meta name="author" content="r-pufky">
       
       
-        <link rel="canonical" href="https://github.com/r-pufky/ansible_docs/collection/troubleshooting/">
+        <link rel="canonical" href="https://github.com/r-pufky/ansible_docs/best_practice/vault/">
       
       
-        <link rel="prev" href="../">
+        <link rel="prev" href="../testing/">
       
       
-        <link rel="next" href="../../role/">
+        <link rel="next" href="../../troubleshooting/">
       
       
         
@@ -24,7 +24,7 @@
     
     
       
-        <title>Troubleshooting - Ansible Development</title>
+        <title>Vault - Ansible Development</title>
       
     
     
@@ -93,7 +93,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#troubleshooting" class="md-skip">
+        <a href="#vault" class="md-skip">
           Skip to content
         </a>
       
@@ -129,7 +129,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Troubleshooting
+              Vault
             
           </span>
         </div>
@@ -311,8 +311,6 @@
       
   
   
-    
-  
   
   
     
@@ -328,15 +326,15 @@
     
     
     
-    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked="">
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2">
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="../" class="md-nav__link ">
+            <a href="../../collection/" class="md-nav__link ">
               
   
   
@@ -360,7 +358,7 @@
             
           </div>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
           <label class="md-nav__title" for="__nav_2">
             <span class="md-nav__icon md-icon"></span>
             
@@ -377,37 +375,10 @@
                 
   
   
-    
   
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-        
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Troubleshooting
-  
-
-    
-  </span>
-  
-  
-
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../../collection/troubleshooting/" class="md-nav__link">
         
   
   
@@ -423,81 +394,6 @@
   
 
       </a>
-      
-        
-
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
-      
-        <li class="md-nav__item">
-  <a href="#testing-in-roles-uses-old-files" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Testing in roles uses old files
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#unable-to-determine-context-for-the-following-test-targets" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Unable to determine context for the following test targets
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#only-localhost-is-available" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Only Localhost is Available
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#fixing-gplv3-license-missing" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Fixing GPLv3 License Missing
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#reference" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Reference
-      
-    </span>
-  </a>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
     </li>
   
 
@@ -1005,6 +901,8 @@
       
   
   
+    
+  
   
   
     
@@ -1026,15 +924,15 @@
     
     
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5">
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" checked="">
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="../../best_practice/" class="md-nav__link ">
+            <a href="../" class="md-nav__link ">
               
   
   
@@ -1058,7 +956,7 @@
             
           </div>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="true">
           <label class="md-nav__title" for="__nav_5">
             <span class="md-nav__icon md-icon"></span>
             
@@ -1078,7 +976,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../best_practice/patterns/" class="md-nav__link">
+      <a href="../patterns/" class="md-nav__link">
         
   
   
@@ -1106,7 +1004,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../best_practice/style_guide/" class="md-nav__link">
+      <a href="../style_guide/" class="md-nav__link">
         
   
   
@@ -1134,7 +1032,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../best_practice/testing/" class="md-nav__link">
+      <a href="../testing/" class="md-nav__link">
         
   
   
@@ -1159,10 +1057,37 @@
                 
   
   
+    
   
   
-    <li class="md-nav__item">
-      <a href="../../best_practice/vault/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Vault
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         
   
   
@@ -1178,6 +1103,120 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
+      
+        <li class="md-nav__item">
+  <a href="#initial-setup" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Initial Setup
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Initial Setup">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#generate-a-random-vault-password-to-use" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Generate a random vault password to use
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#create-vault-scripts" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Create Vault Scripts
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#update-ansible-environment" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Update Ansible Environment
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#create-makefile" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Create Makefile
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#vault-encrypt-ansible-ssh-keys" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Vault Encrypt Ansible SSH Keys
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#managing-keys" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Managing Keys
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#reference" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Reference
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -1244,43 +1283,82 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
       
         <li class="md-nav__item">
-  <a href="#testing-in-roles-uses-old-files" class="md-nav__link">
+  <a href="#initial-setup" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Testing in roles uses old files
+        Initial Setup
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Initial Setup">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#generate-a-random-vault-password-to-use" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Generate a random vault password to use
       
     </span>
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
-  <a href="#unable-to-determine-context-for-the-following-test-targets" class="md-nav__link">
+        
+          <li class="md-nav__item">
+  <a href="#create-vault-scripts" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Unable to determine context for the following test targets
+        Create Vault Scripts
       
     </span>
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
-  <a href="#only-localhost-is-available" class="md-nav__link">
+        
+          <li class="md-nav__item">
+  <a href="#update-ansible-environment" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Only Localhost is Available
+        Update Ansible Environment
       
     </span>
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
-  <a href="#fixing-gplv3-license-missing" class="md-nav__link">
+        
+          <li class="md-nav__item">
+  <a href="#create-makefile" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Fixing GPLv3 License Missing
+        Create Makefile
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#vault-encrypt-ansible-ssh-keys" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Vault Encrypt Ansible SSH Keys
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#managing-keys" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Managing Keys
       
     </span>
   </a>
@@ -1344,7 +1422,7 @@
         <a href="../" class="md-path__link">
           
   <span class="md-ellipsis">
-    Collections
+    Best Practices
   </span>
 
         </a>
@@ -1363,7 +1441,7 @@
 
 
   
-    <a href="https://github.com/r-pufky/ansible_docs/edit/main/docs/collection/troubleshooting.md" title="Edit this page" class="md-content__button md-icon" rel="edit">
+    <a href="https://github.com/r-pufky/ansible_docs/edit/main/docs/best_practice/vault.md" title="Edit this page" class="md-content__button md-icon" rel="edit">
       
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20H6V4h7v5h5v3.1l2-2V8l-6-6H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h4zm10.2-7c.1 0 .3.1.4.2l1.3 1.3c.2.2.2.6 0 .8l-1 1-2.1-2.1 1-1c.1-.1.2-.2.4-.2m0 3.9L14.1 23H12v-2.1l6.1-6.1z"></path></svg>
     </a>
@@ -1371,86 +1449,284 @@
   
 
 
-<h1 id="troubleshooting">Troubleshooting</h1>
-<h2 id="testing-in-roles-uses-old-files">Testing in roles uses old files</h2>
-<p>Collection cache is outdated.</p>
-<p>Clear build cache.
-</p><pre class="highlight"><code class="language-bash">rm -rfv ~/.ansible/collections/ansible_collections/r_pufky/srv</code></pre><p></p>
-<h2 id="unable-to-determine-context-for-the-following-test-targets">Unable to determine context for the following test targets</h2>
-<p>A controller and a target were not specified when running the test.</p>
-<div class="admonition danger">
-<pre class="highlight"><code class="language-log">WARNING: Unable to determine context for the following test targets, they will
-be run on the target host: {MODULE}, {MODULE}, they will be run on the target
-host: {MODULE}, {MODULE}</code></pre>
-</div>
-<p>This is OK for tests that are run on localhost with NO impact on system (e.g.
-filters).</p>
-<h2 id="only-localhost-is-available">Only Localhost is Available</h2>
-<p>Host inventory not detected when running collection tests.</p>
-<div class="admonition danger">
-<pre class="highlight"><code class="language-bash">ansible-playbook roles/hello_motd/tests/playbook/test_hello_motd.yml
-...
-  [WARNING]: No inventory was parsed, only implicit localhost is available
-  [WARNING]: provided hosts list is empty, only localhost is available. Note
-  that the implicit localhost does not match 'all'</code></pre>
-</div>
-<p>Explicitly specify inventory to use.
-</p><pre class="highlight"><code class="language-bash">ansible-playbook -i tests/inventory tests/playbook/test_hello_motd.yml</code></pre><p></p>
-<div class="admonition tip">
-<p class="admonition-title"><strong>--ask-become-pass</strong> will be needed if sudo used or use GPG key injection.</p>
-</div>
-<h2 id="fixing-gplv3-license-missing">Fixing GPLv3 License Missing</h2>
-<p>Community distributions assumes GPLv3.</p>
-<p>Explicitly ignore if different license.
-</p><pre class="highlight"><code class="language-bash">mkdir -p tests/sanity
-touch tests/sanity/ignore-{ANSIBLE VERSION}.txt
+<h1 id="vault">Vault</h1>
+<p>Vault is the built in encryption store for Ansible. GPG (and security key based
+GPG keys) can be used to encrypt ansible data, enabling ansible deployments
+with security key touches. A makefile makes this process reproducible.</p>
+<p>Assumes a <a href="https://r-pufky.github.io/docs/app/gpg">Yubikey with GPG</a> and <a href="https://r-pufky.github.io/ansible_docs/#environment-setup">Environment</a> setup.</p>
+<h2 id="initial-setup">Initial Setup</h2>
+<p>Create the initial directory structure and generate <a href="https://r-pufky.github.io/docs/network/ssh/#generate-4096-bit-rsa-certificates-add-user-to-ssh-group">SSH keys</a> if needed.</p>
+<table>
+<thead>
+<tr>
+<th>Playbook Path</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>scripts/Makefile</td>
+<td>Makefile to reproducibly create secret materials.</td>
+</tr>
+<tr>
+<td>scripts/vault_gpg</td>
+<td>GPG decrypt vault key script.</td>
+</tr>
+<tr>
+<td>scripts/vault_rekey</td>
+<td>Rotation and re-encrypt vault key script.</td>
+</tr>
+<tr>
+<td>certs/gpg</td>
+<td>GPG material.</td>
+</tr>
+<tr>
+<td>certs/ssh</td>
+<td>SSH material.</td>
+</tr>
+<tr>
+<td>certs/ansible*</td>
+<td>Ansible vaulted SSH public key material.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="generate-a-random-vault-password-to-use">Generate a random vault password to use</h3>
+<pre class="highlight"><code class="language-bash">pwgen -n 71 -C | head -n1 | gpg --armor --recipient {GPGID} -e -o certs/gpg/ansible.gpg
 
-touch tests/sanity/ignore-2.16.txt</code></pre><p></p>
-<div class="admonition warning">
-<p class="admonition-title">An ignore file is required for each specific <strong>version</strong> of ansible.</p>
+# Re-key existing vault data with new key if needed.
+grep -rl '^$ANSIBLE_VAULT.*' . | xargs -t ansible-vault rekey</code></pre>
+<h3 id="create-vault-scripts">Create Vault Scripts</h3>
+<div class="admonition abstract">
+<p class="admonition-title">vault_gpg</p>
+<p>0755 {USER}:{USER}</p>
+<pre class="highlight"><code class="language-bash">#!/bin/sh
+#
+# Use from make.
+#
+# pwgen -n 71 -C | head -n1 | gpg --armor --recipient {GPG ID} -e -o ansible.gpg
+#
+# Reference:
+# * https://disjoint.ca/til/2016/12/14/encrypting-the-ansible-vault-passphrase-using-gpg/
+# * https://www.cloudsavvyit.com/3902/how-to-use-ansible-vault-to-store-secret-keys/
+
+gpg --batch --use-agent --decrypt "$(dirname $(dirname $(realpath -s $0)))/certs/gpg/ansible.gpg"</code></pre>
 </div>
-<div class="admonition tip">
-<p class="admonition-title">Tip</p>
-<p><strong>Order Matters</strong>: if ignores are throwing warnings, check ordering and
-make sure they are ordered correctly. Proper ignores will <strong>not</strong> generate
-warnings.</p>
+<div class="admonition abstract">
+<p class="admonition-title">vault_rekey</p>
+<p>0755 {USER}:{USER}</p>
+<pre class="highlight"><code class="language-bash">#!/bin/sh
+#
+# Use from make. Helper script for rekeying GPG encrypted vaults. Use Makefile.
+#
+# Reference:
+# * https://disjoint.ca/til/2016/12/14/encrypting-the-ansible-vault-passphrase-using-gpg/
+# * https://www.cloudsavvyit.com/3902/how-to-use-ansible-vault-to-store-secret-keys/
+
+gpg --batch --use-agent --decrypt "$(dirname $(dirname $(realpath -s $0)))/certs/gpg/ansible.gpg.new"</code></pre>
 </div>
+<h3 id="update-ansible-environment">Update Ansible Environment</h3>
+<div class="admonition abstract">
+<p class="admonition-title">ansible.env</p>
+<p>0644 {USER}:{USER}</p>
+<pre class="highlight"><code class="language-bash"># Add the following to ansible.env to redirect vault authentication.
+# Direnv auto-loads from root directory regardless of entrypoint; pwd will
+# always resolve to root dir. core, core.pub are the SSH keys to use for
+# ansible user.
+export ANSIBLE_PRIVATE_KEY_FILE="$(pwd)/certs/ssh/core"
+export ANSIBLE_VAULT_PASSWORD_FILE="$(pwd)/scripts/vault_gpg"
+
+# Include JSON for vaulted files (e.g. any vaulted files).
+export ANSIBLE_YAML_FILENAME_EXT='.yml, .vault, .json'</code></pre>
+</div>
+<h3 id="create-makefile">Create Makefile</h3>
 <div class="admonition info">
-<p class="admonition-title">Info</p>
-<p>Only certain ignores are explicitly allowed; others will always throw
-ansible-lint errors even if ignored.</p>
+<p class="admonition-title">Makefiles are TAB sensitive</p>
 </div>
-<p>tests/sanity/ignore-2.16.txt
-</p><pre class="highlight"><code>plugins/modules/demo_hello.py compile-2.7!skip
-plugins/modules/demo_hello.py import-2.7!skip
-plugins/modules/demo_hello.py compile-3.6!skip
-plugins/modules/demo_hello.py import-3.6!skip
-plugins/modules/demo_hello.py compile-3.7!skip
-plugins/modules/demo_hello.py import-3.7!skip
-plugins/modules/demo_hello.py compile-3.8!skip
-plugins/modules/demo_hello.py import-3.8!skip
-plugins/modules/demo_hello.py compile-3.9!skip
-plugins/modules/demo_hello.py import-3.9!skip
-plugins/modules/demo_hello.py compile-3.10!skip
-plugins/modules/demo_hello.py import-3.10!skip
-plugins/modules/demo_hello.py compile-3.12!skip
-plugins/modules/demo_hello.py import-3.12!skip
-plugins/modules/demo_hello.py validate-modules:missing-gplv3-license</code></pre><p></p>
-<h2 id="reference">Reference<sup id="fnref:1"><a class="footnote-ref" href="#fn:1">1</a></sup><sup id="fnref:2"><a class="footnote-ref" href="#fn:2">2</a></sup><sup id="fnref:3"><a class="footnote-ref" href="#fn:3">3</a></sup><sup id="fnref:4"><a class="footnote-ref" href="#fn:4">4</a></sup></h2>
+<div class="admonition abstract">
+<p class="admonition-title">Makefile</p>
+<p>0644 {USER}:{USER}</p>
+<pre class="highlight"><code class="language-make">###############################################################################
+# Ansible Secrets
+###############################################################################
+# direnv guarantees current virtual environment setup and  location. Make
+# always executed from current directory.
+
+# Base locations
+ROOT_DIR         = ..
+ENC_DIR          = $(ROOT_DIR)/certs
+GPG_DIR          = $(ENC_DIR)/gpg
+SSH_DIR          = $(ENC_DIR)/ssh
+SCRIPTS_DIR      = $(ROOT_DIR)/scripts
+
+# Ansible locations
+ANS_ENV          = $(ROOT_DIR)/ansible.env
+ANS_VENV         = $(ROOT_DIR)/.venv/bin/activate
+# This can be placed anywhere, it will be the vaulted authorized_keys.
+ANS_USER_VAULT   = $(ROOT_DIR)/group_vars/all/users/ansible/vault
+ANS_SSH_KEY      = $(ENC_DIR)/ansible_key.vault
+ANS_SSH_PUB      = $(ENC_DIR)/ansible_pub.vault
+
+# GPG (use your specific GPG keys!)
+GPG_ID           = user@example.com
+GPG_URL          = https://keys.openpgp.org/vks/v1/by-fingerprint/{GPG_ID}
+GPG_VAULT        = $(GPG_DIR)/ansible.gpg
+GPG_SCRIPT       = $(SCRIPTS_DIR)/vault_gpg
+GPG_SCRIPT_REKEY = $(SCRIPTS_DIR)/vault_gpg_rekey
+
+# SSH settings
+SSH_KEY_NAME     = core
+
+help:
+    @echo "USAGE:"
+    @echo "  🛈 SSH Key Management 🛈"
+    @echo
+    @echo "  make ssh_install"
+    @echo "      Decrypts and installs core ansible ssh keys for current user."
+    @echo
+    @echo "  make ssh_clean"
+    @echo "      Removes ansible ssh generated key material."
+    @echo
+    @echo "  make ssh_keys"
+    @echo "      Generate ansible SSH keys."
+    @echo
+    @echo "  make ssh_import"
+    @echo "      Import $(SSH_KEY_NAME) keys into current user SSH directory."
+    @echo "      Does NOT clobber existing keys."
+    @echo
+    @echo "  🛈 GPG Vault Key Management 🛈"
+    @echo
+    @echo "  make vault_create"
+    @echo "      Generate GPG encrypted vault keys using GPG_ID, which must be"
+    @echo "      imported first."
+    @echo
+    @echo "  make vault_rotate"
+    @echo "      Rotate vault keys. Entire files are automatically rotated."
+    @echo "      Per-variable encryption must be manually migrated."
+    @echo
+    @echo "  make vault_rotate_finish"
+    @echo "      After 'make vault_rotate', use this to remove old vault key and"
+    @echo "      store new one."
+    @echo
+    @echo "  🛈 Dependencies 🛈"
+    @echo
+    @echo "  make deps"
+    @echo "      Install required package dependencies."
+    @echo
+    @echo "      Assumes requires packages are installed. Attempts OS detection"
+    @echo "      and automatic [ssh, gnupg, pwgen] install."
+
+.PHONY: help Makefile
+
+sanity_check:
+    @echo -n "Are you sure? [y/N] " &amp;&amp; read ans &amp;&amp; [ $${ans:-N} = y ]
+
+deps:
+    OS_ID := $(shell grep "^ID=" /etc/os-release | cut -d'=' -f2)
+    ifneq ($(filter $(OS_ID),cachyos manjaro arch),)
+        @sudo pacman --sync --refresh --sysupgrade --noconfirm openssh gnupg pwgen
+        @sudo systemctl start pcscd
+    else
+        @sudo apt update &amp;&amp; sudo apt install --yes ssh gnupg2 pwgen
+    endif
+
+###############################################################################
+# SSH Key Management Options
+###############################################################################
+# SSH Keys are stored encrypted in GPG vault, using the ansible configuration
+# file in $(GPG_DIR). This must be specified in addition to the virtual
+# environment for the ansible vault tool to correct find the vault settings for
+# GPG decryption.
+
+ssh_install:
+    @echo 'Decrypting and installing $(SSH_KEY_NAME) for ansible ssh authentication ...'
+    @mkdir -pv "$(SSH_DIR)"
+    @echo '🛆 Security key auth 🛆'
+    @export ANSIBLE_CONFIG="$(ANS_ENV)";. $(ANS_VENV); cd $(ROOT_DIR) &amp;&amp; ansible-vault decrypt $(ANS_SSH_KEY) --output="../$(SSH_DIR)/$(SSH_KEY_NAME)"
+    @echo '🛆 Security key auth 🛆'
+    @export ANSIBLE_CONFIG="$(ANS_ENV)";. $(ANS_VENV); cd $(ROOT_DIR) &amp;&amp; ansible-vault decrypt $(ANS_SSH_PUB) --output="../$(SSH_DIR)/$(SSH_KEY_NAME).pub"
+    @echo 'Done.'
+
+ssh_clean: sanity_check
+    @echo '🗘 Removing ansible ssh key material 🗘'
+    -@sudo rm -rfv $(SSH_DIR)/$(SSH_KEY_NAME)*
+    @echo 'Done.'
+
+ssh_keys:
+    @echo '🗘 Generating keys (do NOT create passwordless keys) 🗘'
+    @ssh-keygen -b 4096 -t rsa -f "$(SSH_DIR)/$(SSH_KEY_NAME).newkey"
+    @mv "$(SSH_DIR)/$(SSH_KEY_NAME).newkey" "$(SSH_DIR)/$(SSH_KEY_NAME)"
+    @mv "$(SSH_DIR)/$(SSH_KEY_NAME).newkey.pub" "$(SSH_DIR)/$(SSH_KEY_NAME).pub"
+    @echo 'Done.'
+    @echo '🛆 Updating ansible management keys (GPG auth required) 🛆'
+    -@rm -f $(ANS_USER_VAULT)
+    @echo -n "---\n# Autogenerated from make keys\n\nauthorized_keys: " &gt; $(ANS_USER_VAULT)
+    @cat $(SSH_DIR)/$(SSH_KEY_NAME).pub &gt;&gt; $(ANS_USER_VAULT)
+    @. $(ANS_VENV); cd $(ROOT_DIR) &amp;&amp; ansible-vault encrypt $(ANS_USER_VAULT)
+    @echo 'Done.'
+    @echo '🗘 Exporting &amp; Encrypting keys to ansible vault 🗘'
+    @cp -f "$(SSH_DIR)/$(SSH_KEY_NAME)" $(ANS_SSH_KEY)
+    @cp -f "$(SSH_DIR)/$(SSH_KEY_NAME).pub" $(ANS_SSH_PUB)
+    @. $(ANS_VENV); cd $(ROOT_DIR) &amp;&amp; ansible-vault encrypt $(ANS_SSH_KEY)
+    @. $(ANS_VENV); cd $(ROOT_DIR) &amp;&amp; ansible-vault encrypt $(ANS_SSH_PUB)
+    @echo 'Done.'
+
+ssh_import:
+    @echo "🗘 Importing $(SSH_KEY_NAME) keys to current user 🗘"
+    @cp -vn "$(SSH_DIR)/$(SSH_KEY_NAME)*" ~/.ssh
+    @echo 'Done.'
+
+###############################################################################
+# GPG Management Options
+###############################################################################
+# Create GPG encrypted vault key. Do not store unencrypted key material in git.
+
+vault_install:
+    @echo '🗘 Stopping existing gpg-agents to prevent key generation failure 🗘'
+    -@sudo killall gpg-agent 2&gt;/dev/null
+
+vault_rotate_finish:
+    @echo '🗘 Finishing vault key rotation 🗘'
+    @mv -v $(GPG_VAULT).new $(GPG_VAULT)
+    @echo 'Done.'
+
+vault_create: vault_install
+    @echo '🗘 Creating GPG encrypted vault keys 🗘'
+    @pwgen -n 71 -C | head -n1 | gpg --armor --recipient $(GPG_ID) -e -o $(GPG_VAULT)
+    @echo 'Done.'
+
+vault_rotate: vault_install
+    @echo '🗘 Rotating GPG encrypted vault keys 🗘'
+    @echo '🗘 Creating NEW GPG encrypted vault key 🗘'
+    @pwgen -n 71 -C | head -n1 | gpg --armor --recipient $(GPG_ID) -e -o $(GPG_VAULT).new
+    @. $(ANS_VENV); grep -rl '^$$ANSIBLE_VAULT.*' $(SSH_KEY_NAME) | xargs -t ansible-vault rekey --vault-password-file $(GPG_SCRIPT) --new-vault-password-file $(GPG_SCRIPT_REKEY)
+    @echo 'Done.'
+    @echo
+    @echo 'ONLY rekeyed whole files. Encrypted variabled needs manual rotation.'
+    @echo 'Suspected files with variable encryption:'
+    @echo
+    @grep -rl '[[:blank:]]$$ANSIBLE_VAULT.*' $(SSH_KEY_NAME)
+    @echo
+    @echo '🛆 Manually rotate suspected files if needed 🛆'
+    @echo
+    @echo '   make vault_rotate_finish'</code></pre>
+</div>
+<h3 id="vault-encrypt-ansible-ssh-keys">Vault Encrypt Ansible SSH Keys</h3>
+<p>These will be decrypted and used for SSH connections on connection. Place in
+<strong>certs/ansible.{key,pub}.vault</strong>.</p>
+<h2 id="managing-keys">Managing Keys</h2>
+<p>Ansible commands requiring authentication will prompt for key touch when
+configured correctly. The Makefile is only needed for future management.</p>
+<pre class="highlight"><code class="language-bash">cd scripts
+make</code></pre>
+<h2 id="reference">Reference<sup id="fnref:1"><a class="footnote-ref" href="#fn:1">1</a></sup><sup id="fnref:2"><a class="footnote-ref" href="#fn:2">2</a></sup></h2>
 <div class="footnote">
 <hr>
 <ol>
 <li id="fn:1">
-<p><a href="https://github.com/ansible/ansible/issues/67032">https://github.com/ansible/ansible/issues/67032</a>&nbsp;<a class="footnote-backref" href="#fnref:1" title="Jump back to footnote 1 in the text">↩</a></p>
+<p><a href="https://www.cloudsavvyit.com/3902/how-to-use-ansible-vault-to-store-secret-keys">https://www.cloudsavvyit.com/3902/how-to-use-ansible-vault-to-store-secret-keys</a>&nbsp;<a class="footnote-backref" href="#fnref:1" title="Jump back to footnote 1 in the text">↩</a></p>
 </li>
 <li id="fn:2">
-<p><a href="https://docs.ansible.com/ansible/latest/dev_guide/testing/sanity/ignores.html">https://docs.ansible.com/ansible/latest/dev_guide/testing/sanity/ignores.html</a>&nbsp;<a class="footnote-backref" href="#fnref:2" title="Jump back to footnote 2 in the text">↩</a></p>
-</li>
-<li id="fn:3">
-<p><a href="https://docs.ansible.com/ansible/latest/dev_guide/testing/sanity/validate-modules.html">https://docs.ansible.com/ansible/latest/dev_guide/testing/sanity/validate-modules.html</a>&nbsp;<a class="footnote-backref" href="#fnref:3" title="Jump back to footnote 3 in the text">↩</a></p>
-</li>
-<li id="fn:4">
-<p><a href="https://ansible.readthedocs.io/projects/lint/rules/sanity/">https://ansible.readthedocs.io/projects/lint/rules/sanity/</a>&nbsp;<a class="footnote-backref" href="#fnref:4" title="Jump back to footnote 4 in the text">↩</a></p>
+<p><a href="https://disjoint.ca/til/2016/12/14/encrypting-the-ansible-vault-passphrase-using-gpg">https://disjoint.ca/til/2016/12/14/encrypting-the-ansible-vault-passphrase-using-gpg</a>&nbsp;<a class="footnote-backref" href="#fnref:2" title="Jump back to footnote 2 in the text">↩</a></p>
 </li>
 </ol>
 </div>
@@ -1486,7 +1762,7 @@ plugins/modules/demo_hello.py validate-modules:missing-gplv3-license</code></pre
     <span class="md-icon" title="Created">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M14.47 15.08 11 13V7h1.5v5.25l3.08 1.83c-.41.28-.79.62-1.11 1m-1.39 4.84c-.36.05-.71.08-1.08.08-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8c0 .37-.03.72-.08 1.08.69.1 1.33.32 1.92.64.1-.56.16-1.13.16-1.72 0-5.5-4.5-10-10-10S2 6.5 2 12s4.47 10 10 10c.59 0 1.16-.06 1.72-.16-.32-.59-.54-1.23-.64-1.92M18 15v3h-3v2h3v3h2v-3h3v-2h-3v-3z"></path></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="November 6, 2025 05:47:17 UTC">November 6, 2025</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="April 15, 2026 05:03:20 UTC">April 15, 2026</span>
   </span>
 
     
