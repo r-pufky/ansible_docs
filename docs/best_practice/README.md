@@ -1,5 +1,4 @@
 # Best Practices
-
 !!! tip "Prefer consistency in documentation and update if file is touched."
     Always resolve yamllint, and ansible-lint issues with **no** global
     exceptions ([example][a]).
@@ -66,7 +65,6 @@ See [style guide](style_guide.md).
 
 
 ## Abbreviated Data Types
-
  Type                   | Default
 -----------------------:|--------------------------------------------------
  **`int`**              | **`#`** (not empty).
@@ -78,7 +76,6 @@ See [style guide](style_guide.md).
  **`{TYPE} of {TYPE}`** | Outer most type first (e.g. list of str - **`[]`**).
  **`{TYPE} or {TYPE}`** | Multiple types - preferred type first.
 
-
 ## TODO
 Place anywhere where additional work is needed. No restrictions.
 
@@ -87,7 +84,6 @@ Place anywhere where additional work is needed. No restrictions.
 #     next PiHole release. Lists will still be managed, but cannot be deleted.
 # ⋮ Good TODO categories: bug, role, user, {VERSION}.
 ```
-
 
 ## ⋮ Alternative Context
 Include alternative docstring format or context inline with the docstring
@@ -100,13 +96,12 @@ option. This provides self-documenting expanded use features.
 # ⋮* multi_option_two=true.
 ```
 
-
 ## Text Glyphs
 
  Glyph | Code  | Use
 ------:|:------|--------------------------
  ➔     | 2794  | Menus, sub-items, links.
- ⚠     | 26a0  | Warning.
+ 🛆     | 26a0  | Warning.
  ⓘ     | 24be  | Informational.
  🗘    | 1f5d8 | Waiting.
  ✔     | 2714  | Success / Enabled.
@@ -115,16 +110,13 @@ option. This provides self-documenting expanded use features.
  ⚙     | 2699  | Settings.
  ⌘     | 2318  | Super key.
 
-
 ## Reference[^1][^2][^3][^4][^5][^6]
-
 [^1]: https://docs.ansible.com/ansible/2.8/user_guide/playbooks_best_practices.html
 [^2]: https://docs.ansible.com/ansible/latest/reference_appendices/special_variables.html#magic-variables
 [^3]: https://docs.ansible.com/ansible/latest/playbook_guide/playbooks_filters.html#providing-default-values
 [^4]: https://ansible.readthedocs.io/projects/lint/rules/
 [^5]: https://yamllint.readthedocs.io/en/stable/rules.html
 [^6]: https://docs.ansible.com/ansible/latest/dev_guide/migrating_roles.html
-
 
 [a]: https://github.com/r-pufky/ansible_paperless_ngx
 [b]: https://github.com/r-pufky/ansible_collection_data

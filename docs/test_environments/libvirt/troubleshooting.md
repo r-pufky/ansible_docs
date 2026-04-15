@@ -1,10 +1,9 @@
 # Troubleshooting
 !!! info "Molecule 25.2+ [introduced breaking changes](../vagrant/troubleshooting.md#error-couldnt-resolve-moduleaction-vagrant)."
 
-
 ## [dist-upgrade fails for grub-pc][b]
 Virtual disk device mapping changed during configuration, requiring interactive
-re-configuration. Re-create the VM.
+re-configuration. Re-run test or re-create the VM.
 
 !!! abstract ""
 
@@ -15,7 +14,6 @@ re-configuration. Re-create the VM.
     MSG:
     '/usr/bin/apt-get dist-upgrade ' failed: E: Sub-process /usr/bin/dpkg returned an error code (1)
     ```
-
 
 ## [No Network Connection][a]
 libvirt switched to using nftables userspace directly. Immediate workaround is
@@ -31,7 +29,6 @@ same nftables table.
     ``` ini
     firewall_backend = "iptables"
     ```
-
 
 [a]: https://gitlab.com/libvirt/libvirt/-/work_items/644
 [b]: https://stackoverflow.com/questions/44621077/vagrant-stalling-on-boot

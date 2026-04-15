@@ -40,6 +40,7 @@ nav:
       - 'best_practice/patterns.md'
       - 'best_practice/style_guide.md'
       - 'best_practice/testing.md'
+      - 'best_practice/vault.md'
   - 'troubleshooting.md'
 
 extra:

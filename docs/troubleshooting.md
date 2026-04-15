@@ -12,7 +12,6 @@ git config --remove-section submodule.roles/{ROLE}
 # Submodule is fully removed and ready to be re-added.
 ```
 
-
 ## Multiple [configurations found for submodule][b]
 **.git/config** mis-match against checked in submodules file **.gitmodules**.
 
@@ -25,7 +24,6 @@ git config --remove-section submodule.roles/{ROLE}
 
 Ensure files are the same. Check both **.git/config** and **.gitmodules** are
 up to date and the same. Add to git commit if needed.
-
 
 ## no_log does not [honor variable use][c]
 `no_log` currently does not honor variable interpretation.

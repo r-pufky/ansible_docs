@@ -41,38 +41,68 @@ This enables the role to focus on critical setup and the consumer to configure
 the application settings appropriately.
 
 ``` yaml
-- name: '{{ "Install | filesystem | deploy " ~ maria___app._conf_d }}'
+- name: 'Config | filetree | set managed directories'
+  ansible.builtin.file:
+    path: '{{ target_directory ~ "/" ~ item.path }}'
+    owner: 'root'
+    group: 'root'
+    mode: '0755'
+    state: 'directory'
+  loop: '{{ query("community.general.filetree", source_directory) }}'
+  loop_control:
+    label: '{{ item.path }}'
+  when: item.state == 'directory'
+
+- name: 'Config | filetree | set managed files'
   ansible.builtin.template:
     src: '{{ item.src }}'
-    dest: '{{ maria___app._conf_d }}'
-    owner: '{{ maria__srv._user }}'
-    group: '{{ maria__srv._group }}'
+    dest: '{{ target_directory ~ "/" ~ item.path }}'
+    owner: 'root'
+    group: 'root'
     mode: '0644'
-  loop: '{{
-      query("community.general.filetree", "templates/default/mariadb.conf.d")
-    }}'
+  loop: '{{ query("community.general.filetree", source_directory) }}'
   loop_control:
     label: '{{ item.path }}'
   when: item.state == 'file'
-  register: maria__local
 
-- name: 'Install | filesystem | query remote files'
+- name: 'Config | filesystem | query remote files'
   ansible.builtin.find:
-    paths: '{{ maria___app._conf_d }}'
-    file_type: 'file'
+    paths: '{{ target_directory }}'
+    file_type: 'any'
+    hidden: true
     recurse: true
-  register: maria__remote
+  register: remote__list
 
-- name: 'Install | filesystem | remove unmanaged files'
+- name: 'Config | filetree | remove unmanaged files and directories'
   ansible.builtin.file:
     path: '{{ item.path }}'
     state: 'absent'
-  loop: '{{ maria__remote.files }}'
+  loop: '{{ remote__list.files | sort(attribute="path", reverse=true) }}'
   loop_control:
     label: '{{ item.path }}'
   when: >
-    item.path not in maria__local.results | selectattr('dest', 'defined') |
-    map(attribute='dest') | list
+    item.path not in
+    (
+      query("community.general.filetree", source_directory) |
+      map(attribute='path') |
+      map('regex_replace', '^', target_directory ~ "/") | list
+    )
+
+# If source_directory can be left as empty string, clear target_directory.
+- name: '{{ "Config | filesystem | query " ~ target_directory }}'
+  when: source_directory | length == 0
+  ansible.builtin.find:
+    paths: "{{ target_directory }}"
+    recurse: false  # Don't need to enumerate sub-directories to remove.
+    hidden: true
+  register: remote__cmd
+
+- name: '{{ "Config | filesystem | clear " ~ target_directory }}'
+  when: source_directory | length == 0
+  ansible.builtin.file:
+    path: "{{ item.path }}"
+    state: absent
+  loop: "{{ remote__cmd.files }}"
 ```
 
 !!! tip "Do not separate into another role"

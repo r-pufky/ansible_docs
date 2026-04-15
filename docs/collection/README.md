@@ -1,8 +1,6 @@
 # Collection Development
 
-
 ## New Collection
-
 !!! tip
     Recommend copying an existing collection, updating, and removing unused
     options.
@@ -34,7 +32,6 @@
     mkdir -p plugins/modules  # Optional for Python modules.
     ```
 
-
 ## Testing
 Use community references for examples on specific implementations:
 
@@ -65,7 +62,6 @@ Always [build and install](#build-and-install) before running tests.
 cd ~/.ansible/collections/ansible_collections/{USER}/{COLLECTION}
 ansible-test {unit,integration,sanity}
 ```
-
 
 ## Commits
 !!! tip "Decision: Use aggressive deprecation"
@@ -138,7 +134,6 @@ ansible-test {unit,integration,sanity}
 6. Update links to latest release.
 7. Set alerts to check for new release (or push notifications) for each role.
 
-
 ## [Release][k]
 
 !!! tip "Release low-level dependencies first"
@@ -164,9 +159,7 @@ ansible-test {unit,integration,sanity}
 
 2. Push github release.
 
-
 ## Reference[^1][^2][^3][^4][^5][^6][^7][^8][^9][^10][^11]
-
 [^1]: https://docs.ansible.com/ansible/latest/community/collection_contributors/collection_requirements.html
 [^2]: https://docs.ansible.com/ansible/latest/reference_appendices/release_and_maintenance.html#ansible-core-support-matrix
 [^3]: https://docs.ansible.com/ansible/latest/dev_guide/developing_collections_structure.html#collection-structure

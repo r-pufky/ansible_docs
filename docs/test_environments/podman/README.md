@@ -7,7 +7,6 @@
     Used to test **all** cases unless there are required bare-metal cases (see
     [vagrant](../vagrant/README.md)).
 
-
 ## Molecule Setup
 Standard molecule setup for rootless podman debian container.
 
@@ -88,9 +87,7 @@ Standard molecule setup for rootless podman debian container.
         - 'destroy'
     ```
 
-
 ## Reference[^1][^2][^3][^4][^5][^6]
-
 [^1]: https://ansible.readthedocs.io/projects/molecule/guides/systemd-container/
 [^2]: https://ansible.readthedocs.io/projects/molecule/examples/podman/
 [^3]: https://ansible.readthedocs.io/projects/molecule/configuration/?h=test_sequence#scenario

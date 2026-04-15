@@ -1,9 +1,7 @@
 # Molecule
 !!! info "Molecule 25.2+ [introduced breaking changes](../vagrant/troubleshooting.md#error-couldnt-resolve-moduleaction-vagrant)."
 
-
 ## Setup Framework
-
 ``` bash
 # Directory may also be copied from other existing roles and updated.
 # Molecule always uses current working directory.
@@ -35,7 +33,6 @@ These may be **yml** files or directories with **yml** files inside.
 ├── cleanup
 ╰── destroy
 ```
-
 
 ## Testing
 Molecule deletes containers after every test cycle regardless of success or
@@ -69,6 +66,5 @@ Debug molecule actions, not the tests themselves.
 ``` bash
 molecule --debug ${COMMAND}  # Enable verbose debugging.
 ```
-
 
 [a]: https://sbarnea.com/slides/molecule/#/13

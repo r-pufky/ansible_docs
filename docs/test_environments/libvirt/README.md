@@ -1,5 +1,4 @@
 # [libvirt][a]
-
 !!! warning "Explicit Need Only"
     VMs are **ONLY** used to test specific cases which cannot be tested in
     containers (kernel, firmware, proc, systemd, networking, etc.) these should
@@ -85,11 +84,9 @@ Standard molecule setup for vagrant libvirt kvm/qemu debian VM.
 
 
 ## Reference[^1][^2][^3][^4]
-
 [^1]: https://oneuptime.com/blog/post/2026-02-21-how-to-configure-molecule-with-vagrant-driver/view
 [^2]: https://github.com/ansible-community/molecule-vagrant/blob/main/README.rst
 [^3]: https://wiki.archlinux.org/title/Virt-manager
 [^4]: https://wiki.archlinux.org/title/QEMU
-
 
 [a]: https://wiki.archlinux.org/title/Libvirt

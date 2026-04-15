@@ -6,7 +6,6 @@
 
 See [dist-upgrade fails for grub-pc](../libvirt/troubleshooting.md#dist-upgrade-fails-for-grub-pc).
 
-
 ## Driver vagrant does not [provide a schema][a]
 Vagrant driver does have a schema and will always generate a warning.
 
@@ -14,7 +13,6 @@ Vagrant driver does have a schema and will always generate a warning.
     ``` log
     WARNING Driver vagrant does not provide a schema.
     ```
-
 
 ## VERR_CFGM_NOT_ENOUGH_SPACE
 Vagrant path length exceeded for Molecule test (see virtualization manager).
@@ -71,7 +69,6 @@ platforms:
       - network_name: 'private_network'
 ```
 
-
 ## Failed to [lock apt for exclusive operation][b]
 Use root to configure and test VM instance. All Molecule setup/teardown steps
 require root user. Always use become when creating Molecule tests or setup an
@@ -86,7 +83,6 @@ ansible user after VM turnup to apply ansible tasks.
   become: true
 ```
 
-
 ## Flaky VM
 A previous molecule test likely not cleaned up properly.
 
@@ -99,7 +95,6 @@ vagrant box destroy {ID}
 ```
 
 !!! tip "Check GUI for additional VMs if needed."
-
 
 ## Permission denied (publickey,password)
 Vagrant SSH keys should automatically be set in images. Manual images may have
@@ -143,7 +138,6 @@ Enable debugging if issue continues.
     - ansible.builtin.debug:
         msg: '{{ ansible_ssh_private_key_file }}'
     ```
-
 
 ## ERROR! couldn't [resolve module/action 'vagrant'][c]
 Molecule **25.2.0+** is a bad release that broke vagrant modules.
@@ -199,7 +193,6 @@ Molecule **25.2.0+** is a bad release that broke vagrant modules.
     * [Developer response][h]
     * [Script to generate previous molecule environment][i]
     * [opentofu stopped molecule updates][j]
-
 
 [a]: https://github.com/ansible/molecule/discussions/4108
 [b]: https://stackoverflow.com/questions/33563425/ansible-1-9-4-failed-to-lock-apt-for-exclusive-operation

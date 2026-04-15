@@ -1,6 +1,5 @@
 # Role Development
 
-
 ## New Role
 !!! warning "[Ansible galaxy][c] will overwrite GIT metadata when run directly on the submodule"
     Instead write a skeleton role and copy data in as-needed. See [example][b].
@@ -30,7 +29,6 @@ git submodule add https://github.com/{USER}/{REPO} roles/{ROLE}
     ```
 
 Redirect [ansible caches](README.md#redirect-ansible-caches).
-
 
 ## Commits
 Role must be committed before a [new commit hash][d] can be stored in the

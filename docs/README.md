@@ -3,7 +3,6 @@ Ansible development documentation and standards for collection and role
 development. Intended for developer use only. All [collections published][a]
 follow these guidelines.
 
-
 ## Environment Configuration
 !!! info "Decision: Use isolated minimal environments"
     All collections and roles **assume** environment is created and active.
@@ -212,7 +211,6 @@ infrastructure: ansible, molecule, podman, vagrant, libvirt, uv, direnv.
     >  default   active   yes         yes
     ```
 
-
 ### Environment Setup
 A minimal (clean) environment enforces only settings which make testing easier
 for the collection and roles.
@@ -395,7 +393,6 @@ ls -s /mnt/cache/home/${USER}/.vagrant.d ${HOME}/.vagrant.d
 ln -s /mnt/cache/var/lib/libvirt /var/lib/libvirt
 ```
 
-
 ## VSCode
 All VSCode variants are included.
 
@@ -446,12 +443,9 @@ files locally or remotely.
 
     Manually run on the command line.
 
-
 ## Reference[^1][^2]
-
 [^1]: https://docs.ansible.com/ansible/latest/roadmap/ansible_roadmap_index.html
 [^2]: https://docs.ansible.com/ansible/2.9/installation_guide/intro_installation.html
-
 
 [a]: https://galaxy.ansible.com/ui/namespaces/r_pufky
 [b]: https://github.com/ansible/ansible-lint/issues/4533

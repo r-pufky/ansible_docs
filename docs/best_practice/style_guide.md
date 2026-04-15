@@ -1,6 +1,5 @@
 # Style Guide
 
-
 ## 80 character width
 Only extend past 80 characters if long variable names make it impossible.
 Continue long lines with breaks. Prefer human readability.
@@ -35,7 +34,6 @@ Continue long lines with breaks. Prefer human readability.
       ) }}"
 ```
 
-
 ## Accepted Lint Disables
 Isolate disable impact. Never use global lint disables for a project.
 
@@ -57,7 +55,6 @@ some_long_yaml_line: 0  # yamllint disable-line rule:line-length
         ..
       ) }}"
 ```
-
 
 ## Name Directives
 
@@ -141,7 +138,6 @@ Usage.
   notify: 'Handlers | reload restart FRR'
   ...
 ```
-
 
 ## File Documentation
 Provide development notes, overall process, required state before executing,
@@ -259,7 +255,6 @@ what tasks do!).
 
 - name: 'always use one vertical space before code'
 ```
-
 
 ## Variable Documentation
 Explicitly document variable use for end users. Only remove sections which are
@@ -396,7 +391,6 @@ something you implicitly do.
 # Reference:
 # * https://manpages.debian.org/bookworm/openssh-client/ssh_config.5.en.html
 ```
-
 
 [b]: https://docs.ansible.com/ansible/latest/playbook_guide/playbooks_handlers.html
 [c]: https://github.com/ansible/ansible/issues/16378

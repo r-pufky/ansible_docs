@@ -13,7 +13,6 @@ Each pattern requires a separate molecule test setup.
 
     **All** tests must pass with **molecule test --all**.
 
-
 ## Test Patterns
 * Use **r_pufky.data.test** to handle a majority of common test cases with a
   single task.
@@ -31,18 +30,15 @@ Each pattern requires a separate molecule test setup.
 * Molecule test name reflects components tested.
 * Make use of [Molecule test variables][a].
 
-
 ## molecule.yml
 * [Document Test](#documenting-tests).
 * Define test variables for test setup.
-
 
 ## converge.yml
 * **unsafe** variables [must be defined here][b].
 * Edge cases outside of the base setup (e.g. multiple convergence steps).
 * Use **mock** scripts to replace binaries when binaries cannot be used in a
   container and [they do **not** affect testing][c].
-
 
 ## prepare.yml
 * Generate [static testing data (certs, keys, network)][d]
@@ -55,11 +51,9 @@ Each pattern requires a separate molecule test setup.
 * Specify [dynamic target files][e].
 * Load [generated files and inject in converge.yml][f].
 
-
 ## verify.yml
 * Use **ansible.builtin.assert** to [validate test results][g]. Any tests missing
   assert are not explicitly validating correctness.
-
 
 ## Documenting Tests
 Explicitly state test conditions in `molecule.yml` using the following format:
@@ -122,7 +116,6 @@ Clearly state [expected results and failure reasons][h].
 
        test_nzbget_config: {{ test_nzbget_config }}
 ```
-
 
 [a]: https://ansible.readthedocs.io/projects/molecule/configuration/#molecule.config.Config
 [b]: https://github.com/ansible/molecule/issues/4348

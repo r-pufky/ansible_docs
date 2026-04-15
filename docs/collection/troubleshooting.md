@@ -1,6 +1,5 @@
 # Troubleshooting
 
-
 ## Testing in roles uses old files
 Collection cache is outdated.
 
@@ -8,7 +7,6 @@ Clear build cache.
 ``` bash
 rm -rfv ~/.ansible/collections/ansible_collections/r_pufky/srv
 ```
-
 
 ## Unable to determine context for the following test targets
 A controller and a target were not specified when running the test.
@@ -82,9 +80,7 @@ plugins/modules/demo_hello.py import-3.12!skip
 plugins/modules/demo_hello.py validate-modules:missing-gplv3-license
 ```
 
-
 ## Reference[^1][^2][^3][^4]
-
 [^1]: https://github.com/ansible/ansible/issues/67032
 [^2]: https://docs.ansible.com/ansible/latest/dev_guide/testing/sanity/ignores.html
 [^3]: https://docs.ansible.com/ansible/latest/dev_guide/testing/sanity/validate-modules.html

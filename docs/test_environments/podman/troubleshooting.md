@@ -4,7 +4,6 @@
     See [molecule](../molecule/troubleshooting.md) for specific molecule
     troubleshooting.
 
-
 ## Driver podman does not [provide a schema][a]
 Podman driver does have a schema and will always generate a warning.
 
@@ -30,7 +29,6 @@ platforms:
     image: 'ghcr.io/hifis-net/debian-systemd:13'
     systemd: 'always'  # tmpfs not need if 'always'.
 ```
-
 
 ## Podman database [static dir mis-match][d]
 Podman will not migrate things out of **/home** to prevent existing pod
@@ -70,7 +68,6 @@ Some containers services require ping.
         ]
         ```
 
-
 ## Containers [ignore graphroot and runroot][f]
 Graphroot and runroot are ignored in rootless containers and use following
 defaults if not defined:
@@ -80,7 +77,6 @@ XDG_CONFIG_HOME=${HOME}/.config
 XDG_DATA_DIR=${HOME}/.local/share
 XDG_RUNTIME_DIR=/run/user/${UID}
 ```
-
 
 [a]: https://github.com/ansible/molecule/discussions/4108
 [b]: https://docs.ansible.com/ansible/latest/collections/containers/podman/podman_container_module.html#parameter-tmpfs

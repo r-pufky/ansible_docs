@@ -67,7 +67,6 @@ Molecule uses galaxy roles as dependencies when testing.
     tasks_from: 'optimizations/firmware.yml'
 ```
 
-
 ## ERROR! the role '{ROLE}' was not found ...
 Molecule uses galaxy roles as dependencies when testing.
 
@@ -119,6 +118,5 @@ molecule destroy --all
 molecule reset
     containers.
 ```
-
 
 [a]: https://github.com/ansible/molecule/issues/3857
