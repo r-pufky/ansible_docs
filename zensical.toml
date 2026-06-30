@@ -1,0 +1,180 @@
+# Configuration: https://r-pufky.github.io/docs/service/mkdocs
+#
+# uv run zensical serve
+# uv run zensical build --strict
+#
+# Automatic deploy when pushed to master with tag: .github/workflow/docs.yml
+#
+# Reference:
+# * https://zensical.org/docs/setup/extensions/about/#zensical-extensions
+# * https://zensical.org/docs/setup/extensions/python-markdown-extensions
+
+[project]
+# Manually generate nav for format and casing.
+nav = [
+  "README.md",
+  # General apps place native spot. Combined apps go in root app.
+  { Collections = [
+    "collection/README.md",
+    "collection/troubleshooting.md",
+  ] },
+  { Roles = "role.md" },
+  { Testing = [
+    { Molecule = [
+      "test_environments/molecule/README.md",
+      "test_environments/molecule/troubleshooting.md",
+    ] },
+    { Podman = [
+      "test_environments/podman/README.md",
+      "test_environments/podman/troubleshooting.md",
+    ] },
+    { Vagrant = [
+      "test_environments/vagrant/README.md",
+      "test_environments/vagrant/troubleshooting.md",
+    ] },
+    { libvirt = [
+      "test_environments/libvirt/README.md",
+      "test_environments/libvirt/troubleshooting.md",
+    ] },
+  ] },
+  { "Best Practices" = [
+    "best_practice/README.md",
+    "best_practice/patterns.md",
+    "best_practice/style_guide.md",
+    "best_practice/testing.md",
+    "best_practice/vault.md",
+  ] },
+  "troubleshooting.md",
+]
+
+site_name = "Ansible Development"
+site_url = "https://github.com/r-pufky/ansible_docs"
+repo_url = "https://github.com/r-pufky/ansible_docs"
+site_author = "r-pufky"
+copyright = "©2026"
+docs_dir = "docs"
+site_dir = "site"
+use_directory_urls = true
+dev_addr = "localhost:8000"
+extra_css = [
+  "https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/styles/vs2015.min.css",
+  "_extra/widescreen.css",
+]
+extra_javascript = [
+  "https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/highlight.min.js",
+  "https://unpkg.com/tablesort@5.3.0/dist/tablesort.min.js",
+  "_extra/init.js",
+]
+
+[project.theme]
+variant = "classic"  # "modern" is updated look for zensical.
+language = "en"
+features = [
+  "header.autohide",
+  "content.action.edit",
+  "content.footnote.tooltips",
+  "navigation.instant",
+  "navigation.instant.prefetch",
+  "navigation.instant.progress",
+  "navigation.tracking",
+  "navigation.path",
+  "navigation.indexes",
+  "navigation.top",
+  "toc.follow",
+  "search.highlight",
+]
+icon.annotation = "material/chevron-right-circle"
+navigation_depth = 5
+
+[[project.theme.palette]]
+media = "(prefers-color-scheme)"
+toggle.icon = "lucide/sun-moon"
+toggle.name = "Switch to light mode"
+
+[[project.theme.palette]]
+media = "(prefers-color-scheme: dark)"
+scheme = "slate"
+primary = "black"
+accent = "indigo"
+toggle.icon = "lucide/sun"
+toggle.name = "Switch to light mode"
+
+[[project.theme.palette]]
+media = "(prefers-color-scheme: light)"
+scheme = "default"
+primary = "indigo"
+accent = "indigo"
+toggle.icon = "lucide/moon"
+toggle.name = "Switch to dark mode"
+
+[[project.extra.social]]
+icon = "fontawesome/brands/github"
+link = "https://github.com/r-pufky"
+
+[[project.extra.social]]
+icon = "material/ansible"
+link = "https://galaxy.ansible.com/ui/namespaces/r_pufky"
+
+[[project.extra.social]]
+icon = "simple/gnuprivacyguard"
+link = "https://keys.openpgp.org/vks/v1/by-fingerprint/466EEC2B67516C7117C85CE3A0BC35D16698BAB9"
+
+[project.markdown_extensions.admonition]
+[project.markdown_extensions.attr_list]
+[project.markdown_extensions.def_list]
+[project.markdown_extensions.footnotes]
+[project.markdown_extensions.md_in_html]
+[project.markdown_extensions.pymdownx.arithmatex]
+generic = true
+
+[project.markdown_extensions.pymdownx.betterem]
+[project.markdown_extensions.pymdownx.caret]
+[project.markdown_extensions.pymdownx.details]
+[project.markdown_extensions.pymdownx.emoji]
+emoji_generator = "zensical.extensions.emoji.to_svg"
+emoji_index = "zensical.extensions.emoji.twemoji"
+
+[project.markdown_extensions.pymdownx.highlight]
+anchor_linenums = true
+line_spans = "__span"
+use_pygments = false
+
+[project.markdown_extensions.pymdownx.inlinehilite]
+[project.markdown_extensions.pymdownx.magiclink]
+[project.markdown_extensions.pymdownx.superfences]
+[project.markdown_extensions.pymdownx.tabbed]
+alternate_style = true
+slugify = { object = "pymdownx.slugs.slugify", kwds = { case = "lower" } }
+
+[project.markdown_extensions.pymdownx.tasklist]
+custom_checkbox = true
+
+[project.markdown_extensions.pymdownx.tilde]
+[project.markdown_extensions.pymdownx.mark]
+[project.markdown_extensions.tables]
+[project.markdown_extensions.zensical.extensions.glightbox]
+auto = true
+auto_themed = true
+auto_caption = true
+caption_position = "bottom"
+width = "auto"
+height = "auto"
+
+# TODO(zensical): Currently being implemented.
+#     plugins:
+#       - git-revision-date-localized:
+#           enable_creation_date: true
+#
+#     https://github.com/zensical/backlog/issues/18
+
+# TODO(zensical): Currently being migrated and therefore disabled.
+# Use with: zensical build --strict
+# [project.validation]
+# invalid_links = true
+# invalid_link_anchors = true
+# unresolved_references = false
+# unresolved_footnotes = false
+# unused_definitions = false
+# unused_footnotes = false
+# shadowed_definitions = false
+# shadowed_footnotes = false
