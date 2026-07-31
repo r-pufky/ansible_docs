@@ -40,6 +40,12 @@ support for ansible-lint via ansible.cfg.
         TODO.md
         # Auto venv
         .venv/
+
+        # Only include vars from root, not symlinked vars.
+        !/host_vars
+        !/group_vars
+        **/*/host_vars
+        **/*/group_vars
         ```
 
 === ".envrc"
@@ -51,15 +57,24 @@ support for ansible-lint via ansible.cfg.
         # direnv executes .envrc in bash and exports back to current shell.
 
         # Link {group,host}_vars to inventory for nested playbook execution.
-        if [ ! -L "inventory/host_vars" ] && [ -d "host_vars" ]; then
-          echo "inventory/host_vars ➔ host_vars"
-          ln -s ../host_vars inventory/host_vars
-        fi
+        link_map=(
+          "inventory:.."
+          "plays:.."
+          "plays/arr:../.."
+        )
 
-        if [ ! -L "inventory/group_vars" ] && [ -d "group_vars" ]; then
-          echo "inventory/group_vars ➔ group_vars"
-          ln -s ../group_vars inventory/group_vars
-        fi
+        for item in "${link_map[@]}"; do
+          IFS=':' read -r target link <<< "${item}"
+
+          if [ ! -L "${target}/host_vars" ] && [ -d "host_vars" ]; then
+            echo "${target}/host_vars ➔ ${link}/host_vars"
+            ln -s "${link}/host_vars" "${target}/host_vars"
+          fi
+          if [ ! -L "${target}/group_vars" ] && [ -d "group_vars" ]; then
+            echo "${target}/group_vars ➔ ${link}/group_vars"
+            ln -s "${link}/group_vars" "${target}/group_vars"
+          fi
+        done
 
         # Create venv if needed and activate adding ansible testing environment.
         uv sync --all-extras && source .venv/bin/activate
